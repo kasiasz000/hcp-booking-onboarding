@@ -4,38 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Housecall Pro - Booking Onboarding</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #0F77CC;
-            --primary-dark: #0D66A8;
-            --primary-light: #E3F2FD;
-            --success: #4CAF50;
-            --success-light: #E8F5E9;
-            --warning: #FF9800;
-            --warning-light: #FFF3E0;
-            --text-primary: #212121;
-            --text-secondary: #757575;
-            --bg-main: #FAFAFA;
-            --bg-paper: #FFFFFF;
-            --divider: #E0E0E0;
-            --shadow-1: 0 1px 3px rgba(0,0,0,0.12);
-            --shadow-2: 0 2px 6px rgba(0,0,0,0.16);
-            --shadow-4: 0 4px 12px rgba(0,0,0,0.15);
-            --shadow-8: 0 8px 24px rgba(0,0,0,0.15);
-            --radius-sm: 4px;
-            --radius-md: 8px;
-            --radius-lg: 12px;
-            --spacing-xs: 8px;
-            --spacing-sm: 12px;
-            --spacing-md: 16px;
-            --spacing-lg: 24px;
-            --spacing-xl: 32px;
-            --spacing-xxl: 48px;
-        }
-
         * {
             margin: 0;
             padding: 0;
@@ -43,320 +12,301 @@
         }
 
         body {
-            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: var(--bg-main);
-            min-height: 100vh;
-            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background: #F5F5F7;
+            color: #1D1D1F;
+            line-height: 1.5;
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Header - AppBar style */
+        /* Top Nav */
+        .top-nav {
+            background: #2C2C2E;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            color: white;
+            font-size: 14px;
+        }
+
+        .nav-item {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-item.active {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+        }
+
+        /* Header */
         .header {
-            background: var(--bg-paper);
-            padding: var(--spacing-md) var(--spacing-xl);
-            box-shadow: var(--shadow-2);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            background: white;
+            border-bottom: 1px solid #E5E5E7;
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .header h1 {
-            font-size: 20px;
-            font-weight: 500;
-            letter-spacing: 0.15px;
+        .header-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1D1D1F;
         }
 
-        /* Progress Stepper - Material Design */
+        .header-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        /* Stepper */
         .stepper-container {
-            background: var(--bg-paper);
-            padding: var(--spacing-xl) var(--spacing-lg);
-            border-bottom: 1px solid var(--divider);
+            background: white;
+            padding: 32px 24px 24px;
+            border-bottom: 1px solid #E5E5E7;
         }
 
         .stepper {
             display: flex;
-            align-items: center;
             justify-content: center;
-            max-width: 900px;
+            align-items: center;
+            max-width: 800px;
             margin: 0 auto;
-            position: relative;
+            gap: 48px;
         }
 
-        .step-wrapper {
+        .step {
             display: flex;
             flex-direction: column;
             align-items: center;
             position: relative;
-            flex: 1;
         }
 
-        .step-indicator {
-            width: 40px;
-            height: 40px;
+        .step-circle {
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
-            background: var(--bg-paper);
-            border: 2px solid var(--divider);
-            color: var(--text-secondary);
+            background: #E5E5E7;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 500;
             font-size: 14px;
-            margin-bottom: var(--spacing-xs);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 500;
+            color: #86868B;
+            margin-bottom: 8px;
             position: relative;
             z-index: 2;
         }
 
-        .step-wrapper.active .step-indicator {
-            background: var(--primary);
-            border-color: var(--primary);
-            color: var(--bg-paper);
-            box-shadow: 0 0 0 4px var(--primary-light);
+        .step.active .step-circle {
+            background: #0071E3;
+            color: white;
         }
 
-        .step-wrapper.completed .step-indicator {
-            background: var(--success);
-            border-color: var(--success);
-            color: var(--bg-paper);
+        .step.completed .step-circle {
+            background: #0071E3;
+            color: white;
         }
 
-        .step-wrapper.completed .step-indicator::after {
+        .step.completed .step-circle::before {
             content: "✓";
             font-size: 16px;
         }
 
         .step-label {
             font-size: 12px;
-            color: var(--text-secondary);
+            color: #86868B;
             text-align: center;
-            max-width: 80px;
-            line-height: 1.4;
         }
 
-        .step-wrapper.active .step-label {
-            color: var(--primary);
+        .step.active .step-label {
+            color: #0071E3;
             font-weight: 500;
         }
 
-        .step-connector {
+        .step::after {
+            content: '';
             position: absolute;
-            top: 20px;
-            left: calc(50% + 20px);
-            right: calc(-50% + 20px);
+            top: 16px;
+            left: 50%;
+            width: 100%;
             height: 2px;
-            background: var(--divider);
+            background: #E5E5E7;
             z-index: 1;
         }
 
-        .step-wrapper.completed .step-connector {
-            background: var(--success);
-        }
-
-        .step-wrapper:last-child .step-connector {
+        .step:last-child::after {
             display: none;
         }
 
-        /* Main Container */
-        .container {
-            max-width: 1200px;
-            margin: var(--spacing-xxl) auto;
-            padding: 0 var(--spacing-lg);
+        .step.completed::after {
+            background: #0071E3;
         }
 
-        /* Step Content */
+        /* Main Content */
+        .main {
+            max-width: 900px;
+            margin: 48px auto;
+            padding: 0 24px;
+        }
+
         .step-content {
             display: none;
-            animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .step-content.active {
             display: block;
+            animation: fadeIn 0.3s ease;
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(16px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* Step Header */
         .step-header {
             text-align: center;
-            margin-bottom: var(--spacing-xxl);
+            margin-bottom: 40px;
         }
 
         .step-title {
-            font-size: 34px;
-            font-weight: 400;
-            line-height: 1.2;
-            margin-bottom: var(--spacing-sm);
-            letter-spacing: 0.25px;
+            font-size: 32px;
+            font-weight: 600;
+            color: #1D1D1F;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
         }
 
         .step-subtitle {
             font-size: 16px;
-            color: var(--text-secondary);
-            line-height: 1.5;
-            letter-spacing: 0.15px;
+            color: #86868B;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        /* Card Component - Material Design Elevation */
+        /* Card */
         .card {
-            background: var(--bg-paper);
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-1);
-            transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-                        transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            margin-bottom: 20px;
         }
 
-        .card:hover {
-            box-shadow: var(--shadow-4);
+        .card-section {
+            margin-bottom: 24px;
         }
 
-        .card-content {
-            padding: var(--spacing-lg);
+        .card-section:last-child {
+            margin-bottom: 0;
         }
 
-        /* Grid Layouts */
+        .section-title {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #1D1D1F;
+        }
+
+        .section-description {
+            font-size: 14px;
+            color: #86868B;
+            margin-bottom: 16px;
+        }
+
+        /* Grid */
         .grid {
             display: grid;
-            gap: var(--spacing-lg);
-        }
-
-        .grid-2 {
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
         }
 
         .grid-4 {
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         }
 
-        /* Product Cards */
-        .product-card {
+        /* Feature Cards */
+        .feature-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            transition: all 0.2s;
             cursor: pointer;
             position: relative;
-            border: 2px solid transparent;
         }
 
-        .product-card:hover {
-            transform: translateY(-4px);
+        .feature-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+            transform: translateY(-2px);
         }
 
-        .product-card.selected {
-            border-color: var(--primary);
-            box-shadow: 0 4px 20px rgba(15, 119, 204, 0.3);
+        .feature-card.selected {
+            border: 2px solid #0071E3;
+            box-shadow: 0 4px 12px rgba(0, 113, 227, 0.2);
         }
 
-        .product-icon {
-            width: 56px;
-            height: 56px;
-            background: var(--primary-light);
-            border-radius: var(--radius-lg);
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: #F5F5F7;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
-            margin-bottom: var(--spacing-md);
+            font-size: 24px;
+            margin-bottom: 16px;
         }
 
-        .product-title {
-            font-size: 20px;
-            font-weight: 500;
-            margin-bottom: var(--spacing-xs);
-            letter-spacing: 0.15px;
+        .feature-title {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1D1D1F;
         }
 
-        .product-description {
+        .feature-description {
             font-size: 14px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            letter-spacing: 0.25px;
+            color: #86868B;
+            line-height: 1.5;
         }
 
-        .product-badge {
+        .badge {
             position: absolute;
-            top: var(--spacing-md);
-            right: var(--spacing-md);
-            background: var(--warning-light);
-            color: var(--warning);
-            padding: 4px var(--spacing-sm);
-            border-radius: var(--radius-lg);
+            top: 16px;
+            right: 16px;
+            background: #FFE5CC;
+            color: #CC7000;
+            padding: 4px 10px;
+            border-radius: 8px;
             font-size: 11px;
-            font-weight: 500;
+            font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
         }
 
-        .product-checkbox {
-            position: absolute;
-            top: var(--spacing-md);
-            right: var(--spacing-md);
-            width: 24px;
-            height: 24px;
-            accent-color: var(--primary);
-            cursor: pointer;
-        }
-
-        /* Alert/Banner Component */
-        .alert {
-            border-radius: var(--radius-md);
-            padding: var(--spacing-md) var(--spacing-lg);
-            display: flex;
-            align-items: flex-start;
-            gap: var(--spacing-md);
-            margin-bottom: var(--spacing-xl);
-        }
-
-        .alert-info {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: var(--bg-paper);
-        }
-
-        .alert-success {
-            background: var(--success-light);
-            color: #2E7D32;
-        }
-
-        .alert-icon {
-            font-size: 28px;
-            flex-shrink: 0;
-        }
-
-        .alert-content h3 {
-            font-size: 16px;
-            font-weight: 500;
-            margin-bottom: 6px;
-            letter-spacing: 0.15px;
-        }
-
-        .alert-content p {
-            font-size: 14px;
-            line-height: 1.6;
-            opacity: 0.95;
-            letter-spacing: 0.25px;
-        }
-
-        /* List Component */
+        /* List */
         .list {
-            background: var(--bg-paper);
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-1);
+            background: white;
+            border-radius: 12px;
             overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
         }
 
         .list-item {
             display: flex;
             align-items: center;
-            padding: var(--spacing-md) var(--spacing-lg);
-            border-bottom: 1px solid var(--divider);
-            transition: background 0.2s;
+            padding: 16px 20px;
+            border-bottom: 1px solid #F5F5F7;
         }
 
         .list-item:last-child {
@@ -364,203 +314,205 @@
         }
 
         .list-item:hover {
-            background: rgba(0,0,0,0.02);
+            background: #FAFAFA;
         }
 
-        .list-item-handle {
-            margin-right: var(--spacing-md);
-            color: var(--text-secondary);
-            font-size: 20px;
+        .drag-handle {
+            margin-right: 12px;
+            color: #C7C7CC;
             cursor: move;
+            font-size: 18px;
         }
 
         .list-item-text {
             flex: 1;
-            font-size: 16px;
-            letter-spacing: 0.15px;
+            font-size: 15px;
+            color: #1D1D1F;
         }
 
-        /* Switch Component - Material Design */
+        /* Toggle Switch */
         .switch {
-            width: 52px;
-            height: 32px;
-            background: rgba(0,0,0,0.26);
+            width: 51px;
+            height: 31px;
+            background: #E5E5E7;
             border-radius: 16px;
             position: relative;
             cursor: pointer;
-            transition: background 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: background 0.2s;
         }
 
         .switch.checked {
-            background: rgba(15, 119, 204, 0.5);
+            background: #34C759;
         }
 
         .switch-thumb {
-            width: 20px;
-            height: 20px;
-            background: var(--bg-paper);
+            width: 27px;
+            height: 27px;
+            background: white;
             border-radius: 50%;
             position: absolute;
-            top: 6px;
-            left: 6px;
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: var(--shadow-1);
+            top: 2px;
+            left: 2px;
+            transition: transform 0.2s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
         .switch.checked .switch-thumb {
             transform: translateX(20px);
-            background: var(--primary);
         }
 
-        /* Time Picker Grid */
-        .time-grid {
-            background: var(--bg-paper);
-            border-radius: var(--radius-md);
-            padding: var(--spacing-lg);
-            box-shadow: var(--shadow-1);
-            margin-bottom: var(--spacing-lg);
+        /* Radio Group */
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
-        .time-row {
+        .radio-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 16px;
+            border: 1px solid #E5E5E7;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .radio-item:hover {
+            border-color: #0071E3;
+            background: #F9FAFB;
+        }
+
+        .radio-item.selected {
+            border-color: #0071E3;
+            background: #F0F7FF;
+        }
+
+        .radio-circle {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #C7C7CC;
+            border-radius: 50%;
+            margin-right: 12px;
+            flex-shrink: 0;
+            position: relative;
+            margin-top: 2px;
+        }
+
+        .radio-item.selected .radio-circle {
+            border-color: #0071E3;
+        }
+
+        .radio-item.selected .radio-circle::after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            background: #0071E3;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .radio-content {
+            flex: 1;
+        }
+
+        .radio-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #1D1D1F;
+        }
+
+        .radio-description {
+            font-size: 14px;
+            color: #86868B;
+        }
+
+        /* Hours Table */
+        .hours-table {
+            width: 100%;
+        }
+
+        .hours-row {
             display: grid;
             grid-template-columns: 120px 1fr 1fr 60px;
-            gap: var(--spacing-md);
+            gap: 12px;
             align-items: center;
-            padding: var(--spacing-md) 0;
-            border-bottom: 1px solid var(--divider);
+            padding: 12px 0;
+            border-bottom: 1px solid #F5F5F7;
         }
 
-        .time-row:last-child {
+        .hours-row:last-child {
             border-bottom: none;
         }
 
         .day-label {
             font-weight: 500;
-            letter-spacing: 0.15px;
+            color: #1D1D1F;
         }
 
         .time-input {
-            padding: 10px var(--spacing-sm);
-            border: 1px solid var(--divider);
-            border-radius: var(--radius-sm);
-            font-family: inherit;
+            padding: 8px 12px;
+            border: 1px solid #D1D1D6;
+            border-radius: 8px;
             font-size: 14px;
-            transition: border-color 0.2s;
-        }
-
-        .time-input:hover {
-            border-color: var(--text-secondary);
+            font-family: inherit;
+            color: #1D1D1F;
         }
 
         .time-input:focus {
             outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 1px var(--primary);
+            border-color: #0071E3;
+            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1);
         }
 
-        /* Buttons - Material Design */
+        /* Buttons */
         .button-group {
             display: flex;
             justify-content: space-between;
-            gap: var(--spacing-md);
-            margin-top: var(--spacing-xxl);
+            gap: 12px;
+            margin-top: 40px;
         }
 
         .btn {
             padding: 10px 24px;
-            border-radius: var(--radius-sm);
-            font-family: inherit;
-            font-size: 14px;
+            border-radius: 8px;
+            font-size: 15px;
             font-weight: 500;
-            letter-spacing: 0.75px;
-            text-transform: uppercase;
             cursor: pointer;
             border: none;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: #0071E3;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0066CC;
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid #D1D1D6;
+            color: #1D1D1F;
+        }
+
+        .btn-secondary:hover {
+            background: #F5F5F7;
         }
 
         .btn:disabled {
-            opacity: 0.6;
+            opacity: 0.5;
             cursor: not-allowed;
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        .btn:active::before {
-            width: 300px;
-            height: 300px;
-        }
-
-        .btn-text {
-            background: transparent;
-            color: var(--primary);
-            padding: 10px var(--spacing-md);
-        }
-
-        .btn-text:hover:not(:disabled) {
-            background: rgba(15, 119, 204, 0.08);
-        }
-
-        .btn-outlined {
-            background: transparent;
-            border: 1px solid var(--primary);
-            color: var(--primary);
-        }
-
-        .btn-outlined:hover:not(:disabled) {
-            background: rgba(15, 119, 204, 0.08);
-            box-shadow: var(--shadow-1);
-        }
-
-        .btn-contained {
-            background: var(--primary);
-            color: var(--bg-paper);
-            box-shadow: var(--shadow-2);
-        }
-
-        .btn-contained:hover:not(:disabled) {
-            background: var(--primary-dark);
-            box-shadow: var(--shadow-4);
-        }
-
-        .btn-contained:active:not(:disabled) {
-            box-shadow: var(--shadow-8);
-        }
-
-        /* Loading State */
-        .btn.loading {
-            pointer-events: none;
-        }
-
-        .btn.loading::after {
-            content: '';
-            position: absolute;
-            width: 16px;
-            height: 16px;
-            top: 50%;
-            left: 50%;
-            margin: -8px 0 0 -8px;
-            border: 2px solid currentColor;
-            border-right-color: transparent;
-            border-radius: 50%;
-            animation: rotate 0.8s linear infinite;
-        }
-
-        @keyframes rotate {
-            to { transform: rotate(360deg); }
         }
 
         /* Success Screen */
@@ -571,39 +523,40 @@
         }
 
         .success-icon {
-            width: 96px;
-            height: 96px;
-            background: var(--success-light);
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #34C759 0%, #30D158 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 48px;
-            margin: 0 auto var(--spacing-xl);
+            font-size: 40px;
+            margin: 0 auto 32px;
+            color: white;
         }
 
         .success-actions {
             display: flex;
             flex-direction: column;
-            gap: var(--spacing-md);
-            margin-top: var(--spacing-xxl);
+            gap: 12px;
+            margin-top: 40px;
         }
 
         .success-link {
-            background: var(--bg-paper);
-            padding: var(--spacing-lg);
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-1);
+            background: white;
+            padding: 20px 24px;
+            border-radius: 12px;
             text-decoration: none;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            color: var(--text-primary);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            color: #1D1D1F;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            transition: all 0.2s;
         }
 
         .success-link:hover {
-            box-shadow: var(--shadow-4);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
             transform: translateX(4px);
         }
 
@@ -612,81 +565,86 @@
         }
 
         .success-link-title {
-            font-weight: 500;
+            font-weight: 600;
             margin-bottom: 4px;
-            letter-spacing: 0.15px;
         }
 
         .success-link-desc {
             font-size: 14px;
-            color: var(--text-secondary);
-            letter-spacing: 0.25px;
+            color: #86868B;
         }
 
-        .success-link-arrow {
-            font-size: 24px;
-            color: var(--text-secondary);
+        .arrow {
+            font-size: 20px;
+            color: #C7C7CC;
         }
 
-        /* Responsive - Mobile Styles */
+        /* Info Banner */
+        .info-banner {
+            background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
+            border-radius: 12px;
+            padding: 20px 24px;
+            color: white;
+            margin-bottom: 32px;
+            display: flex;
+            gap: 16px;
+        }
+
+        .info-icon {
+            font-size: 32px;
+            flex-shrink: 0;
+        }
+
+        .info-content h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .info-content p {
+            font-size: 14px;
+            opacity: 0.95;
+            line-height: 1.5;
+        }
+
+        /* Checkbox */
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: #0071E3;
+            cursor: pointer;
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            .header {
-                padding: var(--spacing-md);
-            }
-
-            .stepper-container {
-                padding: var(--spacing-md);
+            .top-nav {
+                overflow-x: auto;
             }
 
             .stepper {
-                overflow-x: auto;
-                justify-content: flex-start;
-                padding: var(--spacing-xs) 0;
+                gap: 24px;
             }
 
-            .step-wrapper {
-                min-width: 60px;
-            }
-
-            .step-indicator {
-                width: 32px;
-                height: 32px;
+            .step-circle {
+                width: 28px;
+                height: 28px;
                 font-size: 12px;
             }
 
-            .step-label {
-                font-size: 10px;
-                max-width: 60px;
-            }
-
-            .step-connector {
-                top: 16px;
-            }
-
-            .container {
-                margin: var(--spacing-lg) auto;
-                padding: 0 var(--spacing-md);
-            }
-
             .step-title {
-                font-size: 28px;
-            }
-
-            .step-subtitle {
-                font-size: 14px;
+                font-size: 24px;
             }
 
             .grid-4 {
                 grid-template-columns: 1fr;
             }
 
-            .time-row {
-                grid-template-columns: 100px 1fr;
-                gap: var(--spacing-sm);
+            .hours-row {
+                grid-template-columns: 80px 1fr;
             }
 
-            .time-row > :nth-child(3),
-            .time-row > :nth-child(4) {
+            .hours-row > :nth-child(3),
+            .hours-row > :nth-child(4) {
                 grid-column: 2;
             }
 
@@ -698,410 +656,143 @@
                 width: 100%;
             }
         }
-
-        /* Accessibility */
-        .btn:focus-visible,
-        .time-input:focus-visible,
-        .switch:focus-visible {
-            outline: 2px solid var(--primary);
-            outline-offset: 2px;
-        }
-
-        /* Print Styles */
-        @media print {
-            .header,
-            .stepper-container,
-            .button-group {
-                display: none;
-            }
-        }
     </style>
 </head>
 <body>
+    <!-- Top Navigation -->
+    <div class="top-nav">
+        <a href="#" class="nav-item active">Get started</a>
+        <a href="#" class="nav-item">Home</a>
+        <a href="#" class="nav-item">Inbox</a>
+        <a href="#" class="nav-item">Schedule</a>
+        <a href="#" class="nav-item">Customers</a>
+        <a href="#" class="nav-item">Settings</a>
+    </div>
+
     <!-- Header -->
     <div class="header">
-        <h1>Booking Setup</h1>
+        <div class="header-title">Online booking setup</div>
+        <div class="header-actions">
+            <button class="btn btn-secondary" onclick="window.close()">Back</button>
+            <button class="btn btn-primary" onclick="finishSetup()">Finish onboarding setup</button>
+        </div>
     </div>
 
     <!-- Stepper -->
     <div class="stepper-container">
         <div class="stepper">
-            <div class="step-wrapper active" data-step="1">
-                <div class="step-indicator">1</div>
+            <div class="step active" data-step="1">
+                <div class="step-circle">1</div>
                 <div class="step-label">Overview</div>
-                <div class="step-connector"></div>
             </div>
-            <div class="step-wrapper" data-step="2">
-                <div class="step-indicator">2</div>
+            <div class="step" data-step="2">
+                <div class="step-circle">2</div>
                 <div class="step-label">Services</div>
-                <div class="step-connector"></div>
             </div>
-            <div class="step-wrapper" data-step="3">
-                <div class="step-indicator">3</div>
-                <div class="step-label">Hours</div>
-                <div class="step-connector"></div>
+            <div class="step" data-step="3">
+                <div class="step-circle">3</div>
+                <div class="step-label">Availability</div>
             </div>
-            <div class="step-wrapper" data-step="4">
-                <div class="step-indicator">4</div>
-                <div class="step-label">Team</div>
-                <div class="step-connector"></div>
+            <div class="step" data-step="4">
+                <div class="step-circle">4</div>
+                <div class="step-label">Preview</div>
             </div>
-            <div class="step-wrapper" data-step="5">
-                <div class="step-indicator">5</div>
-                <div class="step-label">Products</div>
-                <div class="step-connector"></div>
-            </div>
-            <div class="step-wrapper" data-step="6">
-                <div class="step-indicator">6</div>
-                <div class="step-label">Setup</div>
-                <div class="step-connector"></div>
-            </div>
-            <div class="step-wrapper" data-step="7">
-                <div class="step-indicator">7</div>
-                <div class="step-label">Done</div>
+            <div class="step" data-step="5">
+                <div class="step-circle">5</div>
+                <div class="step-label">Share</div>
             </div>
         </div>
     </div>
 
-    <!-- Main Container -->
-    <div class="container">
+    <!-- Main Content -->
+    <div class="main">
         <!-- Step 1: Overview -->
         <div class="step-content active" id="step-1">
             <div class="step-header">
-                <h2 class="step-title">Welcome to Booking Setup</h2>
-                <p class="step-subtitle">Let's get you set up to capture more customers with our booking products. This will take about 10 minutes.</p>
+                <h2 class="step-title">Free Online Booking made simple</h2>
+                <p class="step-subtitle">Let your customers book appointments from any device anytime, day or night. Get set up in just three minutes, and you'll be ready to accept appointments on the same day!</p>
             </div>
 
-            <div class="alert alert-info">
-                <div class="alert-icon">🤖</div>
-                <div class="alert-content">
-                    <h3>AI Coach Tip</h3>
-                    <p>We'll help you configure all your booking products in one place. You can always come back and adjust these settings later.</p>
+            <div class="info-banner">
+                <div class="info-icon">💡</div>
+                <div class="info-content">
+                    <h3>Simple. Practical. Convenient.</h3>
+                    <p>We'll help you configure all your booking settings in one place. You can always come back and adjust these settings later.</p>
                 </div>
             </div>
 
             <div class="grid grid-4">
-                <div class="card product-card">
-                    <div class="card-content">
-                        <div class="product-icon">🌐</div>
-                        <h3 class="product-title">Online Booking</h3>
-                        <p class="product-description">Let customers book appointments directly from your website 24/7</p>
-                    </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3 class="feature-title">Online Booking</h3>
+                    <p class="feature-description">Let customers book appointments directly from your website 24/7</p>
                 </div>
-                <div class="card product-card">
-                    <div class="card-content">
-                        <div class="product-icon">📞</div>
-                        <h3 class="product-title">CSR AI</h3>
-                        <p class="product-description">AI-powered phone assistant that answers calls and schedules jobs automatically</p>
-                    </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📞</div>
+                    <h3 class="feature-title">CSR AI</h3>
+                    <p class="feature-description">AI-powered assistant that answers calls and schedules jobs</p>
                 </div>
-                <div class="card product-card">
-                    <div class="card-content">
-                        <div class="product-icon">📅</div>
-                        <h3 class="product-title">Smart Scheduling</h3>
-                        <p class="product-description">Automatically optimize your schedule to maximize efficiency and reduce drive time</p>
-                    </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📅</div>
+                    <h3 class="feature-title">Smart Scheduling</h3>
+                    <p class="feature-description">Automatically optimize your schedule for efficiency</p>
                 </div>
-                <div class="card product-card">
-                    <div class="card-content">
-                        <div class="product-icon">⭐</div>
-                        <h3 class="product-title">HCP Assist</h3>
-                        <p class="product-description">Premium support and dedicated account management (paid add-on)</p>
-                        <div class="product-badge">Paid</div>
-                    </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⭐</div>
+                    <h3 class="feature-title">HCP Assist</h3>
+                    <p class="feature-description">Premium support and account management</p>
+                    <div class="badge">Add-on</div>
                 </div>
             </div>
 
             <div class="button-group">
-                <button class="btn btn-text" style="visibility: hidden;" disabled>Back</button>
-                <button class="btn btn-contained" onclick="nextStep()">Get Started</button>
+                <button class="btn btn-secondary" style="visibility: hidden;">Back</button>
+                <button class="btn btn-primary" onclick="nextStep()">Get it now</button>
             </div>
         </div>
 
         <!-- Step 2: Services -->
         <div class="step-content" id="step-2">
             <div class="step-header">
-                <h2 class="step-title">What Services Do You Offer?</h2>
-                <p class="step-subtitle">Select which services customers can book online</p>
+                <h2 class="step-title">Select your service types</h2>
+                <p class="step-subtitle">Choose which services customers can book online</p>
             </div>
 
-            <div class="alert alert-info">
-                <div class="alert-icon">🤖</div>
-                <div class="alert-content">
-                    <h3>AI Coach Tip</h3>
-                    <p>Choose which services customers can book online. You can drag to reorder them, and toggle services on/off anytime.</p>
-                </div>
-            </div>
-
-            <div class="list">
-                <div class="list-item">
-                    <span class="list-item-handle">☰</span>
-                    <span class="list-item-text">Plumbing Repair</span>
-                    <div class="switch checked" onclick="toggleSwitch(this)">
-                        <div class="switch-thumb"></div>
-                    </div>
-                </div>
-                <div class="list-item">
-                    <span class="list-item-handle">☰</span>
-                    <span class="list-item-text">HVAC Installation</span>
-                    <div class="switch checked" onclick="toggleSwitch(this)">
-                        <div class="switch-thumb"></div>
-                    </div>
-                </div>
-                <div class="list-item">
-                    <span class="list-item-handle">☰</span>
-                    <span class="list-item-text">Electrical Service</span>
-                    <div class="switch checked" onclick="toggleSwitch(this)">
-                        <div class="switch-thumb"></div>
-                    </div>
-                </div>
-                <div class="list-item">
-                    <span class="list-item-handle">☰</span>
-                    <span class="list-item-text">AC Tune-Up</span>
-                    <div class="switch" onclick="toggleSwitch(this)">
-                        <div class="switch-thumb"></div>
-                    </div>
-                </div>
-                <div class="list-item">
-                    <span class="list-item-handle">☰</span>
-                    <span class="list-item-text">Emergency Service</span>
-                    <div class="switch checked" onclick="toggleSwitch(this)">
-                        <div class="switch-thumb"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="button-group">
-                <button class="btn btn-outlined" onclick="prevStep()">Back</button>
-                <button class="btn btn-contained" onclick="nextStep()">Continue</button>
-            </div>
-        </div>
-
-        <!-- Step 3: Hours -->
-        <div class="step-content" id="step-3">
-            <div class="step-header">
-                <h2 class="step-title">When Are You Available?</h2>
-                <p class="step-subtitle">Set your default business hours for booking</p>
-            </div>
-
-            <div class="alert alert-info">
-                <div class="alert-icon">🤖</div>
-                <div class="alert-content">
-                    <h3>AI Coach Tip</h3>
-                    <p>Set your default availability. You can customize per-tech later and add exceptions for holidays.</p>
-                </div>
-            </div>
-
-            <div class="time-grid">
-                <div class="time-row">
-                    <div class="day-label">Monday</div>
-                    <input type="time" class="time-input" value="09:00">
-                    <input type="time" class="time-input" value="17:00">
-                    <div class="switch checked" onclick="toggleSwitch(this)">
-                        <div class="switch-thumb"></div>
-                    </div>
-                </div>
-                <div class="time-row">
-                    <div class="day-label">Tuesday</div>
-                    <input type="time" class="time-input" value="09:00">
-                    <input type="time" class="time-input" value="17:00">
-                    <div class="switch checked" onclick="toggleSwitch(this)">
-                        <div class="switch-thumb"></div>
-                    </div>
-                </div>
-                <div class="time-row">
-                    <div class="day-label">Wednesday</div>
-                    <input type="time" class="time-input" value="09:00">
-                    <input type="time" class="time-input" value="17:00">
-                    <div class="switch checked" onclick="toggleSwitch(this)">
-                        <div class="switch-thumb"></div>
-                    </div>
-                </div>
-                <div class="time-row">
-                    <div class="day-label">Thursday</div>
-                    <input type="time" class="time-input" value="09:00">
-                    <input type="time" class="time-input" value="17:00">
-                    <div class="switch checked" onclick="toggleSwitch(this)">
-                        <div class="switch-thumb"></div>
-                    </div>
-                </div>
-                <div class="time-row">
-                    <div class="day-label">Friday</div>
-                    <input type="time" class="time-input" value="09:00">
-                    <input type="time" class="time-input" value="17:00">
-                    <div class="switch checked" onclick="toggleSwitch(this)">
-                        <div class="switch-thumb"></div>
-                    </div>
-                </div>
-                <div class="time-row">
-                    <div class="day-label">Saturday</div>
-                    <input type="time" class="time-input" value="09:00">
-                    <input type="time" class="time-input" value="13:00">
-                    <div class="switch" onclick="toggleSwitch(this)">
-                        <div class="switch-thumb"></div>
-                    </div>
-                </div>
-                <div class="time-row">
-                    <div class="day-label">Sunday</div>
-                    <input type="time" class="time-input" value="09:00">
-                    <input type="time" class="time-input" value="13:00">
-                    <div class="switch" onclick="toggleSwitch(this)">
-                        <div class="switch-thumb"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="button-group">
-                <button class="btn btn-outlined" onclick="prevStep()">Back</button>
-                <button class="btn btn-contained" onclick="nextStep()">Continue</button>
-            </div>
-        </div>
-
-        <!-- Step 4: Team -->
-        <div class="step-content" id="step-4">
-            <div class="step-header">
-                <h2 class="step-title">Who Takes Bookings?</h2>
-                <p class="step-subtitle">Choose which team members can be booked by customers</p>
-            </div>
-
-            <div class="alert alert-info">
-                <div class="alert-icon">🤖</div>
-                <div class="alert-content">
-                    <h3>AI Coach Tip</h3>
-                    <p>Select team members who should be available for online booking. You can set individual availability for each person later.</p>
-                </div>
-            </div>
-
-            <div class="list">
-                <div class="list-item">
-                    <span class="list-item-text">John Smith (Lead Technician)</span>
-                    <div class="switch checked" onclick="toggleSwitch(this)">
-                        <div class="switch-thumb"></div>
-                    </div>
-                </div>
-                <div class="list-item">
-                    <span class="list-item-text">Sarah Johnson (HVAC Specialist)</span>
-                    <div class="switch checked" onclick="toggleSwitch(this)">
-                        <div class="switch-thumb"></div>
-                    </div>
-                </div>
-                <div class="list-item">
-                    <span class="list-item-text">Mike Davis (Electrician)</span>
-                    <div class="switch checked" onclick="toggleSwitch(this)">
-                        <div class="switch-thumb"></div>
-                    </div>
-                </div>
-                <div class="list-item">
-                    <span class="list-item-text">Emily Wilson (Plumber)</span>
-                    <div class="switch" onclick="toggleSwitch(this)">
-                        <div class="switch-thumb"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="button-group">
-                <button class="btn btn-outlined" onclick="prevStep()">Back</button>
-                <button class="btn btn-contained" onclick="nextStep()">Continue</button>
-            </div>
-        </div>
-
-        <!-- Step 5: Products -->
-        <div class="step-content" id="step-5">
-            <div class="step-header">
-                <h2 class="step-title">Choose What to Enable</h2>
-                <p class="step-subtitle">Select which booking products you want to activate</p>
-            </div>
-
-            <div class="alert alert-info">
-                <div class="alert-icon">🤖</div>
-                <div class="alert-content">
-                    <h3>AI Coach Tip</h3>
-                    <p>Start with what you need now - you can add more later. CSR AI works great with Online Booking!</p>
-                </div>
-            </div>
-
-            <div class="grid grid-2">
-                <div class="card product-card selected" onclick="toggleProduct(this)">
-                    <input type="checkbox" class="product-checkbox" checked>
-                    <div class="card-content">
-                        <div class="product-icon">🌐</div>
-                        <h3 class="product-title">Online Booking</h3>
-                        <p class="product-description">Let customers book appointments directly from your website 24/7. Reduce phone calls and capture more leads.</p>
-                    </div>
-                </div>
-                <div class="card product-card" onclick="toggleProduct(this)">
-                    <input type="checkbox" class="product-checkbox">
-                    <div class="card-content">
-                        <div class="product-icon">📞</div>
-                        <h3 class="product-title">CSR AI</h3>
-                        <p class="product-description">AI-powered phone assistant that answers calls and schedules jobs automatically when you're busy.</p>
-                    </div>
-                </div>
-                <div class="card product-card" onclick="toggleProduct(this)">
-                    <input type="checkbox" class="product-checkbox">
-                    <div class="card-content">
-                        <div class="product-icon">📅</div>
-                        <h3 class="product-title">Smart Scheduling</h3>
-                        <p class="product-description">Automatically optimize your schedule to maximize efficiency and reduce drive time between jobs.</p>
-                    </div>
-                </div>
-                <div class="card product-card" onclick="toggleProduct(this)">
-                    <input type="checkbox" class="product-checkbox">
-                    <div class="card-content">
-                        <div class="product-icon">⭐</div>
-                        <h3 class="product-title">HCP Assist</h3>
-                        <p class="product-description">Get premium support and a dedicated account manager to help grow your business.</p>
-                        <div class="product-badge">Paid Add-on</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="button-group">
-                <button class="btn btn-outlined" onclick="prevStep()">Back</button>
-                <button class="btn btn-contained" onclick="nextStep()">Continue</button>
-            </div>
-        </div>
-
-        <!-- Step 6: Setup -->
-        <div class="step-content" id="step-6">
-            <div class="step-header">
-                <h2 class="step-title">Configure Your Products</h2>
-                <p class="step-subtitle">Final settings for your selected booking products</p>
-            </div>
-
-            <div class="alert alert-info">
-                <div class="alert-icon">🤖</div>
-                <div class="alert-content">
-                    <h3>AI Coach Tip</h3>
-                    <p>We'll set up your selected products with smart defaults. You can fine-tune these settings anytime from your dashboard.</p>
-                </div>
-            </div>
-
-            <div class="card" style="margin-bottom: 24px;">
-                <div class="card-content">
-                    <h3 class="product-title" style="margin-bottom: 16px;">Online Booking Settings</h3>
-
+            <div class="card">
+                <div class="card-section">
+                    <h3 class="section-title">Available Services</h3>
                     <div class="list">
                         <div class="list-item">
-                            <span class="list-item-text">Show prices to customers</span>
+                            <span class="drag-handle">☰</span>
+                            <span class="list-item-text">Plumbing Repair</span>
                             <div class="switch checked" onclick="toggleSwitch(this)">
                                 <div class="switch-thumb"></div>
                             </div>
                         </div>
                         <div class="list-item">
-                            <span class="list-item-text">Require payment at booking</span>
+                            <span class="drag-handle">☰</span>
+                            <span class="list-item-text">HVAC Installation</span>
+                            <div class="switch checked" onclick="toggleSwitch(this)">
+                                <div class="switch-thumb"></div>
+                            </div>
+                        </div>
+                        <div class="list-item">
+                            <span class="drag-handle">☰</span>
+                            <span class="list-item-text">Electrical Service</span>
+                            <div class="switch checked" onclick="toggleSwitch(this)">
+                                <div class="switch-thumb"></div>
+                            </div>
+                        </div>
+                        <div class="list-item">
+                            <span class="drag-handle">☰</span>
+                            <span class="list-item-text">AC Tune-Up</span>
                             <div class="switch" onclick="toggleSwitch(this)">
                                 <div class="switch-thumb"></div>
                             </div>
                         </div>
                         <div class="list-item">
-                            <span class="list-item-text">Allow same-day bookings</span>
-                            <div class="switch checked" onclick="toggleSwitch(this)">
-                                <div class="switch-thumb"></div>
-                            </div>
-                        </div>
-                        <div class="list-item">
-                            <span class="list-item-text">Send booking confirmations via SMS</span>
+                            <span class="drag-handle">☰</span>
+                            <span class="list-item-text">Emergency Service</span>
                             <div class="switch checked" onclick="toggleSwitch(this)">
                                 <div class="switch-thumb"></div>
                             </div>
@@ -1111,51 +802,177 @@
             </div>
 
             <div class="button-group">
-                <button class="btn btn-outlined" onclick="prevStep()">Back</button>
-                <button class="btn btn-contained" onclick="nextStep()">Finish Setup</button>
+                <button class="btn btn-secondary" onclick="prevStep()">Back</button>
+                <button class="btn btn-primary" onclick="nextStep()">Next</button>
             </div>
         </div>
 
-        <!-- Step 7: Done -->
-        <div class="step-content" id="step-7">
+        <!-- Step 3: Availability -->
+        <div class="step-content" id="step-3">
+            <div class="step-header">
+                <h2 class="step-title">Set your availability</h2>
+                <p class="step-subtitle">We have set the online booking availability for you. Check which days and time works best for online booking appointments.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-section">
+                    <h3 class="section-title">Booking preferences</h3>
+                    <div class="radio-group">
+                        <div class="radio-item selected" onclick="selectRadio(this)">
+                            <div class="radio-circle"></div>
+                            <div class="radio-content">
+                                <div class="radio-title">Flexible scheduling</div>
+                                <div class="radio-description">Homeowner will be able to select any available time slot in your calendar in 30min increments.</div>
+                            </div>
+                        </div>
+                        <div class="radio-item" onclick="selectRadio(this)">
+                            <div class="radio-circle"></div>
+                            <div class="radio-content">
+                                <div class="radio-title">Set specific start time</div>
+                                <div class="radio-description">Booking will always start at defined start time and last for as much as the service duration (ex. only 8am, noon, 1pm, 5pm etc.)</div>
+                            </div>
+                        </div>
+                        <div class="radio-item" onclick="selectRadio(this)">
+                            <div class="radio-circle"></div>
+                            <div class="radio-content">
+                                <div class="radio-title">Manual</div>
+                                <div class="radio-description">Hide this selection from booking page and book as unscheduled jobs and estimates</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-section">
+                    <h3 class="section-title">Booking hours</h3>
+                    <p class="section-description">Each day will fit in multiple appointments based on the service duration and available technicians.</p>
+                    <div class="hours-table">
+                        <div class="hours-row">
+                            <div class="day-label">Monday</div>
+                            <input type="time" class="time-input" value="08:00">
+                            <input type="time" class="time-input" value="16:00">
+                            <div class="switch checked" onclick="toggleSwitch(this)">
+                                <div class="switch-thumb"></div>
+                            </div>
+                        </div>
+                        <div class="hours-row">
+                            <div class="day-label">Tuesday</div>
+                            <input type="time" class="time-input" value="08:00">
+                            <input type="time" class="time-input" value="16:00">
+                            <div class="switch checked" onclick="toggleSwitch(this)">
+                                <div class="switch-thumb"></div>
+                            </div>
+                        </div>
+                        <div class="hours-row">
+                            <div class="day-label">Wednesday</div>
+                            <input type="time" class="time-input" value="08:00">
+                            <input type="time" class="time-input" value="16:00">
+                            <div class="switch checked" onclick="toggleSwitch(this)">
+                                <div class="switch-thumb"></div>
+                            </div>
+                        </div>
+                        <div class="hours-row">
+                            <div class="day-label">Thursday</div>
+                            <input type="time" class="time-input" value="08:00">
+                            <input type="time" class="time-input" value="16:00">
+                            <div class="switch checked" onclick="toggleSwitch(this)">
+                                <div class="switch-thumb"></div>
+                            </div>
+                        </div>
+                        <div class="hours-row">
+                            <div class="day-label">Friday</div>
+                            <input type="time" class="time-input" value="08:00">
+                            <input type="time" class="time-input" value="16:00">
+                            <div class="switch checked" onclick="toggleSwitch(this)">
+                                <div class="switch-thumb"></div>
+                            </div>
+                        </div>
+                        <div class="hours-row">
+                            <div class="day-label">Saturday</div>
+                            <input type="time" class="time-input" value="08:00">
+                            <input type="time" class="time-input" value="13:00">
+                            <div class="switch" onclick="toggleSwitch(this)">
+                                <div class="switch-thumb"></div>
+                            </div>
+                        </div>
+                        <div class="hours-row">
+                            <div class="day-label">Sunday</div>
+                            <input type="time" class="time-input" value="08:00">
+                            <input type="time" class="time-input" value="13:00">
+                            <div class="switch" onclick="toggleSwitch(this)">
+                                <div class="switch-thumb"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-section">
+                    <button class="btn btn-secondary">Edit</button>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="prevStep()">Back</button>
+                <button class="btn btn-primary" onclick="nextStep()">Next</button>
+            </div>
+        </div>
+
+        <!-- Step 4: Preview -->
+        <div class="step-content" id="step-4">
+            <div class="step-header">
+                <h2 class="step-title">Preview online booking page</h2>
+                <p class="step-subtitle">See how your online booking page will look on your website. The path to your page will start with the click of the 'BOOK ONLINE' button. You can customize it further in settings.</p>
+            </div>
+
+            <div class="card">
+                <div style="padding: 40px; text-align: center; color: #86868B;">
+                    <div style="font-size: 48px; margin-bottom: 16px;">📱</div>
+                    <p>Preview of your booking page will appear here</p>
+                    <p style="font-size: 14px; margin-top: 8px;">This is a demonstration - the actual preview will show your customized booking page</p>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="prevStep()">Back</button>
+                <button class="btn btn-primary" onclick="nextStep()">Finish onboarding setup</button>
+            </div>
+        </div>
+
+        <!-- Step 5: Share -->
+        <div class="step-content" id="step-5">
             <div class="success-container">
                 <div class="success-icon">✓</div>
 
                 <div class="step-header">
-                    <h2 class="step-title">You're All Set!</h2>
-                    <p class="step-subtitle">Your booking products are now live and ready to capture customers</p>
-                </div>
-
-                <div class="alert alert-success">
-                    <div class="alert-icon">🎉</div>
-                    <div class="alert-content">
-                        <h3>Congratulations!</h3>
-                        <p>Your booking setup is complete. Customers can now book appointments, and you'll start receiving notifications for new bookings.</p>
-                    </div>
+                    <h2 class="step-title">Congratulations, your booking page is ready</h2>
+                    <p class="step-subtitle">Make your online booking available for your clients. These instructions will be available in online booking settings, so you can come back to it later.</p>
                 </div>
 
                 <div class="success-actions">
                     <a href="#" class="success-link">
                         <div class="success-link-content">
-                            <div class="success-link-title">View Your Booking Page</div>
-                            <div class="success-link-desc">See how your booking page looks to customers</div>
+                            <div class="success-link-title">Add booking button to your website</div>
+                            <div class="success-link-desc">Copy this code to add a booking button to your website</div>
                         </div>
-                        <div class="success-link-arrow">→</div>
+                        <div class="arrow">→</div>
                     </a>
                     <a href="#" class="success-link">
                         <div class="success-link-content">
-                            <div class="success-link-title">Share Booking Link</div>
-                            <div class="success-link-desc">Copy your booking link to share with customers</div>
+                            <div class="success-link-title">Share booking page</div>
+                            <div class="success-link-desc">Don't have a website? Share this link to your online booking page</div>
                         </div>
-                        <div class="success-link-arrow">→</div>
+                        <div class="arrow">→</div>
                     </a>
                     <a href="#" class="success-link">
                         <div class="success-link-content">
-                            <div class="success-link-title">Go to Dashboard</div>
-                            <div class="success-link-desc">Manage your bookings and settings</div>
+                            <div class="success-link-title">Go to settings</div>
+                            <div class="success-link-desc">Customize your booking page further</div>
                         </div>
-                        <div class="success-link-arrow">→</div>
+                        <div class="arrow">→</div>
                     </a>
+                </div>
+
+                <div style="margin-top: 40px;">
+                    <button class="btn btn-primary" onclick="window.close()">Close</button>
                 </div>
             </div>
         </div>
@@ -1163,22 +980,22 @@
 
     <script>
         let currentStep = 1;
-        const totalSteps = 7;
+        const totalSteps = 5;
 
-        function updateStepper() {
-            // Update step wrappers
-            document.querySelectorAll('.step-wrapper').forEach((wrapper, index) => {
+        function updateUI() {
+            // Update steps
+            document.querySelectorAll('.step').forEach((step, index) => {
                 const stepNum = index + 1;
-                wrapper.classList.remove('active', 'completed');
+                step.classList.remove('active', 'completed');
 
                 if (stepNum === currentStep) {
-                    wrapper.classList.add('active');
+                    step.classList.add('active');
                 } else if (stepNum < currentStep) {
-                    wrapper.classList.add('completed');
+                    step.classList.add('completed');
                 }
             });
 
-            // Update step content
+            // Update content
             document.querySelectorAll('.step-content').forEach((content, index) => {
                 content.classList.remove('active');
                 if (index + 1 === currentStep) {
@@ -1186,32 +1003,37 @@
                 }
             });
 
-            // Scroll to top smoothly
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function nextStep() {
             if (currentStep < totalSteps) {
                 currentStep++;
-                updateStepper();
+                updateUI();
             }
         }
 
         function prevStep() {
             if (currentStep > 1) {
                 currentStep--;
-                updateStepper();
+                updateUI();
             }
+        }
+
+        function finishSetup() {
+            currentStep = totalSteps;
+            updateUI();
         }
 
         function toggleSwitch(element) {
             element.classList.toggle('checked');
         }
 
-        function toggleProduct(card) {
-            const checkbox = card.querySelector('.product-checkbox');
-            checkbox.checked = !checkbox.checked;
-            card.classList.toggle('selected');
+        function selectRadio(element) {
+            document.querySelectorAll('.radio-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            element.classList.add('selected');
         }
 
         // Keyboard navigation
@@ -1221,17 +1043,6 @@
             } else if (e.key === 'ArrowLeft' && currentStep > 1) {
                 prevStep();
             }
-        });
-
-        // Allow clicking on stepper items to jump to steps (optional feature)
-        document.querySelectorAll('.step-wrapper').forEach((wrapper, index) => {
-            wrapper.addEventListener('click', () => {
-                const targetStep = index + 1;
-                if (targetStep < currentStep) { // Only allow going back to completed steps
-                    currentStep = targetStep;
-                    updateStepper();
-                }
-            });
         });
     </script>
 </body>
