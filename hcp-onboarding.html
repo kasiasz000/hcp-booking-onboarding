@@ -1,0 +1,1395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Housecall Pro - Booking Setup</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #FAFAFA;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1440px;
+            width: 100%;
+            margin: 0 auto;
+            background: #FAFAFA;
+            min-height: 100vh;
+        }
+
+        /* Appbar */
+        .appbar {
+            background: #FFFFFF;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.25);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .appbar h1 {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 700;
+            font-size: 20px;
+            line-height: 32px;
+            color: #212121;
+        }
+
+        .appbar-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 4px;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+        }
+
+        .btn-outlined {
+            background: transparent;
+            border: 1px solid #0F77CC;
+            color: #0F77CC;
+        }
+
+        .btn-outlined:hover {
+            background: rgba(15, 119, 204, 0.08);
+        }
+
+        .btn-contained {
+            background: #0F77CC;
+            color: #FFFFFF;
+        }
+
+        .btn-contained:hover {
+            background: #0D66A8;
+        }
+
+        /* Stepper */
+        .stepper-container {
+            background: #FFFFFF;
+            border-bottom: 1px solid #E0E0E0;
+            padding: 24px 0;
+        }
+
+        .stepper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .stepper-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .stepper-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #E0E0E0;
+            color: #757575;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 500;
+            font-size: 14px;
+            margin-bottom: 8px;
+            transition: all 0.3s;
+        }
+
+        .stepper-item.active .stepper-icon {
+            background: #0F77CC;
+            color: #FFFFFF;
+        }
+
+        .stepper-item.completed .stepper-icon {
+            background: #0F77CC;
+            color: #FFFFFF;
+        }
+
+        .stepper-label {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 16px;
+            color: #757575;
+            text-align: center;
+        }
+
+        .stepper-item.active .stepper-label {
+            color: #0F77CC;
+            font-weight: 500;
+        }
+
+        .stepper-line {
+            width: 80px;
+            height: 2px;
+            background: #E0E0E0;
+            margin: 0 8px;
+            margin-bottom: 32px;
+        }
+
+        .stepper-item.completed ~ .stepper-line {
+            background: #0F77CC;
+        }
+
+        /* Content */
+        .content {
+            padding: 48px 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .step {
+            display: none;
+        }
+
+        .step.active {
+            display: block;
+            animation: fadeIn 0.4s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Page Headers */
+        .page-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .page-title {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 700;
+            font-size: 32px;
+            line-height: 40px;
+            color: #212121;
+            margin-bottom: 12px;
+        }
+
+        .page-subtitle {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 24px;
+            color: #757575;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Product Cards - Step 1 */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            max-width: 900px;
+            margin: 0 auto 32px;
+        }
+
+        .product-card {
+            background: #FFFFFF;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12);
+            transition: all 0.2s;
+        }
+
+        .product-card:hover {
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-card.paid {
+            border: 2px solid #FFA726;
+        }
+
+        .product-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+
+        .product-icon {
+            font-size: 32px;
+        }
+
+        .product-info h3 {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 600;
+            font-size: 18px;
+            line-height: 24px;
+            color: #212121;
+            margin-bottom: 4px;
+        }
+
+        .product-badge {
+            display: inline-block;
+            background: #FFA726;
+            color: #FFFFFF;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            margin-left: 8px;
+        }
+
+        .product-info p {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 20px;
+            color: #757575;
+        }
+
+        /* Stats */
+        .stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            margin: 32px 0;
+            padding: 24px;
+            background: #FFFFFF;
+            border-radius: 8px;
+            max-width: 800px;
+            margin: 32px auto;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 700;
+            font-size: 24px;
+            color: #0F77CC;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-family: 'Roboto', sans-serif;
+            font-size: 14px;
+            color: #757575;
+        }
+
+        /* AI Coach */
+        .ai-coach {
+            background: linear-gradient(135deg, #E3F2FD 0%, #F3E5F5 100%);
+            border-left: 4px solid #0F77CC;
+            padding: 16px;
+            border-radius: 4px;
+            margin: 24px auto;
+            max-width: 800px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .ai-coach-icon {
+            font-size: 24px;
+        }
+
+        .ai-coach-content {
+            flex: 1;
+        }
+
+        .ai-coach-label {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            color: #0F77CC;
+            margin-bottom: 4px;
+        }
+
+        .ai-coach-text {
+            font-family: 'Roboto', sans-serif;
+            font-size: 14px;
+            line-height: 20px;
+            color: #212121;
+        }
+
+        /* Service List - Step 2 */
+        .service-section {
+            background: #FFFFFF;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #E0E0E0;
+        }
+
+        .section-title {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 600;
+            font-size: 16px;
+            color: #212121;
+        }
+
+        .search-box {
+            width: 100%;
+            max-width: 400px;
+            padding: 10px 16px;
+            border: 1px solid #E0E0E0;
+            border-radius: 4px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #0F77CC;
+        }
+
+        .service-category {
+            margin-bottom: 16px;
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: #F5F5F5;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .category-header:hover {
+            background: #EEEEEE;
+        }
+
+        .category-toggle {
+            font-size: 12px;
+            color: #757575;
+            transition: transform 0.3s;
+        }
+
+        .category-header.expanded .category-toggle {
+            transform: rotate(180deg);
+        }
+
+        .category-checkbox {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #0F77CC;
+        }
+
+        .category-name {
+            flex: 1;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            color: #212121;
+        }
+
+        .service-list {
+            display: none;
+            margin-top: 8px;
+        }
+
+        .service-list.expanded {
+            display: block;
+        }
+
+        .service-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            padding-left: 48px;
+            border-left: 2px solid #E0E0E0;
+            margin-left: 24px;
+            transition: all 0.2s;
+            cursor: grab;
+        }
+
+        .service-item:hover {
+            background: #F9F9F9;
+            border-left-color: #0F77CC;
+        }
+
+        .service-item.dragging {
+            opacity: 0.5;
+            cursor: grabbing;
+        }
+
+        .drag-handle {
+            color: #9E9E9E;
+            cursor: grab;
+            font-size: 18px;
+            user-select: none;
+        }
+
+        .service-checkbox {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #0F77CC;
+        }
+
+        .service-name {
+            flex: 1;
+            font-family: 'Roboto', sans-serif;
+            font-size: 14px;
+            color: #212121;
+        }
+
+        .service-price {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            color: #212121;
+        }
+
+        .add-service-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: transparent;
+            border: 1px dashed #0F77CC;
+            border-radius: 4px;
+            color: #0F77CC;
+            font-family: 'Roboto', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 16px;
+            transition: all 0.2s;
+        }
+
+        .add-service-btn:hover {
+            background: rgba(15, 119, 204, 0.08);
+        }
+
+        /* Schedule - Step 3 */
+        .schedule-grid {
+            display: grid;
+            gap: 12px;
+        }
+
+        .schedule-row {
+            display: grid;
+            grid-template-columns: 100px 1fr 80px;
+            gap: 16px;
+            align-items: center;
+            padding: 12px;
+            background: #FFFFFF;
+            border-radius: 4px;
+            border: 1px solid #E0E0E0;
+        }
+
+        .day-name {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 500;
+            font-size: 14px;
+            color: #212121;
+        }
+
+        .time-inputs {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .time-input {
+            padding: 8px 12px;
+            border: 1px solid #E0E0E0;
+            border-radius: 4px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 14px;
+            width: 120px;
+        }
+
+        .time-input:focus {
+            outline: none;
+            border-color: #0F77CC;
+        }
+
+        .time-separator {
+            color: #757575;
+            font-weight: 500;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 44px;
+            height: 24px;
+            cursor: pointer;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #BDBDBD;
+            transition: 0.3s;
+            border-radius: 24px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: #0F77CC;
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(20px);
+        }
+
+        .schedule-options {
+            margin-top: 24px;
+            padding: 16px;
+            background: #F5F5F5;
+            border-radius: 4px;
+        }
+
+        .option-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+
+        .option-label {
+            font-family: 'Roboto', sans-serif;
+            font-size: 14px;
+            color: #212121;
+            min-width: 150px;
+        }
+
+        .dropdown {
+            padding: 8px 12px;
+            border: 1px solid #E0E0E0;
+            border-radius: 4px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 14px;
+            background: #FFFFFF;
+            cursor: pointer;
+        }
+
+        /* Team Table - Step 4 */
+        .team-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #FFFFFF;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12);
+        }
+
+        .team-table thead {
+            background: #F5F5F5;
+        }
+
+        .team-table th {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 500;
+            font-size: 14px;
+            color: #757575;
+            text-align: left;
+            padding: 16px;
+            border-bottom: 1px solid #E0E0E0;
+        }
+
+        .team-table td {
+            font-family: 'Roboto', sans-serif;
+            font-size: 14px;
+            color: #212121;
+            padding: 16px;
+            border-bottom: 1px solid #F5F5F5;
+        }
+
+        .team-table tbody tr:hover {
+            background: #FAFAFA;
+        }
+
+        .employee-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #0F77CC;
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .employee-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Product Selection - Step 5 */
+        .product-selection {
+            display: grid;
+            gap: 16px;
+        }
+
+        .product-option {
+            background: #FFFFFF;
+            border: 2px solid #E0E0E0;
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .product-option:hover {
+            border-color: #0F77CC;
+        }
+
+        .product-option.selected {
+            border-color: #0F77CC;
+            background: #F3F8FC;
+        }
+
+        .product-option-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .product-option-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .product-option-info h4 {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 600;
+            font-size: 16px;
+            color: #212121;
+        }
+
+        .product-option-desc {
+            font-family: 'Roboto', sans-serif;
+            font-size: 14px;
+            color: #757575;
+            margin-bottom: 8px;
+        }
+
+        .setup-time {
+            font-size: 12px;
+            color: #0F77CC;
+            font-weight: 500;
+        }
+
+        /* Product Config - Steps 6 */
+        .config-section {
+            background: #FFFFFF;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 16px;
+            box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12);
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 16px;
+            border: 1px solid #E0E0E0;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .radio-option:hover {
+            border-color: #0F77CC;
+            background: #FAFAFA;
+        }
+
+        .radio-option.selected {
+            border-color: #0F77CC;
+            background: #F3F8FC;
+        }
+
+        .radio-input {
+            margin-top: 2px;
+            accent-color: #0F77CC;
+        }
+
+        .radio-content h5 {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            color: #212121;
+            margin-bottom: 4px;
+        }
+
+        .radio-content p {
+            font-family: 'Roboto', sans-serif;
+            font-size: 13px;
+            color: #757575;
+            line-height: 18px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .checkbox-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+        }
+
+        .checkbox-option input {
+            width: 20px;
+            height: 20px;
+            accent-color: #0F77CC;
+            cursor: pointer;
+        }
+
+        .checkbox-option label {
+            font-family: 'Roboto', sans-serif;
+            font-size: 14px;
+            color: #212121;
+            cursor: pointer;
+        }
+
+        /* Success Screen */
+        .success-screen {
+            text-align: center;
+            padding: 48px 24px;
+        }
+
+        .success-icon {
+            font-size: 80px;
+            margin-bottom: 24px;
+        }
+
+        .success-screen h2 {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 700;
+            font-size: 32px;
+            color: #0F77CC;
+            margin-bottom: 16px;
+        }
+
+        .success-screen p {
+            font-family: 'Roboto', sans-serif;
+            font-size: 16px;
+            color: #757575;
+            margin-bottom: 32px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .success-products {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            max-width: 700px;
+            margin: 32px auto;
+        }
+
+        .success-product {
+            background: #FFFFFF;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12);
+        }
+
+        .success-product-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .success-product-name {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            color: #212121;
+            margin-bottom: 4px;
+        }
+
+        .success-product-status {
+            font-family: 'Roboto', sans-serif;
+            font-size: 12px;
+            color: #4CAF50;
+        }
+
+        @media (max-width: 768px) {
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-row {
+                flex-direction: column;
+                gap: 24px;
+            }
+
+            .stepper {
+                overflow-x: auto;
+                justify-content: flex-start;
+                padding: 0 24px;
+            }
+
+            .schedule-row {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .team-table {
+                display: block;
+                overflow-x: auto;
+            }
+
+            .success-products {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Appbar -->
+        <div class="appbar">
+            <h1>Booking Setup</h1>
+            <div class="appbar-actions">
+                <button class="btn btn-outlined" id="back-btn" onclick="previousStep()" style="display: none;">Back</button>
+                <button class="btn btn-contained" id="next-btn" onclick="nextStep()">Get Started</button>
+            </div>
+        </div>
+
+        <!-- Stepper -->
+        <div class="stepper-container">
+            <div class="stepper">
+                <div class="stepper-item active" data-step="1">
+                    <div class="stepper-icon">1</div>
+                    <div class="stepper-label">Choose</div>
+                </div>
+                <div class="stepper-line"></div>
+                <div class="stepper-item" data-step="2">
+                    <div class="stepper-icon">2</div>
+                    <div class="stepper-label">Setup</div>
+                </div>
+                <div class="stepper-line"></div>
+                <div class="stepper-item" data-step="3">
+                    <div class="stepper-icon">3</div>
+                    <div class="stepper-label">Team</div>
+                </div>
+                <div class="stepper-line"></div>
+                <div class="stepper-item" data-step="4">
+                    <div class="stepper-icon">4</div>
+                    <div class="stepper-label">Done</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Step 1: Choose Products -->
+            <div class="step active" id="step-1">
+                <div class="page-header">
+                    <h2 class="page-title">Choose Your Booking Tools</h2>
+                    <p class="page-subtitle">Select which products you want to use. You can always change this later.</p>
+                </div>
+
+                <div class="product-selection">
+                    <div class="product-option selected" data-product="online-booking">
+                        <div class="product-option-header">
+                            <div class="product-option-info">
+                                <span style="font-size: 24px;">🌐</span>
+                                <h4>Online Booking</h4>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked onchange="toggleProduct(this, 'online-booking')">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <p class="product-option-desc">Customers book appointments from your website 24/7</p>
+                        <p class="setup-time">✓ Free</p>
+                    </div>
+
+                    <div class="product-option selected" data-product="csr-ai">
+                        <div class="product-option-header">
+                            <div class="product-option-info">
+                                <span style="font-size: 24px;">🤖</span>
+                                <h4>CSR AI</h4>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked onchange="toggleProduct(this, 'csr-ai')">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <p class="product-option-desc">AI answers calls and books jobs automatically</p>
+                        <p class="setup-time">✓ Free</p>
+                    </div>
+
+                    <div class="product-option selected" data-product="smart-scheduling">
+                        <div class="product-option-header">
+                            <div class="product-option-info">
+                                <span style="font-size: 24px;">📅</span>
+                                <h4>Smart Scheduling</h4>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked onchange="toggleProduct(this, 'smart-scheduling')">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <p class="product-option-desc">Automatically find the best time slots</p>
+                        <p class="setup-time">✓ Free - No setup needed!</p>
+                    </div>
+
+                    <div class="product-option" data-product="hcp-assist">
+                        <div class="product-option-header">
+                            <div class="product-option-info">
+                                <span style="font-size: 24px;">📞</span>
+                                <h4>HCP Assist <span class="product-badge">Paid Add-on</span></h4>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" onchange="toggleProduct(this, 'hcp-assist')">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <p class="product-option-desc">Real people answer your calls professionally</p>
+                        <p class="setup-time">→ Schedule a demo to learn more</p>
+                    </div>
+                </div>
+
+                <div class="ai-coach">
+                    <div class="ai-coach-icon">💡</div>
+                    <div class="ai-coach-content">
+                        <div class="ai-coach-label">AI Coach Tip</div>
+                        <div class="ai-coach-text">Most pros enable all 3 free tools to capture 40% more leads. Turn them all on now - setup takes less than 2 minutes!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: Quick Setup -->
+            <div class="step" id="step-2">
+                <div class="page-header">
+                    <h2 class="page-title">Quick Setup</h2>
+                    <p class="page-subtitle">We've pre-selected smart defaults. You can customize everything later.</p>
+                </div>
+
+                <!-- Services -->
+                <div class="service-section">
+                    <div class="section-header">
+                        <h3 class="section-title">Services available for booking</h3>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <div class="checkbox-option">
+                            <input type="checkbox" checked id="service-1">
+                            <label for="service-1">A/C Service Call - $100</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" checked id="service-2">
+                            <label for="service-2">Furnace Repair - $150</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" checked id="service-3">
+                            <label for="service-3">AC Installation - $500</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="service-4">
+                            <label for="service-4">Annual Maintenance - $89</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" id="service-5">
+                            <label for="service-5">Duct Cleaning - $175</label>
+                        </div>
+                    </div>
+                    <p style="color: #0F77CC; font-size: 13px; margin-top: 12px; cursor: pointer;">+ Add more services</p>
+                </div>
+
+                <!-- Hours -->
+                <div class="service-section" style="margin-top: 24px;">
+                    <div class="section-header">
+                        <h3 class="section-title">Booking hours</h3>
+                    </div>
+
+                    <div style="display: flex; align-items: center; gap: 16px; padding: 16px; background: #F5F5F5; border-radius: 4px;">
+                        <div style="flex: 1;">
+                            <div style="font-weight: 500; margin-bottom: 4px;">Monday - Friday</div>
+                            <div style="color: #757575; font-size: 14px;">8:00 AM - 5:00 PM</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+
+                    <div style="display: flex; align-items: center; gap: 16px; padding: 16px; background: #F5F5F5; border-radius: 4px; margin-top: 8px;">
+                        <div style="flex: 1;">
+                            <div style="font-weight: 500; margin-bottom: 4px;">Saturday</div>
+                            <div style="color: #757575; font-size: 14px;">9:00 AM - 1:00 PM</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+
+                    <div style="display: flex; align-items: center; gap: 16px; padding: 16px; background: #F5F5F5; border-radius: 4px; margin-top: 8px;">
+                        <div style="flex: 1;">
+                            <div style="font-weight: 500; margin-bottom: 4px;">Sunday</div>
+                            <div style="color: #757575; font-size: 14px;">Closed</div>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+
+                    <p style="color: #0F77CC; font-size: 13px; margin-top: 12px; cursor: pointer;">→ Customize hours by day</p>
+                </div>
+
+                <!-- Product Config -->
+                <div class="service-section" style="margin-top: 24px;">
+                    <div class="section-header">
+                        <h3 class="section-title">🌐 Online Booking</h3>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" checked id="collect-payment">
+                        <label for="collect-payment">Collect payment when customers book</label>
+                    </div>
+                    <button class="btn btn-outlined" style="margin-top: 8px;">Connect Bank Account</button>
+                </div>
+
+                <div class="service-section" style="margin-top: 16px;">
+                    <div class="section-header">
+                        <h3 class="section-title">🤖 CSR AI</h3>
+                    </div>
+                    <div style="margin-bottom: 12px;">
+                        <label style="font-size: 13px; color: #757575; margin-bottom: 4px; display: block;">Voice tone</label>
+                        <select class="dropdown" style="width: 100%; max-width: 300px;">
+                            <option selected>Friendly & Professional</option>
+                            <option>Professional & Direct</option>
+                            <option>Warm & Conversational</option>
+                        </select>
+                    </div>
+                    <div class="checkbox-group">
+                        <div class="checkbox-option">
+                            <input type="checkbox" checked id="ai-book">
+                            <label for="ai-book">AI can book appointments</label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" checked id="ai-pricing">
+                            <label for="ai-pricing">AI can answer pricing questions</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ai-coach">
+                    <div class="ai-coach-icon">💡</div>
+                    <div class="ai-coach-content">
+                        <div class="ai-coach-label">AI Coach Tip</div>
+                        <div class="ai-coach-text">These defaults work great for most HVAC pros. You can fine-tune everything later in Settings!</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: Team -->
+            <div class="step" id="step-3">
+                <div class="page-header">
+                    <h2 class="page-title">Who handles bookings?</h2>
+                    <p class="page-subtitle">Choose which team members are available for customer bookings</p>
+                </div>
+
+                <table class="team-table">
+                    <thead>
+                        <tr>
+                            <th>Team Member</th>
+                            <th>Role</th>
+                            <th>Available for Booking</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="employee-info">
+                                    <div class="employee-avatar">JT</div>
+                                    <span>Joe Technician</span>
+                                </div>
+                            </td>
+                            <td>Field Tech</td>
+                            <td>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="employee-info">
+                                    <div class="employee-avatar" style="background: #9C27B0;">MI</div>
+                                    <span>Maria Installer</span>
+                                </div>
+                            </td>
+                            <td>Installer</td>
+                            <td>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="employee-info">
+                                    <div class="employee-avatar" style="background: #FF5722;">BS</div>
+                                    <span>Bob Service</span>
+                                </div>
+                            </td>
+                            <td>Service Tech</td>
+                            <td>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="employee-info">
+                                    <div class="employee-avatar" style="background: #009688;">SA</div>
+                                    <span>Sarah Admin</span>
+                                </div>
+                            </td>
+                            <td>Office Staff</td>
+                            <td>
+                                <label class="toggle-switch">
+                                    <input type="checkbox">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="ai-coach">
+                    <div class="ai-coach-icon">💡</div>
+                    <div class="ai-coach-content">
+                        <div class="ai-coach-label">AI Coach Tip</div>
+                        <div class="ai-coach-text">Smart Scheduling will automatically assign jobs to the right person based on their skills, location, and availability.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4: Success -->
+            <div class="step" id="step-4">
+                <div class="success-screen">
+                    <div class="success-icon">🎉</div>
+                    <h2>You're all set!</h2>
+                    <p>Your booking products are live and ready to capture leads 24/7</p>
+
+                    <div class="success-products">
+                        <div class="success-product">
+                            <div class="success-product-icon">🌐</div>
+                            <div class="success-product-name">Online Booking</div>
+                            <div class="success-product-status">✓ Live</div>
+                        </div>
+                        <div class="success-product">
+                            <div class="success-product-icon">🤖</div>
+                            <div class="success-product-name">CSR AI</div>
+                            <div class="success-product-status">✓ Active</div>
+                        </div>
+                        <div class="success-product">
+                            <div class="success-product-icon">📅</div>
+                            <div class="success-product-name">Smart Scheduling</div>
+                            <div class="success-product-status">✓ Enabled</div>
+                        </div>
+                    </div>
+
+                    <div class="stats-row">
+                        <div class="stat">
+                            <div class="stat-value">8+ hours</div>
+                            <div class="stat-label">Saved per week</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">40%</div>
+                            <div class="stat-label">More bookings</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">24/7</div>
+                            <div class="stat-label">Coverage</div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 16px; justify-content: center; margin-top: 32px;">
+                        <button class="btn btn-outlined">Test Booking Page</button>
+                        <button class="btn btn-contained" onclick="goToDashboard()">Go to Dashboard</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        const totalSteps = 4;
+        const state = {
+            products: {
+                'online-booking': true,
+                'csr-ai': true,
+                'smart-scheduling': true,
+                'hcp-assist': false
+            }
+        };
+
+        // Stepper Management
+        function updateStepper() {
+            document.querySelectorAll('.stepper-item').forEach((item, index) => {
+                const stepNum = index + 1;
+                item.classList.remove('active', 'completed');
+
+                if (stepNum === currentStep) {
+                    item.classList.add('active');
+                } else if (stepNum < currentStep) {
+                    item.classList.add('completed');
+                    item.querySelector('.stepper-icon').textContent = '✓';
+                } else {
+                    item.querySelector('.stepper-icon').textContent = stepNum;
+                }
+            });
+        }
+
+        function updateButtons() {
+            const backBtn = document.getElementById('back-btn');
+            const nextBtn = document.getElementById('next-btn');
+
+            if (currentStep === 1) {
+                backBtn.style.display = 'none';
+                nextBtn.textContent = 'Continue';
+            } else if (currentStep === 3) {
+                backBtn.style.display = 'inline-block';
+                nextBtn.textContent = 'Finish Setup';
+            } else if (currentStep === totalSteps) {
+                backBtn.style.display = 'none';
+                nextBtn.style.display = 'none';
+            } else {
+                backBtn.style.display = 'inline-block';
+                nextBtn.textContent = 'Continue';
+            }
+        }
+
+        function showStep(step) {
+            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+            document.getElementById('step-' + step).classList.add('active');
+            currentStep = step;
+            updateStepper();
+            updateButtons();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function nextStep() {
+            if (currentStep < totalSteps) {
+                showStep(currentStep + 1);
+            }
+        }
+
+        function previousStep() {
+            if (currentStep > 1) {
+                showStep(currentStep - 1);
+            }
+        }
+
+
+        // Product Selection
+        function toggleProduct(checkbox, productId) {
+            const card = checkbox.closest('.product-option');
+            state.products[productId] = checkbox.checked;
+
+            if (checkbox.checked) {
+                card.classList.add('selected');
+            } else {
+                card.classList.remove('selected');
+            }
+        }
+
+        function goToDashboard() {
+            alert('🎉 Congratulations! Your booking products are now live.\n\nIn a real application, this would take you to your dashboard where you can:\n- View incoming bookings\n- Monitor CSR AI calls\n- Adjust settings\n- See analytics');
+        }
+
+        // Initialize
+        updateStepper();
+        updateButtons();
+    </script>
+</body>
+</html>
