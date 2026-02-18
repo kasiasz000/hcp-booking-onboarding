@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Housecall Pro - Booking Products Setup</title>
+    <title>Booking Products Setup - Housecall Pro</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -15,1621 +16,1201 @@
         }
 
         :root {
-            --primary: #0066FF;
-            --primary-dark: #0052CC;
-            --primary-light: #4D94FF;
-            --accent: #FF6B35;
-            --success: #00D084;
-            --dark: #0A0E27;
-            --gray-900: #1A1D35;
-            --gray-800: #2A2D45;
-            --gray-700: #3A3D55;
-            --gray-100: #F7F8FA;
-            --white: #FFFFFF;
-            --gradient-primary: linear-gradient(135deg, #0066FF 0%, #00D4FF 100%);
-            --gradient-accent: linear-gradient(135deg, #FF6B35 0%, #FF8E53 100%);
-            --gradient-mesh: radial-gradient(at 0% 0%, rgba(0, 102, 255, 0.15) 0, transparent 50%),
-                             radial-gradient(at 100% 100%, rgba(255, 107, 53, 0.12) 0, transparent 50%),
-                             radial-gradient(at 100% 0%, rgba(0, 212, 132, 0.08) 0, transparent 50%);
+            /* HCP Theme Colors */
+            --primary-main: #1976D2;
+            --primary-light: #42A5F5;
+            --primary-dark: #1565C0;
+            --secondary-main: #757575;
+            --secondary-light: #BDBDBD;
+            --text-primary: #212121;
+            --text-secondary: #757575;
+            --background-default: #FAFAFA;
+            --background-paper: #FFFFFF;
+            --divider: rgba(0, 0, 0, 0.12);
+            --success-main: #4CAF50;
+            --success-light: #E8F5E9;
+            --warning-main: #FF9800;
+            --warning-light: #FFF3E0;
+            --error-main: #F44336;
+            --grey-100: #F5F5F5;
+            --grey-300: #E0E0E0;
+            --grey-400: #BDBDBD;
+            --grey-600: #757575;
+            --grey-900: #212121;
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--dark);
-            color: var(--white);
-            line-height: 1.6;
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--background-default);
+            color: var(--text-primary);
+            line-height: 1.5;
             -webkit-font-smoothing: antialiased;
-            position: relative;
-            overflow-x: hidden;
         }
 
-        body::before {
-            content: '';
+        /* Navigation Bar (matches HCP) */
+        .top-nav {
+            background: var(--grey-900);
+            color: white;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            padding: 0 24px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            bottom: 0;
-            background: var(--gradient-mesh);
-            z-index: 0;
-            pointer-events: none;
+            z-index: 1000;
         }
 
-        .app-container {
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Bold Typography */
-        h1, h2, h3 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-        }
-
-        /* Top Nav with Depth */
-        .top-nav {
-            background: rgba(10, 14, 39, 0.8);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 16px 32px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            animation: slideDown 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        @keyframes slideDown {
-            from {
-                transform: translateY(-100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .nav-left, .nav-right {
+        .top-nav-logo {
+            font-size: 20px;
+            font-weight: 500;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .nav-item {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            padding: 10px 16px;
-            border-radius: 8px;
-            font-weight: 500;
-            font-size: 14px;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-        }
-
-        .nav-item:hover {
-            color: var(--white);
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .nav-item.active::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 16px;
-            right: 16px;
-            height: 2px;
-            background: var(--gradient-primary);
-            border-radius: 2px;
-        }
-
-        .user-badge {
-            background: var(--gradient-accent);
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 14px;
-            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
-        }
-
-        /* Header with Floating Effect */
-        .header {
-            background: rgba(26, 29, 53, 0.6);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 20px 32px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .header-title {
-            font-size: 24px;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--white) 0%, rgba(255, 255, 255, 0.8) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* Diagonal Stepper - Breaking Grid */
-        .stepper-container {
-            padding: 48px 32px;
-            display: none;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stepper-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -50%;
-            right: -50%;
-            height: 1px;
-            background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%);
-            transform: rotate(-2deg);
-        }
-
-        .stepper-container.show {
-            display: block;
-            animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
-        }
-
-        .stepper {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            max-width: 900px;
-            margin: 0 auto;
-            gap: 60px;
-            position: relative;
-        }
-
-        .step {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-        }
-
-        .step:nth-child(1) { animation-delay: 0.5s; }
-        .step:nth-child(2) { animation-delay: 0.6s; }
-        .step:nth-child(3) { animation-delay: 0.7s; }
-        .step:nth-child(4) { animation-delay: 0.8s; }
-
-        @keyframes popIn {
-            from {
-                opacity: 0;
-                transform: scale(0.5) translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
-        }
-
-        .step-circle {
-            width: 48px;
-            height: 48px;
-            border-radius: 16px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            font-weight: 700;
-            color: rgba(255, 255, 255, 0.5);
-            margin-bottom: 12px;
-            position: relative;
-            z-index: 2;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .step.active .step-circle {
-            background: var(--gradient-primary);
-            border-color: var(--primary-light);
-            color: var(--white);
-            box-shadow: 0 8px 24px rgba(0, 102, 255, 0.4);
-            transform: scale(1.1);
-        }
-
-        .step.completed .step-circle {
-            background: var(--gradient-primary);
-            border-color: var(--primary-light);
-            color: var(--white);
-        }
-
-        .step.completed .step-circle::before {
-            content: "✓";
-            font-size: 20px;
-        }
-
-        .step-label {
-            font-size: 13px;
-            font-weight: 600;
-            color: rgba(255, 255, 255, 0.5);
-            text-align: center;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .step.active .step-label {
+        .top-nav-logo .material-icons {
+            font-size: 28px;
             color: var(--primary-light);
         }
 
-        .step::after {
-            content: '';
-            position: absolute;
-            top: 24px;
-            left: calc(50% + 24px);
-            width: 60px;
-            height: 2px;
-            background: linear-gradient(90deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.05) 100%);
-            z-index: 1;
-        }
-
-        .step:last-child::after {
-            display: none;
-        }
-
-        .step.completed::after {
-            background: var(--gradient-primary);
-        }
-
-        /* Asymmetric Main Layout */
-        .main {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 60px 32px;
-            display: grid;
-            grid-template-columns: 1fr 380px;
-            gap: 48px;
-            position: relative;
-        }
-
-        .main.full-width {
-            grid-template-columns: 1fr;
-            max-width: 1100px;
-        }
-
-        .content-area {
-            min-height: 500px;
-        }
-
-        .step-content {
-            display: none;
-        }
-
-        .step-content.active {
-            display: block;
-            animation: slideInContent 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        @keyframes slideInContent {
-            from {
-                opacity: 0;
-                transform: translateX(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        /* AI Coach - Floating Card with Glow */
-        .ai-coach-sidebar {
-            position: sticky;
-            top: 120px;
-            height: fit-content;
-            animation: floatIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.6s both;
-        }
-
-        @keyframes floatIn {
-            from {
-                opacity: 0;
-                transform: translateY(40px) rotate(2deg);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) rotate(0deg);
-            }
-        }
-
-        .ai-coach-card {
-            background: rgba(26, 29, 53, 0.8);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 24px;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4),
-                        0 0 1px 1px rgba(255, 255, 255, 0.1) inset;
-        }
-
-        .ai-coach-header {
-            background: var(--gradient-primary);
-            padding: 24px;
-            color: var(--white);
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .ai-coach-header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
-            animation: shimmer 3s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-        }
-
-        .ai-coach-icon {
-            font-size: 40px;
-            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
-        }
-
-        .ai-coach-title {
-            font-size: 20px;
-            font-weight: 700;
-            font-family: 'Space Grotesk', sans-serif;
-        }
-
-        .ai-coach-messages {
-            height: 350px;
-            overflow-y: auto;
-            padding: 20px;
-            background: rgba(10, 14, 39, 0.4);
-        }
-
-        .ai-coach-messages::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .ai-coach-messages::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 3px;
-        }
-
-        .ai-coach-messages::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 3px;
-        }
-
-        .ai-message {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(10px);
-            padding: 14px 16px;
-            border-radius: 16px;
-            margin-bottom: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            animation: messageSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        @keyframes messageSlideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .ai-message.user {
-            background: var(--gradient-primary);
-            margin-left: 40px;
-            border-color: var(--primary-light);
-            animation: messageSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .ai-coach-input-area {
-            padding: 20px;
-            background: rgba(26, 29, 53, 0.6);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .ai-input-wrapper {
-            display: flex;
-            gap: 12px;
-        }
-
-        .ai-input {
-            flex: 1;
-            padding: 12px 16px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 12px;
-            font-size: 14px;
-            font-family: inherit;
-            color: var(--white);
-            transition: all 0.3s;
-        }
-
-        .ai-input:focus {
-            outline: none;
-            border-color: var(--primary-light);
-            background: rgba(255, 255, 255, 0.12);
-            box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.2);
-        }
-
-        .ai-input::placeholder {
-            color: rgba(255, 255, 255, 0.4);
-        }
-
-        .ai-send-btn {
-            padding: 12px 24px;
-            background: var(--gradient-primary);
-            color: var(--white);
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .ai-send-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0, 102, 255, 0.4);
-        }
-
-        /* Step Headers */
-        .step-header {
-            margin-bottom: 40px;
-            animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
-        }
-
-        .step-title {
-            font-size: 48px;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--white) 0%, rgba(255, 255, 255, 0.7) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 16px;
-            line-height: 1.1;
-        }
-
-        .step-subtitle {
-            font-size: 18px;
-            color: rgba(255, 255, 255, 0.6);
-            font-weight: 400;
-            max-width: 700px;
-        }
-
-        /* Welcome Hero - Bold Entrance */
-        .welcome-hero {
-            text-align: center;
-            padding: 80px 0 60px;
-            animation: scaleIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        @keyframes scaleIn {
-            from {
-                opacity: 0;
-                transform: scale(0.9);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .welcome-title {
-            font-size: 72px;
-            font-weight: 700;
-            margin-bottom: 24px;
-            background: linear-gradient(135deg, var(--white) 0%, var(--primary-light) 50%, var(--accent) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1;
-            animation: titleReveal 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
-        }
-
-        @keyframes titleReveal {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-                filter: blur(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-                filter: blur(0);
-            }
-        }
-
-        .welcome-subtitle {
-            font-size: 22px;
-            color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 48px;
-            max-width: 700px;
+        .main-content {
+            margin-top: 64px;
+            padding: 32px;
+            max-width: 1200px;
             margin-left: auto;
             margin-right: auto;
-            line-height: 1.6;
-            animation: fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
         }
 
-        .product-showcase {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-            margin-top: 60px;
-        }
-
-        /* Feature Cards with Depth */
-        .feature-card {
-            background: rgba(26, 29, 53, 0.6);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 24px;
-            padding: 40px 32px;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            cursor: pointer;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            animation: cardFloat 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
-        }
-
-        .feature-card:nth-child(1) { animation-delay: 0.6s; }
-        .feature-card:nth-child(2) { animation-delay: 0.7s; }
-        .feature-card:nth-child(3) { animation-delay: 0.8s; }
-        .feature-card:nth-child(4) { animation-delay: 0.9s; }
-
-        @keyframes cardFloat {
-            from {
-                opacity: 0;
-                transform: translateY(40px) rotate(2deg);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) rotate(0deg);
-            }
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--gradient-primary);
-            transform: scaleX(0);
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .feature-card:hover {
-            transform: translateY(-8px) rotate(-1deg);
-            border-color: var(--primary-light);
-            box-shadow: 0 24px 60px rgba(0, 102, 255, 0.3);
-        }
-
-        .feature-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .feature-icon {
-            width: 72px;
-            height: 72px;
-            background: var(--gradient-primary);
-            border-radius: 20px;
+        /* Breadcrumbs (HCP style) */
+        .breadcrumbs {
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 36px;
-            margin: 0 auto 24px;
-            box-shadow: 0 12px 32px rgba(0, 102, 255, 0.3);
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .feature-card:hover .feature-icon {
-            transform: scale(1.1) rotate(-5deg);
-        }
-
-        .feature-title {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: var(--white);
-        }
-
-        .feature-description {
-            font-size: 15px;
-            color: rgba(255, 255, 255, 0.6);
-            line-height: 1.6;
-        }
-
-        /* Card Components with Layered Effect */
-        .card {
-            background: rgba(26, 29, 53, 0.6);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 20px;
-            padding: 32px;
+            gap: 8px;
             margin-bottom: 24px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
+            color: var(--text-secondary);
+            font-size: 14px;
         }
 
-        /* Services - Grid Breaking Layout */
-        .services-toolbar {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 32px;
-            animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
+        .breadcrumbs .material-icons {
+            font-size: 16px;
         }
 
-        .search-input {
-            flex: 1;
-            padding: 14px 20px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 14px;
-            font-size: 15px;
-            font-family: inherit;
-            color: var(--white);
-            transition: all 0.3s;
+        .breadcrumb-link {
+            color: var(--text-secondary);
+            text-decoration: none;
         }
 
-        .search-input:focus {
-            outline: none;
-            border-color: var(--primary-light);
-            background: rgba(255, 255, 255, 0.12);
-            box-shadow: 0 0 0 4px rgba(0, 102, 255, 0.2);
+        .breadcrumb-link:hover {
+            color: var(--primary-main);
         }
 
-        .search-input::placeholder {
-            color: rgba(255, 255, 255, 0.4);
+        /* Card (Material Design) */
+        .card {
+            background: var(--background-paper);
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            padding: 24px;
+            margin-bottom: 24px;
         }
 
-        .service-item {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 16px;
-            display: grid;
-            grid-template-columns: 40px 1fr 140px 60px;
-            gap: 20px;
-            align-items: center;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            animation: slideInService 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+        .card-large {
+            padding: 48px;
         }
 
-        .service-item:nth-child(1) { animation-delay: 0.6s; }
-        .service-item:nth-child(2) { animation-delay: 0.65s; }
-        .service-item:nth-child(3) { animation-delay: 0.7s; }
-        .service-item:nth-child(4) { animation-delay: 0.75s; }
-        .service-item:nth-child(5) { animation-delay: 0.8s; }
-
-        @keyframes slideInService {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+        /* Typography */
+        h1 {
+            font-size: 34px;
+            font-weight: 400;
+            line-height: 1.2;
+            margin-bottom: 8px;
         }
 
-        .service-item:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: var(--primary-light);
-            transform: translateX(4px);
-            box-shadow: 0 4px 20px rgba(0, 102, 255, 0.2);
-        }
-
-        .drag-handle {
-            color: rgba(255, 255, 255, 0.3);
-            cursor: move;
+        h2 {
             font-size: 24px;
-        }
-
-        .service-name {
-            font-weight: 600;
-            color: var(--white);
-            font-size: 16px;
-        }
-
-        .service-price {
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 14px;
-            margin-top: 4px;
-        }
-
-        .price-input {
-            padding: 10px 14px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 10px;
-            font-size: 14px;
-            color: var(--white);
-            font-weight: 600;
-            width: 100%;
-            transition: all 0.3s;
-        }
-
-        .price-input:focus {
-            outline: none;
-            border-color: var(--primary-light);
-            background: rgba(255, 255, 255, 0.12);
-            box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.2);
-        }
-
-        /* Toggle Switch - Smooth Animation */
-        .switch {
-            width: 56px;
-            height: 32px;
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 16px;
-            position: relative;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .switch.checked {
-            background: var(--gradient-primary);
-            border-color: var(--primary-light);
-            box-shadow: 0 4px 16px rgba(0, 102, 255, 0.4);
-        }
-
-        .switch-thumb {
-            width: 24px;
-            height: 24px;
-            background: var(--white);
-            border-radius: 50%;
-            position: absolute;
-            top: 3px;
-            left: 4px;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-        }
-
-        .switch.checked .switch-thumb {
-            transform: translateX(24px);
-        }
-
-        /* Product Grid with Overlap */
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
-            animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
-        }
-
-        .product-card {
-            background: rgba(26, 29, 53, 0.6);
-            backdrop-filter: blur(20px);
-            border: 2px solid rgba(255, 255, 255, 0.15);
-            border-radius: 24px;
-            padding: 32px;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .product-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: var(--gradient-primary);
-            opacity: 0;
-            transition: opacity 0.4s;
-            z-index: 0;
-        }
-
-        .product-card:hover {
-            transform: translateY(-8px) rotate(-1deg);
-            border-color: var(--primary-light);
-            box-shadow: 0 20px 60px rgba(0, 102, 255, 0.3);
-        }
-
-        .product-card.selected {
-            border-color: var(--primary-light);
-            background: rgba(0, 102, 255, 0.1);
-        }
-
-        .product-card.selected::before {
-            opacity: 0.1;
-        }
-
-        .product-card.selected::after {
-            content: "✓";
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 32px;
-            height: 32px;
-            background: var(--gradient-primary);
-            color: var(--white);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            font-weight: 700;
-            box-shadow: 0 4px 12px rgba(0, 102, 255, 0.4);
-            z-index: 1;
-        }
-
-        .product-icon-large {
-            width: 64px;
-            height: 64px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            margin-bottom: 20px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .badge {
-            display: inline-block;
-            background: var(--gradient-accent);
-            color: var(--white);
-            padding: 6px 14px;
-            border-radius: 10px;
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            font-weight: 400;
+            line-height: 1.3;
             margin-bottom: 16px;
-            box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
-            position: relative;
-            z-index: 1;
         }
 
-        /* Buttons - Bold and Tactile */
-        .button-group {
-            display: flex;
-            justify-content: space-between;
-            gap: 16px;
-            margin-top: 48px;
-            animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.8s both;
+        h5 {
+            font-size: 20px;
+            font-weight: 500;
+            line-height: 1.4;
+            margin-bottom: 16px;
         }
 
-        .btn {
-            padding: 16px 32px;
-            border-radius: 14px;
+        .subtitle1 {
             font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            border: none;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            font-family: inherit;
-            position: relative;
-            overflow: hidden;
+            font-weight: 500;
+            line-height: 1.5;
         }
 
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
+        .body1 {
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 1.5;
         }
 
-        .btn:active::before {
-            width: 300px;
-            height: 300px;
+        .body2 {
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.43;
         }
 
-        .btn-primary {
-            background: var(--gradient-primary);
-            color: var(--white);
-            box-shadow: 0 8px 24px rgba(0, 102, 255, 0.3);
+        .caption {
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 1.66;
+            color: var(--text-secondary);
         }
 
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 32px rgba(0, 102, 255, 0.4);
+        .text-secondary {
+            color: var(--text-secondary);
         }
 
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: var(--white);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.12);
-            border-color: rgba(255, 255, 255, 0.3);
-        }
-
-        .btn-large {
-            padding: 20px 48px;
-            font-size: 18px;
-            font-weight: 700;
-        }
-
-        /* Success Screen with Celebration */
-        .success-container {
-            text-align: center;
-            padding: 60px 0;
-            animation: scaleIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .success-icon {
-            width: 120px;
-            height: 120px;
-            background: linear-gradient(135deg, var(--success) 0%, #00F5A0 100%);
-            border-radius: 50%;
+        /* Stepper (HCP style) */
+        .stepper {
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 60px;
-            margin: 0 auto 40px;
-            color: var(--white);
-            box-shadow: 0 20px 60px rgba(0, 208, 132, 0.4);
-            animation: successPulse 2s ease-in-out infinite;
+            margin-bottom: 48px;
+            padding: 0 24px;
         }
 
-        @keyframes successPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        .products-enabled {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            margin: 40px 0;
-            flex-wrap: wrap;
-        }
-
-        .enabled-badge {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(20px);
-            padding: 16px 24px;
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+        .stepper-step {
             display: flex;
             align-items: center;
             gap: 12px;
-            animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
         }
 
-        .enabled-badge:nth-child(1) { animation-delay: 0.4s; }
-        .enabled-badge:nth-child(2) { animation-delay: 0.5s; }
-        .enabled-badge:nth-child(3) { animation-delay: 0.6s; }
-        .enabled-badge:nth-child(4) { animation-delay: 0.7s; }
-
-        .enabled-icon {
-            font-size: 24px;
-        }
-
-        /* Modal with Backdrop Blur */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(10, 14, 39, 0.8);
-            backdrop-filter: blur(12px);
+        .stepper-circle {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 1000;
-            animation: fadeIn 0.3s;
+            font-weight: 500;
+            border: 2px solid var(--grey-400);
+            color: var(--text-secondary);
+            background: var(--background-paper);
         }
 
-        .modal.show {
+        .stepper-circle.active {
+            background: var(--primary-main);
+            color: white;
+            border-color: var(--primary-main);
+        }
+
+        .stepper-circle.completed {
+            background: var(--success-main);
+            color: white;
+            border-color: var(--success-main);
+        }
+
+        .stepper-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .stepper-label.active {
+            color: var(--primary-main);
+        }
+
+        .stepper-connector {
+            width: 40px;
+            height: 2px;
+            background: var(--grey-300);
+            margin: 0 8px;
+        }
+
+        .stepper-connector.completed {
+            background: var(--success-main);
+        }
+
+        /* Buttons */
+        .button {
+            padding: 8px 22px;
+            font-size: 14px;
+            font-weight: 500;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.02857em;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .button-contained {
+            background: var(--primary-main);
+            color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .button-contained:hover {
+            background: var(--primary-dark);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .button-outlined {
+            background: transparent;
+            color: var(--primary-main);
+            border: 1px solid var(--primary-main);
+        }
+
+        .button-outlined:hover {
+            background: rgba(25, 118, 210, 0.04);
+        }
+
+        .button-text {
+            background: transparent;
+            color: var(--primary-main);
+        }
+
+        .button-text:hover {
+            background: rgba(25, 118, 210, 0.04);
+        }
+
+        .button:disabled {
+            background: var(--grey-300);
+            color: var(--grey-600);
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .button-group {
             display: flex;
+            gap: 16px;
+            justify-content: flex-end;
+            margin-top: 32px;
         }
 
-        .modal-content {
-            background: rgba(26, 29, 53, 0.95);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 24px;
-            padding: 40px;
-            max-width: 500px;
-            width: 90%;
-            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
-            animation: modalSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        @keyframes modalSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-40px) scale(0.9);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-
-        .modal-title {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 24px;
-            background: linear-gradient(135deg, var(--white) 0%, rgba(255, 255, 255, 0.8) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
+        /* Form Controls */
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
         .form-label {
             display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: rgba(255, 255, 255, 0.9);
             font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--text-primary);
         }
 
         .form-input {
             width: 100%;
-            padding: 14px 16px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 12px;
-            font-size: 15px;
+            padding: 12px;
+            border: 1px solid var(--grey-400);
+            border-radius: 4px;
+            font-size: 16px;
             font-family: inherit;
-            color: var(--white);
-            transition: all 0.3s;
+            transition: border-color 0.2s;
         }
 
         .form-input:focus {
             outline: none;
-            border-color: var(--primary-light);
-            background: rgba(255, 255, 255, 0.12);
-            box-shadow: 0 0 0 4px rgba(0, 102, 255, 0.2);
+            border-color: var(--primary-main);
+            box-shadow: 0 0 0 1px var(--primary-main);
         }
 
-        .form-input::placeholder {
-            color: rgba(255, 255, 255, 0.4);
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        .checkbox-wrapper:hover {
+            background: var(--grey-100);
+        }
+
+        .checkbox-input {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        /* Service List */
+        .service-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .service-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px;
+            background: var(--background-paper);
+            border: 1px solid var(--grey-300);
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .service-item:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .service-item.disabled {
+            opacity: 0.5;
+        }
+
+        .service-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex: 1;
+        }
+
+        .drag-handle {
+            color: var(--grey-400);
+            cursor: grab;
+        }
+
+        .drag-handle:active {
+            cursor: grabbing;
+        }
+
+        .service-details {
+            flex: 1;
+        }
+
+        .service-name {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .service-meta {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .service-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        /* Schedule Grid */
+        .schedule-grid {
+            display: grid;
+            gap: 16px;
+        }
+
+        .schedule-day {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            background: var(--grey-100);
+            border-radius: 4px;
+        }
+
+        .schedule-day-name {
+            font-weight: 500;
+            min-width: 100px;
+        }
+
+        .schedule-times {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex: 1;
+        }
+
+        .time-input {
+            padding: 8px;
+            border: 1px solid var(--grey-400);
+            border-radius: 4px;
+            font-size: 14px;
+            width: 120px;
+        }
+
+        /* Team Member Cards */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 16px;
+        }
+
+        .team-card {
+            padding: 20px;
+            background: var(--background-paper);
+            border: 1px solid var(--grey-300);
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .team-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: 500;
+        }
+
+        /* Product Cards */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .product-card {
+            padding: 24px;
+            background: var(--background-paper);
+            border: 2px solid var(--grey-300);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .product-card:hover {
+            border-color: var(--primary-main);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .product-card.selected {
+            border-color: var(--primary-main);
+            background: rgba(25, 118, 210, 0.04);
+        }
+
+        .product-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--primary-light);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+
+        .product-icon .material-icons {
+            font-size: 28px;
+            color: white;
+        }
+
+        .product-name {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .product-description {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* AI Coach */
+        .ai-coach {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 380px;
+            background: var(--background-paper);
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            overflow: hidden;
+            z-index: 900;
+            display: none;
+        }
+
+        .ai-coach.visible {
+            display: block;
+        }
+
+        .ai-coach-header {
+            background: var(--primary-main);
+            color: white;
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ai-coach-header h6 {
+            font-size: 16px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .ai-coach-close {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .ai-coach-body {
+            padding: 16px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .ai-message {
+            background: var(--grey-100);
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 12px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .ai-input-wrapper {
+            padding: 16px;
+            border-top: 1px solid var(--divider);
+            display: flex;
+            gap: 8px;
+        }
+
+        .ai-input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid var(--grey-400);
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        /* Toggle Button */
+        .ai-toggle-button {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--primary-main);
+            color: white;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 899;
+        }
+
+        .ai-toggle-button:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Utility Classes */
+        .hidden {
+            display: none !important;
+        }
+
+        .mt-24 {
+            margin-top: 24px;
+        }
+
+        .mb-16 {
+            margin-bottom: 16px;
+        }
+
+        .text-center {
+            text-align: center;
         }
 
         /* Responsive */
-        @media (max-width: 1024px) {
-            .main {
-                grid-template-columns: 1fr;
-                gap: 32px;
-            }
-
-            .ai-coach-sidebar {
-                position: relative;
-                top: 0;
-            }
-        }
-
         @media (max-width: 768px) {
-            .welcome-title {
-                font-size: 48px;
+            .main-content {
+                padding: 16px;
             }
 
-            .step-title {
-                font-size: 36px;
+            .stepper {
+                flex-direction: column;
+                align-items: flex-start;
             }
 
-            .product-showcase {
-                grid-template-columns: 1fr;
-            }
-
-            .service-item {
-                grid-template-columns: 1fr;
-                gap: 12px;
+            .stepper-connector {
+                width: 2px;
+                height: 40px;
+                margin: 8px 0;
             }
 
             .product-grid {
                 grid-template-columns: 1fr;
             }
+
+            .ai-coach {
+                width: calc(100% - 32px);
+                right: 16px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="app-container">
-        <!-- Top Navigation -->
-        <div class="top-nav">
-            <div class="nav-left">
-                <a href="#" class="nav-item active">Get started</a>
-                <a href="#" class="nav-item">Home</a>
-                <a href="#" class="nav-item">Schedule</a>
-                <a href="#" class="nav-item">Customers</a>
-            </div>
-            <div class="nav-right">
-                <a href="#" class="nav-item">+ New</a>
-                <div class="user-badge">JD</div>
-            </div>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+        <div class="top-nav-logo">
+            <span class="material-icons">home_repair_service</span>
+            <span>Housecall Pro</span>
         </div>
+    </nav>
 
-        <!-- Header -->
-        <div class="header">
-            <div class="header-title">Booking Products Setup</div>
-            <div class="header-actions">
-                <button class="btn btn-secondary" onclick="window.close()" style="padding: 10px 20px;">Exit Setup</button>
-            </div>
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Breadcrumbs -->
+        <div class="breadcrumbs">
+            <a href="#" class="breadcrumb-link">Settings</a>
+            <span class="material-icons">chevron_right</span>
+            <a href="#" class="breadcrumb-link">Booking</a>
+            <span class="material-icons">chevron_right</span>
+            <span>Setup</span>
         </div>
 
         <!-- Stepper -->
-        <div class="stepper-container" id="stepper">
-            <div class="stepper">
-                <div class="step active" data-step="1">
-                    <div class="step-circle">1</div>
-                    <div class="step-label">Services</div>
-                </div>
-                <div class="step" data-step="2">
-                    <div class="step-circle">2</div>
-                    <div class="step-label">Availability</div>
-                </div>
-                <div class="step" data-step="3">
-                    <div class="step-circle">3</div>
-                    <div class="step-label">Products</div>
-                </div>
-                <div class="step" data-step="4">
-                    <div class="step-circle">4</div>
-                    <div class="step-label">Complete</div>
-                </div>
+        <div class="stepper" id="stepper"></div>
+
+        <!-- Content -->
+        <div id="content"></div>
+    </div>
+
+    <!-- AI Coach Toggle -->
+    <button class="ai-toggle-button" onclick="toggleAICoach()">
+        <span class="material-icons">smart_toy</span>
+    </button>
+
+    <!-- AI Coach -->
+    <div class="ai-coach" id="aiCoach">
+        <div class="ai-coach-header">
+            <h6>
+                <span class="material-icons">smart_toy</span>
+                AI Setup Coach
+            </h6>
+            <button class="ai-coach-close" onclick="toggleAICoach()">
+                <span class="material-icons">close</span>
+            </button>
+        </div>
+        <div class="ai-coach-body" id="aiCoachBody">
+            <div class="ai-message">
+                Hi! I'm your AI Setup Coach. I'm here to help you configure your booking products. Ask me anything!
             </div>
         </div>
-
-        <!-- Main Content -->
-        <div class="main full-width" id="mainContainer">
-            <div class="content-area">
-                <!-- Welcome Screen -->
-                <div class="step-content active" id="step-0">
-                    <div class="welcome-hero">
-                        <h1 class="welcome-title">Capture More Customers</h1>
-                        <p class="welcome-subtitle">Set up your booking products in minutes and start accepting appointments 24/7. Unlock the full power of Housecall Pro.</p>
-                        <button class="btn btn-primary btn-large" onclick="startOnboarding()">Let's Get Started →</button>
-                    </div>
-
-                    <div class="product-showcase">
-                        <div class="feature-card">
-                            <div class="feature-icon">🌐</div>
-                            <h3 class="feature-title">Online Booking</h3>
-                            <p class="feature-description">Let customers book on your website 24/7</p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">📞</div>
-                            <h3 class="feature-title">CSR AI</h3>
-                            <p class="feature-description">AI answers calls and schedules automatically</p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">📅</div>
-                            <h3 class="feature-title">Smart Scheduling</h3>
-                            <p class="feature-description">Auto-optimize your schedule</p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">⭐</div>
-                            <h3 class="feature-title">HCP Assist</h3>
-                            <p class="feature-description">Premium support & account management</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Step 1: Services -->
-                <div class="step-content" id="step-1">
-                    <div class="step-header">
-                        <h2 class="step-title">Configure Your Services</h2>
-                        <p class="step-subtitle">Select which HVAC services customers can book online. Adjust prices and add new services anytime.</p>
-                    </div>
-
-                    <div class="services-toolbar">
-                        <input type="text" class="search-input" id="serviceSearch" placeholder="Search services..." oninput="filterServices()">
-                        <button class="btn btn-secondary" onclick="showAddServiceModal()" style="padding: 14px 24px;">+ Add Service</button>
-                    </div>
-
-                    <div id="servicesList"></div>
-
-                    <div class="button-group">
-                        <button class="btn btn-secondary" onclick="prevStep()">Back</button>
-                        <button class="btn btn-primary" onclick="nextStep()">Continue →</button>
-                    </div>
-                </div>
-
-                <!-- Step 2: Availability -->
-                <div class="step-content" id="step-2">
-                    <div class="step-header">
-                        <h2 class="step-title">Set Booking Hours</h2>
-                        <p class="step-subtitle">When should customers be able to book appointments? You can customize per-tech later.</p>
-                    </div>
-
-                    <div class="card">
-                        <p style="padding: 40px; text-align: center; color: rgba(255, 255, 255, 0.6); font-size: 16px;">
-                            <strong style="color: var(--white); font-size: 18px;">Default Hours:</strong><br><br>
-                            Monday-Friday, 8:00 AM - 5:00 PM<br>
-                            <small style="opacity: 0.6;">You can customize these in settings</small>
-                        </p>
-                    </div>
-
-                    <div class="button-group">
-                        <button class="btn btn-secondary" onclick="prevStep()">← Back</button>
-                        <button class="btn btn-primary" onclick="nextStep()">Continue →</button>
-                    </div>
-                </div>
-
-                <!-- Step 3: Products -->
-                <div class="step-content" id="step-3">
-                    <div class="step-header">
-                        <h2 class="step-title">Choose Products to Enable</h2>
-                        <p class="step-subtitle">Select which booking products you want to activate for your business</p>
-                    </div>
-
-                    <div class="product-grid">
-                        <div class="product-card selected" onclick="toggleProduct(this)" data-product="online-booking">
-                            <div class="product-icon-large">🌐</div>
-                            <h3 class="feature-title">Online Booking</h3>
-                            <p class="feature-description">Let customers book appointments from your website anytime, day or night</p>
-                        </div>
-                        <div class="product-card" onclick="toggleProduct(this)" data-product="csr-ai">
-                            <div class="product-icon-large">📞</div>
-                            <h3 class="feature-title">CSR AI</h3>
-                            <p class="feature-description">AI-powered assistant answers calls and schedules jobs when you're busy</p>
-                        </div>
-                        <div class="product-card" onclick="toggleProduct(this)" data-product="smart-scheduling">
-                            <div class="product-icon-large">📅</div>
-                            <h3 class="feature-title">Smart Scheduling</h3>
-                            <p class="feature-description">Automatically optimize your technician schedules for maximum efficiency</p>
-                        </div>
-                        <div class="product-card" onclick="toggleProduct(this)" data-product="hcp-assist">
-                            <span class="badge">Paid Add-on</span>
-                            <div class="product-icon-large">⭐</div>
-                            <h3 class="feature-title">HCP Assist</h3>
-                            <p class="feature-description">Dedicated account manager and premium support to grow your business</p>
-                        </div>
-                    </div>
-
-                    <div class="button-group">
-                        <button class="btn btn-secondary" onclick="prevStep()">← Back</button>
-                        <button class="btn btn-primary" onclick="completeSetup()">Complete Setup ✓</button>
-                    </div>
-                </div>
-
-                <!-- Step 4: Complete -->
-                <div class="step-content" id="step-4">
-                    <div class="success-container">
-                        <div class="success-icon">✓</div>
-                        <h2 class="step-title">Setup Complete!</h2>
-                        <p class="step-subtitle">Your booking products are now active and ready to capture customers</p>
-
-                        <div class="products-enabled" id="enabledProducts"></div>
-
-                        <div class="card" style="margin-top: 40px; text-align: left;">
-                            <h3 style="margin-bottom: 20px; font-size: 20px;">What's Next?</h3>
-                            <ul style="padding-left: 24px; color: rgba(255, 255, 255, 0.7); line-height: 2;">
-                                <li>Add the booking widget to your website</li>
-                                <li>Share your booking link with customers</li>
-                                <li>Customize settings for each product</li>
-                                <li>Train your team on the new tools</li>
-                            </ul>
-                        </div>
-
-                        <div class="button-group" style="justify-content: center; margin-top: 40px;">
-                            <button class="btn btn-primary btn-large" onclick="window.close()">Go to Dashboard →</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- AI Coach Sidebar -->
-            <div class="ai-coach-sidebar" id="aiCoach" style="display: none;">
-                <div class="ai-coach-card">
-                    <div class="ai-coach-header">
-                        <div class="ai-coach-icon">🤖</div>
-                        <div>
-                            <div class="ai-coach-title">AI Coach</div>
-                            <div style="font-size: 13px; opacity: 0.9;">Ask me anything!</div>
-                        </div>
-                    </div>
-                    <div class="ai-coach-messages" id="aiMessages">
-                        <div class="ai-message">
-                            Hi! I'm here to help you set up your booking products. Feel free to ask me questions at any time! 👋
-                        </div>
-                    </div>
-                    <div class="ai-coach-input-area">
-                        <div class="ai-input-wrapper">
-                            <input type="text" class="ai-input" id="aiInput" placeholder="Ask a question..." onkeypress="handleAiInputKeypress(event)">
-                            <button class="ai-send-btn" onclick="sendAiMessage()">Send</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Add Service Modal -->
-        <div class="modal" id="addServiceModal">
-            <div class="modal-content">
-                <h3 class="modal-title">Add New Service</h3>
-                <div class="form-group">
-                    <label class="form-label">Service Name</label>
-                    <input type="text" class="form-input" id="newServiceName" placeholder="e.g., AC Maintenance">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Price</label>
-                    <input type="text" class="form-input" id="newServicePrice" placeholder="e.g., 150">
-                </div>
-                <div class="button-group">
-                    <button class="btn btn-secondary" onclick="closeAddServiceModal()">Cancel</button>
-                    <button class="btn btn-primary" onclick="addService()">Add Service</button>
-                </div>
-            </div>
+        <div class="ai-input-wrapper">
+            <input type="text" class="ai-input" id="aiInput" placeholder="Ask me anything..." onkeypress="handleAIInput(event)">
+            <button class="button button-contained" onclick="sendAIMessage()">
+                <span class="material-icons">send</span>
+            </button>
         </div>
     </div>
 
     <script>
-        // [Previous JavaScript code remains exactly the same]
+        // State
         let currentStep = 0;
-        const totalSteps = 4;
         let services = [
-            { id: 1, name: "AC Installation", price: 3500, enabled: true },
-            { id: 2, name: "AC Repair", price: 250, enabled: true },
-            { id: 3, name: "AC Tune-Up", price: 150, enabled: true },
-            { id: 4, name: "Furnace Installation", price: 4000, enabled: true },
-            { id: 5, name: "Furnace Repair", price: 300, enabled: true },
-            { id: 6, name: "Duct Cleaning", price: 400, enabled: false },
-            { id: 7, name: "Thermostat Installation", price: 200, enabled: true },
-            { id: 8, name: "Emergency Service", price: 500, enabled: true }
+            { id: 1, name: 'AC Repair', price: 150, duration: 90, enabled: true },
+            { id: 2, name: 'Heating Service', price: 120, duration: 60, enabled: true },
+            { id: 3, name: 'Maintenance Check', price: 85, duration: 45, enabled: true },
+            { id: 4, name: 'Installation', price: 500, duration: 240, enabled: false },
+            { id: 5, name: 'Emergency Service', price: 200, duration: 120, enabled: true }
         ];
-        let selectedProducts = ['online-booking'];
+        let selectedProducts = [];
+        let teamMembers = [
+            { id: 1, name: 'John Smith', initials: 'JS', available: true },
+            { id: 2, name: 'Sarah Johnson', initials: 'SJ', available: true },
+            { id: 3, name: 'Mike Davis', initials: 'MD', available: false }
+        ];
+        let schedule = {
+            monday: { enabled: true, start: '08:00', end: '17:00' },
+            tuesday: { enabled: true, start: '08:00', end: '17:00' },
+            wednesday: { enabled: true, start: '08:00', end: '17:00' },
+            thursday: { enabled: true, start: '08:00', end: '17:00' },
+            friday: { enabled: true, start: '08:00', end: '17:00' },
+            saturday: { enabled: false, start: '09:00', end: '13:00' },
+            sunday: { enabled: false, start: '09:00', end: '13:00' }
+        };
 
-        function startOnboarding() {
-            currentStep = 1;
-            document.getElementById('stepper').classList.add('show');
-            document.getElementById('mainContainer').classList.remove('full-width');
-            document.getElementById('aiCoach').style.display = 'block';
-            updateUI();
-            renderServices();
+        const steps = [
+            { name: 'Welcome', render: renderWelcome },
+            { name: 'Services', render: renderServices },
+            { name: 'Hours', render: renderHours },
+            { name: 'Team', render: renderTeam },
+            { name: 'Products', render: renderProducts },
+            { name: 'Setup', render: renderSetup },
+            { name: 'Done', render: renderDone }
+        ];
+
+        // Initialize
+        function init() {
+            renderStepper();
+            renderStep();
         }
 
-        function updateUI() {
-            document.querySelectorAll('.step').forEach((step, index) => {
-                const stepNum = index + 1;
-                step.classList.remove('active', 'completed');
-                if (stepNum === currentStep) step.classList.add('active');
-                else if (stepNum < currentStep) step.classList.add('completed');
-            });
+        // Render Stepper
+        function renderStepper() {
+            const stepper = document.getElementById('stepper');
+            stepper.innerHTML = steps.map((step, index) => {
+                const isActive = index === currentStep;
+                const isCompleted = index < currentStep;
+                const showConnector = index < steps.length - 1;
 
-            document.querySelectorAll('.step-content').forEach((content, index) => {
-                content.classList.remove('active');
-                if (index === currentStep) content.classList.add('active');
-            });
-
-            if (currentStep === 1) {
-                addAiMessage("Great! Let's configure your HVAC services. I've pre-selected some common ones. Feel free to add more or adjust prices!");
-            } else if (currentStep === 2) {
-                addAiMessage("Now let's set when customers can book. The default hours work great for most HVAC businesses.");
-            } else if (currentStep === 3) {
-                addAiMessage("Almost done! Choose which booking products you want to enable. Online Booking is already selected for you.");
-            }
-
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function renderServices() {
-            const container = document.getElementById('servicesList');
-            container.innerHTML = services.map(service => `
-                <div class="service-item">
-                    <span class="drag-handle">☰</span>
-                    <div>
-                        <div class="service-name">${service.name}</div>
-                        <div class="service-price">$${service.price}</div>
-                    </div>
-                    <input type="text" class="price-input" value="$${service.price}" onchange="updatePrice(${service.id}, this.value)">
-                    <div class="switch ${service.enabled ? 'checked' : ''}" onclick="toggleService(${service.id})">
-                        <div class="switch-thumb"></div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function filterServices() {
-            const search = document.getElementById('serviceSearch').value.toLowerCase();
-            const filtered = services.filter(s => s.name.toLowerCase().includes(search));
-            const container = document.getElementById('servicesList');
-            container.innerHTML = filtered.map(service => `
-                <div class="service-item">
-                    <span class="drag-handle">☰</span>
-                    <div>
-                        <div class="service-name">${service.name}</div>
-                        <div class="service-price">$${service.price}</div>
-                    </div>
-                    <input type="text" class="price-input" value="$${service.price}" onchange="updatePrice(${service.id}, this.value)">
-                    <div class="switch ${service.enabled ? 'checked' : ''}" onclick="toggleService(${service.id})">
-                        <div class="switch-thumb"></div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function toggleService(id) {
-            const service = services.find(s => s.id === id);
-            service.enabled = !service.enabled;
-            renderServices();
-        }
-
-        function updatePrice(id, value) {
-            const service = services.find(s => s.id === id);
-            service.price = parseInt(value.replace(/[^0-9]/g, '')) || 0;
-            renderServices();
-        }
-
-        function showAddServiceModal() {
-            document.getElementById('addServiceModal').classList.add('show');
-        }
-
-        function closeAddServiceModal() {
-            document.getElementById('addServiceModal').classList.remove('show');
-            document.getElementById('newServiceName').value = '';
-            document.getElementById('newServicePrice').value = '';
-        }
-
-        function addService() {
-            const name = document.getElementById('newServiceName').value;
-            const price = parseInt(document.getElementById('newServicePrice').value) || 0;
-
-            if (name) {
-                services.push({
-                    id: services.length + 1,
-                    name: name,
-                    price: price,
-                    enabled: true
-                });
-                renderServices();
-                closeAddServiceModal();
-                addAiMessage(`Great! I've added "${name}" to your service list. It's enabled by default.`);
-            }
-        }
-
-        function toggleProduct(card) {
-            const product = card.dataset.product;
-            if (selectedProducts.includes(product)) {
-                selectedProducts = selectedProducts.filter(p => p !== product);
-                card.classList.remove('selected');
-            } else {
-                selectedProducts.push(product);
-                card.classList.add('selected');
-            }
-        }
-
-        function completeSetup() {
-            currentStep = 4;
-            updateUI();
-            showEnabledProducts();
-        }
-
-        function showEnabledProducts() {
-            const productNames = {
-                'online-booking': { icon: '🌐', name: 'Online Booking' },
-                'csr-ai': { icon: '📞', name: 'CSR AI' },
-                'smart-scheduling': { icon: '📅', name: 'Smart Scheduling' },
-                'hcp-assist': { icon: '⭐', name: 'HCP Assist' }
-            };
-
-            const container = document.getElementById('enabledProducts');
-            container.innerHTML = selectedProducts.map(product => {
-                const p = productNames[product];
                 return `
-                    <div class="enabled-badge">
-                        <span class="enabled-icon">${p.icon}</span>
-                        <span style="font-weight: 600;">${p.name}</span>
+                    <div class="stepper-step">
+                        <div>
+                            <div class="stepper-circle ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''}">
+                                ${isCompleted ? '<span class="material-icons" style="font-size: 20px;">check</span>' : index + 1}
+                            </div>
+                            <div class="stepper-label ${isActive ? 'active' : ''}">${step.name}</div>
+                        </div>
                     </div>
+                    ${showConnector ? `<div class="stepper-connector ${isCompleted ? 'completed' : ''}"></div>` : ''}
                 `;
             }).join('');
         }
 
+        // Render Current Step
+        function renderStep() {
+            const content = document.getElementById('content');
+            content.innerHTML = '';
+            steps[currentStep].render();
+            renderStepper();
+        }
+
+        // Navigation
         function nextStep() {
-            if (currentStep < totalSteps) {
+            if (currentStep < steps.length - 1) {
                 currentStep++;
-                updateUI();
+                renderStep();
             }
         }
 
         function prevStep() {
             if (currentStep > 0) {
-                if (currentStep === 1) {
-                    currentStep = 0;
-                    document.getElementById('stepper').classList.remove('show');
-                    document.getElementById('mainContainer').classList.add('full-width');
-                    document.getElementById('aiCoach').style.display = 'none';
-                } else {
-                    currentStep--;
-                }
-                updateUI();
+                currentStep--;
+                renderStep();
             }
         }
 
-        function addAiMessage(message, isUser = false) {
-            const messagesContainer = document.getElementById('aiMessages');
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `ai-message ${isUser ? 'user' : ''}`;
-            messageDiv.textContent = message;
-            messagesContainer.appendChild(messageDiv);
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        // Step Renderers
+        function renderWelcome() {
+            const content = document.getElementById('content');
+            content.innerHTML = `
+                <div class="card card-large text-center">
+                    <h1>Welcome to Booking Products Setup</h1>
+                    <p class="body1 text-secondary" style="margin: 16px 0 32px;">
+                        Let's set up your booking products in just a few steps. This will only take 5-10 minutes.
+                    </p>
+                    <div class="product-grid" style="text-align: left; margin-top: 32px;">
+                        <div class="card">
+                            <div class="product-icon">
+                                <span class="material-icons">calendar_today</span>
+                            </div>
+                            <h5>Online Booking</h5>
+                            <p class="body2 text-secondary">Let customers book appointments 24/7 from your website</p>
+                        </div>
+                        <div class="card">
+                            <div class="product-icon">
+                                <span class="material-icons">phone</span>
+                            </div>
+                            <h5>CSR AI</h5>
+                            <p class="body2 text-secondary">AI-powered phone answering to handle customer calls</p>
+                        </div>
+                        <div class="card">
+                            <div class="product-icon">
+                                <span class="material-icons">route</span>
+                            </div>
+                            <h5>Smart Scheduling</h5>
+                            <p class="body2 text-secondary">Optimize routes and automatically assign jobs to your team</p>
+                        </div>
+                        <div class="card">
+                            <div class="product-icon">
+                                <span class="material-icons">support_agent</span>
+                            </div>
+                            <h5>HCP Assist</h5>
+                            <p class="body2 text-secondary">Live customer support with real agents (paid add-on)</p>
+                        </div>
+                    </div>
+                    <div class="button-group" style="justify-content: center; margin-top: 48px;">
+                        <button class="button button-contained" onclick="nextStep()">
+                            Get Started
+                            <span class="material-icons">arrow_forward</span>
+                        </button>
+                    </div>
+                </div>
+            `;
         }
 
-        function handleAiInputKeypress(event) {
-            if (event.key === 'Enter') sendAiMessage();
+        function renderServices() {
+            const content = document.getElementById('content');
+            content.innerHTML = `
+                <div class="card">
+                    <h2>Select Your Services</h2>
+                    <p class="body2 text-secondary mb-16">Choose which services you want to offer for online booking. You can reorder them by dragging.</p>
+
+                    <div class="form-group">
+                        <input type="text" class="form-input" placeholder="Search services..." id="serviceSearch" oninput="filterServices()">
+                    </div>
+
+                    <div class="service-list" id="serviceList">
+                        ${services.map(service => `
+                            <div class="service-item ${!service.enabled ? 'disabled' : ''}" data-id="${service.id}">
+                                <div class="service-info">
+                                    <span class="material-icons drag-handle">drag_indicator</span>
+                                    <div class="service-details">
+                                        <div class="service-name">${service.name}</div>
+                                        <div class="service-meta">$${service.price} • ${service.duration} min</div>
+                                    </div>
+                                </div>
+                                <div class="service-actions">
+                                    <label class="checkbox-wrapper" style="margin: 0;">
+                                        <input type="checkbox" class="checkbox-input" ${service.enabled ? 'checked' : ''} onchange="toggleService(${service.id})">
+                                    </label>
+                                    <button class="button button-text" onclick="editService(${service.id})">
+                                        <span class="material-icons">edit</span>
+                                    </button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <button class="button button-outlined mt-24" onclick="addService()">
+                        <span class="material-icons">add</span>
+                        Add Service
+                    </button>
+
+                    <div class="button-group">
+                        <button class="button button-text" onclick="prevStep()">Back</button>
+                        <button class="button button-contained" onclick="nextStep()">
+                            Continue
+                            <span class="material-icons">arrow_forward</span>
+                        </button>
+                    </div>
+                </div>
+            `;
         }
 
-        function sendAiMessage() {
+        function renderHours() {
+            const content = document.getElementById('content');
+            const days = Object.keys(schedule);
+
+            content.innerHTML = `
+                <div class="card">
+                    <h2>Set Your Availability</h2>
+                    <p class="body2 text-secondary mb-16">Define when customers can book appointments with you.</p>
+
+                    <div class="schedule-grid">
+                        ${days.map(day => `
+                            <div class="schedule-day">
+                                <label class="checkbox-wrapper" style="margin: 0;">
+                                    <input type="checkbox" class="checkbox-input" ${schedule[day].enabled ? 'checked' : ''} onchange="toggleDay('${day}')">
+                                    <span class="schedule-day-name">${day.charAt(0).toUpperCase() + day.slice(1)}</span>
+                                </label>
+                                <div class="schedule-times">
+                                    <input type="time" class="time-input" value="${schedule[day].start}" ${!schedule[day].enabled ? 'disabled' : ''} onchange="updateTime('${day}', 'start', this.value)">
+                                    <span>to</span>
+                                    <input type="time" class="time-input" value="${schedule[day].end}" ${!schedule[day].enabled ? 'disabled' : ''} onchange="updateTime('${day}', 'end', this.value)">
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <div class="button-group">
+                        <button class="button button-text" onclick="prevStep()">Back</button>
+                        <button class="button button-contained" onclick="nextStep()">
+                            Continue
+                            <span class="material-icons">arrow_forward</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderTeam() {
+            const content = document.getElementById('content');
+            content.innerHTML = `
+                <div class="card">
+                    <h2>Your Team</h2>
+                    <p class="body2 text-secondary mb-16">Manage which team members can take bookings.</p>
+
+                    <div class="team-grid">
+                        ${teamMembers.map(member => `
+                            <div class="team-card">
+                                <div class="team-avatar">${member.initials}</div>
+                                <div>
+                                    <div class="subtitle1">${member.name}</div>
+                                    <div class="caption">${member.available ? 'Available' : 'Not available'}</div>
+                                </div>
+                                <label class="checkbox-wrapper" style="margin: 0;">
+                                    <input type="checkbox" class="checkbox-input" ${member.available ? 'checked' : ''} onchange="toggleTeamMember(${member.id})">
+                                    <span class="body2">Available for bookings</span>
+                                </label>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <div class="button-group">
+                        <button class="button button-text" onclick="prevStep()">Back</button>
+                        <button class="button button-contained" onclick="nextStep()">
+                            Continue
+                            <span class="material-icons">arrow_forward</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderProducts() {
+            const content = document.getElementById('content');
+            const products = [
+                { id: 'online_booking', name: 'Online Booking', icon: 'calendar_today', desc: 'Let customers book appointments 24/7' },
+                { id: 'csr_ai', name: 'CSR AI', icon: 'phone', desc: 'AI-powered phone answering' },
+                { id: 'smart_scheduling', name: 'Smart Scheduling', icon: 'route', desc: 'Optimize routes and assignments' },
+                { id: 'hcp_assist', name: 'HCP Assist', icon: 'support_agent', desc: 'Live customer support (paid add-on)' }
+            ];
+
+            content.innerHTML = `
+                <div class="card">
+                    <h2>Choose Your Products</h2>
+                    <p class="body2 text-secondary mb-16">Select which booking products you want to enable.</p>
+
+                    <div class="product-grid">
+                        ${products.map(product => `
+                            <div class="product-card ${selectedProducts.includes(product.id) ? 'selected' : ''}" onclick="toggleProduct('${product.id}')">
+                                <div class="product-icon">
+                                    <span class="material-icons">${product.icon}</span>
+                                </div>
+                                <div class="product-name">${product.name}</div>
+                                <div class="product-description">${product.desc}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <div class="button-group">
+                        <button class="button button-text" onclick="prevStep()">Back</button>
+                        <button class="button button-contained" onclick="nextStep()" ${selectedProducts.length === 0 ? 'disabled' : ''}>
+                            Continue
+                            <span class="material-icons">arrow_forward</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderSetup() {
+            const content = document.getElementById('content');
+            const enabledServices = services.filter(s => s.enabled);
+            const enabledDays = Object.keys(schedule).filter(day => schedule[day].enabled);
+            const availableTeam = teamMembers.filter(m => m.available);
+
+            content.innerHTML = `
+                <div class="card">
+                    <h2>Review Your Setup</h2>
+                    <p class="body2 text-secondary mb-16">Review your configuration before we activate your booking products.</p>
+
+                    <div class="card" style="background: var(--grey-100); margin-top: 24px;">
+                        <h5>Services (${enabledServices.length})</h5>
+                        <ul style="list-style: none; padding: 0;">
+                            ${enabledServices.slice(0, 3).map(s => `<li class="body2">✓ ${s.name} - $${s.price}</li>`).join('')}
+                            ${enabledServices.length > 3 ? `<li class="body2">+ ${enabledServices.length - 3} more</li>` : ''}
+                        </ul>
+                    </div>
+
+                    <div class="card" style="background: var(--grey-100); margin-top: 16px;">
+                        <h5>Availability</h5>
+                        <p class="body2">${enabledDays.join(', ')}</p>
+                    </div>
+
+                    <div class="card" style="background: var(--grey-100); margin-top: 16px;">
+                        <h5>Team Members (${availableTeam.length})</h5>
+                        <p class="body2">${availableTeam.map(m => m.name).join(', ')}</p>
+                    </div>
+
+                    <div class="card" style="background: var(--grey-100); margin-top: 16px;">
+                        <h5>Products (${selectedProducts.length})</h5>
+                        <p class="body2">${selectedProducts.join(', ').replace(/_/g, ' ')}</p>
+                    </div>
+
+                    <div class="button-group">
+                        <button class="button button-text" onclick="prevStep()">Back</button>
+                        <button class="button button-contained" onclick="nextStep()">
+                            Activate Products
+                            <span class="material-icons">check</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderDone() {
+            const content = document.getElementById('content');
+            content.innerHTML = `
+                <div class="card card-large text-center">
+                    <div style="width: 80px; height: 80px; background: var(--success-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px;">
+                        <span class="material-icons" style="font-size: 48px; color: var(--success-main);">check_circle</span>
+                    </div>
+                    <h1>You're All Set!</h1>
+                    <p class="body1 text-secondary" style="margin: 16px 0 32px;">
+                        Your booking products are now active. Customers can start booking appointments right away.
+                    </p>
+
+                    <div class="card" style="text-align: left; max-width: 600px; margin: 0 auto;">
+                        <h5>Next Steps</h5>
+                        <div class="body2" style="margin-bottom: 12px;">
+                            <span class="material-icons" style="vertical-align: middle; color: var(--primary-main);">link</span>
+                            <strong>Share your booking link:</strong> Add it to your website and social media
+                        </div>
+                        <div class="body2" style="margin-bottom: 12px;">
+                            <span class="material-icons" style="vertical-align: middle; color: var(--primary-main);">phone</span>
+                            <strong>Test CSR AI:</strong> Call your number to experience the AI assistant
+                        </div>
+                        <div class="body2">
+                            <span class="material-icons" style="vertical-align: middle; color: var(--primary-main);">settings</span>
+                            <strong>Fine-tune settings:</strong> Adjust advanced options in Settings > Booking
+                        </div>
+                    </div>
+
+                    <div class="button-group" style="justify-content: center; margin-top: 48px;">
+                        <button class="button button-outlined" onclick="window.location.reload()">
+                            Set Up Another
+                        </button>
+                        <button class="button button-contained" onclick="alert('Redirecting to dashboard...')">
+                            Go to Dashboard
+                            <span class="material-icons">arrow_forward</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Service Functions
+        function toggleService(id) {
+            const service = services.find(s => s.id === id);
+            service.enabled = !service.enabled;
+            renderStep();
+        }
+
+        function filterServices() {
+            const search = document.getElementById('serviceSearch').value.toLowerCase();
+            const items = document.querySelectorAll('.service-item');
+            items.forEach(item => {
+                const name = item.querySelector('.service-name').textContent.toLowerCase();
+                item.style.display = name.includes(search) ? 'flex' : 'none';
+            });
+        }
+
+        function addService() {
+            const name = prompt('Service name:');
+            const price = prompt('Price ($):');
+            const duration = prompt('Duration (minutes):');
+            if (name && price && duration) {
+                services.push({
+                    id: services.length + 1,
+                    name,
+                    price: parseInt(price),
+                    duration: parseInt(duration),
+                    enabled: true
+                });
+                renderStep();
+            }
+        }
+
+        function editService(id) {
+            const service = services.find(s => s.id === id);
+            const price = prompt('New price:', service.price);
+            const duration = prompt('New duration (minutes):', service.duration);
+            if (price) service.price = parseInt(price);
+            if (duration) service.duration = parseInt(duration);
+            renderStep();
+        }
+
+        // Schedule Functions
+        function toggleDay(day) {
+            schedule[day].enabled = !schedule[day].enabled;
+            renderStep();
+        }
+
+        function updateTime(day, field, value) {
+            schedule[day][field] = value;
+        }
+
+        // Team Functions
+        function toggleTeamMember(id) {
+            const member = teamMembers.find(m => m.id === id);
+            member.available = !member.available;
+            renderStep();
+        }
+
+        // Product Functions
+        function toggleProduct(id) {
+            const index = selectedProducts.indexOf(id);
+            if (index > -1) {
+                selectedProducts.splice(index, 1);
+            } else {
+                selectedProducts.push(id);
+            }
+            renderStep();
+        }
+
+        // AI Coach Functions
+        function toggleAICoach() {
+            const coach = document.getElementById('aiCoach');
+            coach.classList.toggle('visible');
+        }
+
+        function handleAIInput(event) {
+            if (event.key === 'Enter') {
+                sendAIMessage();
+            }
+        }
+
+        function sendAIMessage() {
             const input = document.getElementById('aiInput');
+            const body = document.getElementById('aiCoachBody');
             const message = input.value.trim();
 
-            if (message) {
-                addAiMessage(message, true);
-                input.value = '';
+            if (!message) return;
 
-                setTimeout(() => {
-                    const response = getAiResponse(message);
-                    addAiMessage(response);
-                }, 500);
-            }
+            // User message
+            body.innerHTML += `<div class="ai-message" style="background: var(--primary-light); color: white; margin-left: 24px;">${message}</div>`;
+
+            // AI response (mock)
+            setTimeout(() => {
+                const responses = {
+                    'services': 'You have 5 services configured. The most popular is AC Repair at $150. Would you like to adjust pricing?',
+                    'hours': 'Your availability is set for Mon-Fri, 8am-5pm. Most HVAC pros also enable Saturday mornings for emergency calls.',
+                    'products': 'I recommend starting with Online Booking and CSR AI. You can add Smart Scheduling later as your team grows.',
+                    'default': 'Great question! Based on your setup, everything looks good. Is there anything specific you\'d like to change?'
+                };
+
+                const response = responses[message.toLowerCase()] || responses.default;
+                body.innerHTML += `<div class="ai-message">${response}</div>`;
+                body.scrollTop = body.scrollHeight;
+            }, 500);
+
+            input.value = '';
+            body.scrollTop = body.scrollHeight;
         }
 
-        function getAiResponse(question) {
-            const q = question.toLowerCase();
-
-            if (q.includes('price') || q.includes('cost')) {
-                return "You can set prices for each service on the Services step. Just click in the price field to edit. Most HVAC companies charge $150-$250 for basic services.";
-            } else if (q.includes('service') || q.includes('add')) {
-                return "To add a new service, click the '+ Add Service' button on the Services step. You can add as many services as you need!";
-            } else if (q.includes('hours') || q.includes('availability')) {
-                return "Booking hours determine when customers can schedule appointments. The default is Monday-Friday, 8 AM - 5 PM, but you can customize this for each technician later.";
-            } else if (q.includes('product') || q.includes('which')) {
-                return "I recommend starting with Online Booking - it's the easiest way to capture customers 24/7. You can add CSR AI and Smart Scheduling later as your business grows!";
-            } else if (q.includes('help') || q.includes('how')) {
-                return "I'm here to help! You can ask me about pricing, services, booking hours, or which products to choose. What would you like to know?";
-            } else {
-                return "Great question! For setup, focus on: 1) Selecting your most popular services, 2) Setting competitive prices, and 3) Choosing products that fit your business needs. Need more specific help?";
-            }
-        }
+        // Initialize on load
+        init();
     </script>
 </body>
 </html>
