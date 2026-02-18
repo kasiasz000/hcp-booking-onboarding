@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Housecall Pro - Booking Onboarding</title>
+    <title>Housecall Pro - Booking Products Setup</title>
     <style>
         * {
             margin: 0;
@@ -25,9 +25,21 @@
             padding: 12px 24px;
             display: flex;
             align-items: center;
-            gap: 24px;
+            justify-content: space-between;
             color: white;
             font-size: 14px;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
         }
 
         .nav-item {
@@ -45,6 +57,18 @@
         .nav-item.active {
             background: rgba(255, 255, 255, 0.15);
             color: white;
+        }
+
+        .user-badge {
+            background: #FF9500;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
         }
 
         /* Header */
@@ -73,6 +97,11 @@
             background: white;
             padding: 32px 24px 24px;
             border-bottom: 1px solid #E5E5E7;
+            display: none;
+        }
+
+        .stepper-container.show {
+            display: block;
         }
 
         .stepper {
@@ -154,9 +183,21 @@
 
         /* Main Content */
         .main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 48px 24px;
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 32px;
+        }
+
+        .main.full-width {
+            grid-template-columns: 1fr;
             max-width: 900px;
-            margin: 48px auto;
-            padding: 0 24px;
+        }
+
+        .content-area {
+            min-height: 400px;
         }
 
         .step-content {
@@ -173,10 +214,96 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* AI Coach Sidebar */
+        .ai-coach-sidebar {
+            position: sticky;
+            top: 24px;
+            height: fit-content;
+        }
+
+        .ai-coach-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .ai-coach-header {
+            background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
+            padding: 16px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .ai-coach-icon {
+            font-size: 32px;
+        }
+
+        .ai-coach-title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .ai-coach-messages {
+            height: 300px;
+            overflow-y: auto;
+            padding: 16px;
+            background: #FAFAFA;
+        }
+
+        .ai-message {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .ai-message.user {
+            background: #0071E3;
+            color: white;
+            margin-left: 40px;
+        }
+
+        .ai-coach-input-area {
+            padding: 12px;
+            border-top: 1px solid #E5E5E7;
+            background: white;
+        }
+
+        .ai-input-wrapper {
+            display: flex;
+            gap: 8px;
+        }
+
+        .ai-input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #D1D1D6;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        .ai-send-btn {
+            padding: 8px 16px;
+            background: #0071E3;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .ai-send-btn:hover {
+            background: #0066CC;
+        }
+
         /* Step Header */
         .step-header {
-            text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 32px;
         }
 
         .step-title {
@@ -190,8 +317,35 @@
         .step-subtitle {
             font-size: 16px;
             color: #86868B;
+        }
+
+        /* Welcome Screen */
+        .welcome-hero {
+            text-align: center;
+            padding: 60px 0;
+        }
+
+        .welcome-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        .welcome-subtitle {
+            font-size: 20px;
+            color: #86868B;
+            margin-bottom: 40px;
             max-width: 600px;
-            margin: 0 auto;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .product-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            margin-top: 48px;
         }
 
         /* Card */
@@ -203,131 +357,109 @@
             margin-bottom: 20px;
         }
 
-        .card-section {
-            margin-bottom: 24px;
-        }
-
-        .card-section:last-child {
-            margin-bottom: 0;
-        }
-
-        .section-title {
-            font-size: 17px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            color: #1D1D1F;
-        }
-
-        .section-description {
-            font-size: 14px;
-            color: #86868B;
-            margin-bottom: 16px;
-        }
-
-        /* Grid */
-        .grid {
-            display: grid;
-            gap: 16px;
-        }
-
-        .grid-4 {
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        }
-
         /* Feature Cards */
         .feature-card {
             background: white;
             border-radius: 12px;
-            padding: 24px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-            transition: all 0.2s;
+            padding: 32px 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
             cursor: pointer;
-            position: relative;
+            text-align: center;
         }
 
         .feature-card:hover {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-            transform: translateY(-2px);
-        }
-
-        .feature-card.selected {
-            border: 2px solid #0071E3;
-            box-shadow: 0 4px 12px rgba(0, 113, 227, 0.2);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            transform: translateY(-4px);
         }
 
         .feature-icon {
-            width: 48px;
-            height: 48px;
-            background: #F5F5F7;
-            border-radius: 10px;
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #0071E3 0%, #00C6FB 100%);
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
-            margin-bottom: 16px;
+            font-size: 32px;
+            margin: 0 auto 20px;
         }
 
         .feature-title {
-            font-size: 17px;
+            font-size: 20px;
             font-weight: 600;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
             color: #1D1D1F;
         }
 
         .feature-description {
-            font-size: 14px;
+            font-size: 15px;
             color: #86868B;
-            line-height: 1.5;
+            line-height: 1.6;
         }
 
-        .badge {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            background: #FFE5CC;
-            color: #CC7000;
-            padding: 4px 10px;
-            border-radius: 8px;
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-        }
-
-        /* List */
-        .list {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-        }
-
-        .list-item {
+        /* Services Management */
+        .services-toolbar {
             display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 10px 16px;
+            border: 1px solid #D1D1D6;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: inherit;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #0071E3;
+            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1);
+        }
+
+        .service-item {
+            background: white;
+            border: 1px solid #E5E5E7;
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 12px;
+            display: grid;
+            grid-template-columns: 40px 1fr 120px 60px;
+            gap: 16px;
             align-items: center;
-            padding: 16px 20px;
-            border-bottom: 1px solid #F5F5F7;
+            transition: all 0.2s;
         }
 
-        .list-item:last-child {
-            border-bottom: none;
+        .service-item:hover {
+            border-color: #0071E3;
+            box-shadow: 0 2px 8px rgba(0, 113, 227, 0.1);
         }
 
-        .list-item:hover {
-            background: #FAFAFA;
+        .service-name {
+            font-weight: 500;
+            color: #1D1D1F;
+        }
+
+        .service-price {
+            color: #86868B;
+            font-size: 14px;
+        }
+
+        .price-input {
+            padding: 6px 10px;
+            border: 1px solid #D1D1D6;
+            border-radius: 6px;
+            font-size: 14px;
+            width: 100%;
         }
 
         .drag-handle {
-            margin-right: 12px;
             color: #C7C7CC;
             cursor: move;
-            font-size: 18px;
-        }
-
-        .list-item-text {
-            flex: 1;
-            font-size: 15px;
-            color: #1D1D1F;
+            font-size: 20px;
         }
 
         /* Toggle Switch */
@@ -361,111 +493,71 @@
             transform: translateX(20px);
         }
 
-        /* Radio Group */
-        .radio-group {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
+        /* Product Selection */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
         }
 
-        .radio-item {
-            display: flex;
-            align-items: flex-start;
-            padding: 16px;
-            border: 1px solid #E5E5E7;
-            border-radius: 10px;
+        .product-card {
+            background: white;
+            border: 2px solid #E5E5E7;
+            border-radius: 12px;
+            padding: 24px;
             cursor: pointer;
             transition: all 0.2s;
+            position: relative;
         }
 
-        .radio-item:hover {
+        .product-card:hover {
             border-color: #0071E3;
-            background: #F9FAFB;
+            box-shadow: 0 4px 12px rgba(0, 113, 227, 0.15);
         }
 
-        .radio-item.selected {
+        .product-card.selected {
             border-color: #0071E3;
             background: #F0F7FF;
         }
 
-        .radio-circle {
-            width: 20px;
-            height: 20px;
-            border: 2px solid #C7C7CC;
-            border-radius: 50%;
-            margin-right: 12px;
-            flex-shrink: 0;
-            position: relative;
-            margin-top: 2px;
-        }
-
-        .radio-item.selected .radio-circle {
-            border-color: #0071E3;
-        }
-
-        .radio-item.selected .radio-circle::after {
-            content: '';
-            width: 10px;
-            height: 10px;
-            background: #0071E3;
-            border-radius: 50%;
+        .product-card.selected::before {
+            content: "✓";
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        .radio-content {
-            flex: 1;
-        }
-
-        .radio-title {
-            font-weight: 600;
-            margin-bottom: 4px;
-            color: #1D1D1F;
-        }
-
-        .radio-description {
-            font-size: 14px;
-            color: #86868B;
-        }
-
-        /* Hours Table */
-        .hours-table {
-            width: 100%;
-        }
-
-        .hours-row {
-            display: grid;
-            grid-template-columns: 120px 1fr 1fr 60px;
-            gap: 12px;
+            top: 16px;
+            right: 16px;
+            width: 24px;
+            height: 24px;
+            background: #0071E3;
+            color: white;
+            border-radius: 50%;
+            display: flex;
             align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid #F5F5F7;
-        }
-
-        .hours-row:last-child {
-            border-bottom: none;
-        }
-
-        .day-label {
-            font-weight: 500;
-            color: #1D1D1F;
-        }
-
-        .time-input {
-            padding: 8px 12px;
-            border: 1px solid #D1D1D6;
-            border-radius: 8px;
+            justify-content: center;
             font-size: 14px;
-            font-family: inherit;
-            color: #1D1D1F;
         }
 
-        .time-input:focus {
-            outline: none;
-            border-color: #0071E3;
-            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1);
+        .product-icon-large {
+            width: 56px;
+            height: 56px;
+            background: #F5F5F7;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 16px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #FFE5CC;
+            color: #CC7000;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 12px;
         }
 
         /* Buttons */
@@ -477,7 +569,7 @@
         }
 
         .btn {
-            padding: 10px 24px;
+            padding: 12px 28px;
             border-radius: 8px;
             font-size: 15px;
             font-weight: 500;
@@ -496,10 +588,6 @@
             background: #0066CC;
         }
 
-        .btn-primary:active {
-            transform: scale(0.98);
-        }
-
         .btn-secondary {
             background: transparent;
             border: 1px solid #D1D1D6;
@@ -510,477 +598,362 @@
             background: #F5F5F7;
         }
 
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
+        .btn-large {
+            padding: 16px 48px;
+            font-size: 17px;
         }
 
         /* Success Screen */
         .success-container {
             text-align: center;
-            max-width: 600px;
-            margin: 0 auto;
+            padding: 40px 0;
         }
 
         .success-icon {
-            width: 80px;
-            height: 80px;
+            width: 96px;
+            height: 96px;
             background: linear-gradient(135deg, #34C759 0%, #30D158 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 40px;
+            font-size: 48px;
             margin: 0 auto 32px;
             color: white;
         }
 
-        .success-actions {
+        .products-enabled {
             display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-top: 40px;
+            justify-content: center;
+            gap: 16px;
+            margin: 32px 0;
+            flex-wrap: wrap;
         }
 
-        .success-link {
+        .enabled-badge {
             background: white;
-            padding: 20px 24px;
-            border-radius: 12px;
-            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            color: #1D1D1F;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-            transition: all 0.2s;
+            gap: 8px;
         }
 
-        .success-link:hover {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-            transform: translateX(4px);
-        }
-
-        .success-link-content {
-            text-align: left;
-        }
-
-        .success-link-title {
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
-        .success-link-desc {
-            font-size: 14px;
-            color: #86868B;
-        }
-
-        .arrow {
+        .enabled-icon {
             font-size: 20px;
-            color: #C7C7CC;
         }
 
-        /* Info Banner */
-        .info-banner {
-            background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
-            border-radius: 12px;
-            padding: 20px 24px;
-            color: white;
-            margin-bottom: 32px;
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal.show {
             display: flex;
-            gap: 16px;
         }
 
-        .info-icon {
-            font-size: 32px;
-            flex-shrink: 0;
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 32px;
+            max-width: 500px;
+            width: 90%;
         }
 
-        .info-content h3 {
-            font-size: 16px;
+        .modal-title {
+            font-size: 20px;
             font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
             margin-bottom: 6px;
+            font-weight: 500;
+            color: #1D1D1F;
         }
 
-        .info-content p {
-            font-size: 14px;
-            opacity: 0.95;
-            line-height: 1.5;
+        .form-input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #D1D1D6;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: inherit;
         }
 
-        /* Checkbox */
-        input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            accent-color: #0071E3;
-            cursor: pointer;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .top-nav {
-                overflow-x: auto;
-            }
-
-            .stepper {
-                gap: 24px;
-            }
-
-            .step-circle {
-                width: 28px;
-                height: 28px;
-                font-size: 12px;
-            }
-
-            .step-title {
-                font-size: 24px;
-            }
-
-            .grid-4 {
-                grid-template-columns: 1fr;
-            }
-
-            .hours-row {
-                grid-template-columns: 80px 1fr;
-            }
-
-            .hours-row > :nth-child(3),
-            .hours-row > :nth-child(4) {
-                grid-column: 2;
-            }
-
-            .button-group {
-                flex-direction: column-reverse;
-            }
-
-            .btn {
-                width: 100%;
-            }
+        .form-input:focus {
+            outline: none;
+            border-color: #0071E3;
+            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.1);
         }
     </style>
 </head>
 <body>
     <!-- Top Navigation -->
     <div class="top-nav">
-        <a href="#" class="nav-item active">Get started</a>
-        <a href="#" class="nav-item">Home</a>
-        <a href="#" class="nav-item">Inbox</a>
-        <a href="#" class="nav-item">Schedule</a>
-        <a href="#" class="nav-item">Customers</a>
-        <a href="#" class="nav-item">Settings</a>
+        <div class="nav-left">
+            <a href="#" class="nav-item active">Get started</a>
+            <a href="#" class="nav-item">Home</a>
+            <a href="#" class="nav-item">Schedule</a>
+            <a href="#" class="nav-item">Customers</a>
+            <a href="#" class="nav-item">Settings</a>
+        </div>
+        <div class="nav-right">
+            <a href="#" class="nav-item">New</a>
+            <div class="user-badge">JD</div>
+        </div>
     </div>
 
     <!-- Header -->
     <div class="header">
-        <div class="header-title">Online booking setup</div>
+        <div class="header-title">Booking Products Setup</div>
         <div class="header-actions">
-            <button class="btn btn-secondary" onclick="window.close()">Back</button>
-            <button class="btn btn-primary" onclick="finishSetup()">Finish onboarding setup</button>
+            <button class="btn btn-secondary" onclick="window.close()">Exit Setup</button>
         </div>
     </div>
 
     <!-- Stepper -->
-    <div class="stepper-container">
+    <div class="stepper-container" id="stepper">
         <div class="stepper">
             <div class="step active" data-step="1">
                 <div class="step-circle">1</div>
-                <div class="step-label">Overview</div>
+                <div class="step-label">Services</div>
             </div>
             <div class="step" data-step="2">
                 <div class="step-circle">2</div>
-                <div class="step-label">Services</div>
+                <div class="step-label">Availability</div>
             </div>
             <div class="step" data-step="3">
                 <div class="step-circle">3</div>
-                <div class="step-label">Availability</div>
+                <div class="step-label">Products</div>
             </div>
             <div class="step" data-step="4">
                 <div class="step-circle">4</div>
-                <div class="step-label">Preview</div>
-            </div>
-            <div class="step" data-step="5">
-                <div class="step-circle">5</div>
-                <div class="step-label">Share</div>
+                <div class="step-label">Complete</div>
             </div>
         </div>
     </div>
 
     <!-- Main Content -->
-    <div class="main">
-        <!-- Step 1: Overview -->
-        <div class="step-content active" id="step-1">
-            <div class="step-header">
-                <h2 class="step-title">Free Online Booking made simple</h2>
-                <p class="step-subtitle">Let your customers book appointments from any device anytime, day or night. Get set up in just three minutes, and you'll be ready to accept appointments on the same day!</p>
-            </div>
-
-            <div class="info-banner">
-                <div class="info-icon">💡</div>
-                <div class="info-content">
-                    <h3>Simple. Practical. Convenient.</h3>
-                    <p>We'll help you configure all your booking settings in one place. You can always come back and adjust these settings later.</p>
+    <div class="main full-width" id="mainContainer">
+        <div class="content-area">
+            <!-- Welcome Screen (Step 0) -->
+            <div class="step-content active" id="step-0">
+                <div class="welcome-hero">
+                    <h1 class="welcome-title">Capture More Customers</h1>
+                    <p class="welcome-subtitle">Set up your booking products in just a few minutes and start accepting appointments 24/7. Let's unlock the full power of Housecall Pro.</p>
+                    <button class="btn btn-primary btn-large" onclick="startOnboarding()">Let's Get Started →</button>
                 </div>
-            </div>
 
-            <div class="grid grid-4">
-                <div class="feature-card">
-                    <div class="feature-icon">🌐</div>
-                    <h3 class="feature-title">Online Booking</h3>
-                    <p class="feature-description">Let customers book appointments directly from your website 24/7</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📞</div>
-                    <h3 class="feature-title">CSR AI</h3>
-                    <p class="feature-description">AI-powered assistant that answers calls and schedules jobs</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📅</div>
-                    <h3 class="feature-title">Smart Scheduling</h3>
-                    <p class="feature-description">Automatically optimize your schedule for efficiency</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">⭐</div>
-                    <h3 class="feature-title">HCP Assist</h3>
-                    <p class="feature-description">Premium support and account management</p>
-                    <div class="badge">Add-on</div>
-                </div>
-            </div>
-
-            <div class="button-group">
-                <button class="btn btn-secondary" style="visibility: hidden;">Back</button>
-                <button class="btn btn-primary" onclick="nextStep()">Get it now</button>
-            </div>
-        </div>
-
-        <!-- Step 2: Services -->
-        <div class="step-content" id="step-2">
-            <div class="step-header">
-                <h2 class="step-title">Select your service types</h2>
-                <p class="step-subtitle">Choose which services customers can book online</p>
-            </div>
-
-            <div class="card">
-                <div class="card-section">
-                    <h3 class="section-title">Available Services</h3>
-                    <div class="list">
-                        <div class="list-item">
-                            <span class="drag-handle">☰</span>
-                            <span class="list-item-text">Plumbing Repair</span>
-                            <div class="switch checked" onclick="toggleSwitch(this)">
-                                <div class="switch-thumb"></div>
-                            </div>
-                        </div>
-                        <div class="list-item">
-                            <span class="drag-handle">☰</span>
-                            <span class="list-item-text">HVAC Installation</span>
-                            <div class="switch checked" onclick="toggleSwitch(this)">
-                                <div class="switch-thumb"></div>
-                            </div>
-                        </div>
-                        <div class="list-item">
-                            <span class="drag-handle">☰</span>
-                            <span class="list-item-text">Electrical Service</span>
-                            <div class="switch checked" onclick="toggleSwitch(this)">
-                                <div class="switch-thumb"></div>
-                            </div>
-                        </div>
-                        <div class="list-item">
-                            <span class="drag-handle">☰</span>
-                            <span class="list-item-text">AC Tune-Up</span>
-                            <div class="switch" onclick="toggleSwitch(this)">
-                                <div class="switch-thumb"></div>
-                            </div>
-                        </div>
-                        <div class="list-item">
-                            <span class="drag-handle">☰</span>
-                            <span class="list-item-text">Emergency Service</span>
-                            <div class="switch checked" onclick="toggleSwitch(this)">
-                                <div class="switch-thumb"></div>
-                            </div>
-                        </div>
+                <div class="product-showcase">
+                    <div class="feature-card">
+                        <div class="feature-icon">🌐</div>
+                        <h3 class="feature-title">Online Booking</h3>
+                        <p class="feature-description">Let customers book on your website 24/7</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📞</div>
+                        <h3 class="feature-title">CSR AI</h3>
+                        <p class="feature-description">AI answers calls and schedules automatically</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📅</div>
+                        <h3 class="feature-title">Smart Scheduling</h3>
+                        <p class="feature-description">Auto-optimize your schedule</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⭐</div>
+                        <h3 class="feature-title">HCP Assist</h3>
+                        <p class="feature-description">Premium support & account management</p>
                     </div>
                 </div>
             </div>
 
-            <div class="button-group">
-                <button class="btn btn-secondary" onclick="prevStep()">Back</button>
-                <button class="btn btn-primary" onclick="nextStep()">Next</button>
-            </div>
-        </div>
-
-        <!-- Step 3: Availability -->
-        <div class="step-content" id="step-3">
-            <div class="step-header">
-                <h2 class="step-title">Set your availability</h2>
-                <p class="step-subtitle">We have set the online booking availability for you. Check which days and time works best for online booking appointments.</p>
-            </div>
-
-            <div class="card">
-                <div class="card-section">
-                    <h3 class="section-title">Booking preferences</h3>
-                    <div class="radio-group">
-                        <div class="radio-item selected" onclick="selectRadio(this)">
-                            <div class="radio-circle"></div>
-                            <div class="radio-content">
-                                <div class="radio-title">Flexible scheduling</div>
-                                <div class="radio-description">Homeowner will be able to select any available time slot in your calendar in 30min increments.</div>
-                            </div>
-                        </div>
-                        <div class="radio-item" onclick="selectRadio(this)">
-                            <div class="radio-circle"></div>
-                            <div class="radio-content">
-                                <div class="radio-title">Set specific start time</div>
-                                <div class="radio-description">Booking will always start at defined start time and last for as much as the service duration (ex. only 8am, noon, 1pm, 5pm etc.)</div>
-                            </div>
-                        </div>
-                        <div class="radio-item" onclick="selectRadio(this)">
-                            <div class="radio-circle"></div>
-                            <div class="radio-content">
-                                <div class="radio-title">Manual</div>
-                                <div class="radio-description">Hide this selection from booking page and book as unscheduled jobs and estimates</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card-section">
-                    <h3 class="section-title">Booking hours</h3>
-                    <p class="section-description">Each day will fit in multiple appointments based on the service duration and available technicians.</p>
-                    <div class="hours-table">
-                        <div class="hours-row">
-                            <div class="day-label">Monday</div>
-                            <input type="time" class="time-input" value="08:00">
-                            <input type="time" class="time-input" value="16:00">
-                            <div class="switch checked" onclick="toggleSwitch(this)">
-                                <div class="switch-thumb"></div>
-                            </div>
-                        </div>
-                        <div class="hours-row">
-                            <div class="day-label">Tuesday</div>
-                            <input type="time" class="time-input" value="08:00">
-                            <input type="time" class="time-input" value="16:00">
-                            <div class="switch checked" onclick="toggleSwitch(this)">
-                                <div class="switch-thumb"></div>
-                            </div>
-                        </div>
-                        <div class="hours-row">
-                            <div class="day-label">Wednesday</div>
-                            <input type="time" class="time-input" value="08:00">
-                            <input type="time" class="time-input" value="16:00">
-                            <div class="switch checked" onclick="toggleSwitch(this)">
-                                <div class="switch-thumb"></div>
-                            </div>
-                        </div>
-                        <div class="hours-row">
-                            <div class="day-label">Thursday</div>
-                            <input type="time" class="time-input" value="08:00">
-                            <input type="time" class="time-input" value="16:00">
-                            <div class="switch checked" onclick="toggleSwitch(this)">
-                                <div class="switch-thumb"></div>
-                            </div>
-                        </div>
-                        <div class="hours-row">
-                            <div class="day-label">Friday</div>
-                            <input type="time" class="time-input" value="08:00">
-                            <input type="time" class="time-input" value="16:00">
-                            <div class="switch checked" onclick="toggleSwitch(this)">
-                                <div class="switch-thumb"></div>
-                            </div>
-                        </div>
-                        <div class="hours-row">
-                            <div class="day-label">Saturday</div>
-                            <input type="time" class="time-input" value="08:00">
-                            <input type="time" class="time-input" value="13:00">
-                            <div class="switch" onclick="toggleSwitch(this)">
-                                <div class="switch-thumb"></div>
-                            </div>
-                        </div>
-                        <div class="hours-row">
-                            <div class="day-label">Sunday</div>
-                            <input type="time" class="time-input" value="08:00">
-                            <input type="time" class="time-input" value="13:00">
-                            <div class="switch" onclick="toggleSwitch(this)">
-                                <div class="switch-thumb"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card-section">
-                    <button class="btn btn-secondary">Edit</button>
-                </div>
-            </div>
-
-            <div class="button-group">
-                <button class="btn btn-secondary" onclick="prevStep()">Back</button>
-                <button class="btn btn-primary" onclick="nextStep()">Next</button>
-            </div>
-        </div>
-
-        <!-- Step 4: Preview -->
-        <div class="step-content" id="step-4">
-            <div class="step-header">
-                <h2 class="step-title">Preview online booking page</h2>
-                <p class="step-subtitle">See how your online booking page will look on your website. The path to your page will start with the click of the 'BOOK ONLINE' button. You can customize it further in settings.</p>
-            </div>
-
-            <div class="card">
-                <div style="padding: 40px; text-align: center; color: #86868B;">
-                    <div style="font-size: 48px; margin-bottom: 16px;">📱</div>
-                    <p>Preview of your booking page will appear here</p>
-                    <p style="font-size: 14px; margin-top: 8px;">This is a demonstration - the actual preview will show your customized booking page</p>
-                </div>
-            </div>
-
-            <div class="button-group">
-                <button class="btn btn-secondary" onclick="prevStep()">Back</button>
-                <button class="btn btn-primary" onclick="nextStep()">Finish onboarding setup</button>
-            </div>
-        </div>
-
-        <!-- Step 5: Share -->
-        <div class="step-content" id="step-5">
-            <div class="success-container">
-                <div class="success-icon">✓</div>
-
+            <!-- Step 1: Services -->
+            <div class="step-content" id="step-1">
                 <div class="step-header">
-                    <h2 class="step-title">Congratulations, your booking page is ready</h2>
-                    <p class="step-subtitle">Make your online booking available for your clients. These instructions will be available in online booking settings, so you can come back to it later.</p>
+                    <h2 class="step-title">Configure Your Services</h2>
+                    <p class="step-subtitle">Select which HVAC services customers can book online. You can adjust prices and add new services anytime.</p>
                 </div>
 
-                <div class="success-actions">
-                    <a href="#" class="success-link">
-                        <div class="success-link-content">
-                            <div class="success-link-title">Add booking button to your website</div>
-                            <div class="success-link-desc">Copy this code to add a booking button to your website</div>
-                        </div>
-                        <div class="arrow">→</div>
-                    </a>
-                    <a href="#" class="success-link">
-                        <div class="success-link-content">
-                            <div class="success-link-title">Share booking page</div>
-                            <div class="success-link-desc">Don't have a website? Share this link to your online booking page</div>
-                        </div>
-                        <div class="arrow">→</div>
-                    </a>
-                    <a href="#" class="success-link">
-                        <div class="success-link-content">
-                            <div class="success-link-title">Go to settings</div>
-                            <div class="success-link-desc">Customize your booking page further</div>
-                        </div>
-                        <div class="arrow">→</div>
-                    </a>
+                <div class="services-toolbar">
+                    <input type="text" class="search-input" id="serviceSearch" placeholder="Search services..." oninput="filterServices()">
+                    <button class="btn btn-secondary" onclick="showAddServiceModal()">+ Add Service</button>
                 </div>
 
-                <div style="margin-top: 40px;">
-                    <button class="btn btn-primary" onclick="window.close()">Close</button>
+                <div id="servicesList"></div>
+
+                <div class="button-group">
+                    <button class="btn btn-secondary" onclick="prevStep()">Back</button>
+                    <button class="btn btn-primary" onclick="nextStep()">Continue</button>
+                </div>
+            </div>
+
+            <!-- Step 2: Availability -->
+            <div class="step-content" id="step-2">
+                <div class="step-header">
+                    <h2 class="step-title">Set Booking Hours</h2>
+                    <p class="step-subtitle">When should customers be able to book appointments? You can customize per-tech later.</p>
+                </div>
+
+                <div class="card">
+                    <p style="padding: 40px; text-align: center; color: #86868B;">
+                        <strong>Default Hours:</strong> Monday-Friday, 8:00 AM - 5:00 PM<br>
+                        <small>You can customize these in settings</small>
+                    </p>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-secondary" onclick="prevStep()">Back</button>
+                    <button class="btn btn-primary" onclick="nextStep()">Continue</button>
+                </div>
+            </div>
+
+            <!-- Step 3: Products -->
+            <div class="step-content" id="step-3">
+                <div class="step-header">
+                    <h2 class="step-title">Choose Products to Enable</h2>
+                    <p class="step-subtitle">Select which booking products you want to activate for your business</p>
+                </div>
+
+                <div class="product-grid">
+                    <div class="product-card selected" onclick="toggleProduct(this)" data-product="online-booking">
+                        <div class="product-icon-large">🌐</div>
+                        <h3 class="feature-title">Online Booking</h3>
+                        <p class="feature-description">Let customers book appointments from your website anytime, day or night</p>
+                    </div>
+                    <div class="product-card" onclick="toggleProduct(this)" data-product="csr-ai">
+                        <div class="product-icon-large">📞</div>
+                        <h3 class="feature-title">CSR AI</h3>
+                        <p class="feature-description">AI-powered assistant answers calls and schedules jobs when you're busy</p>
+                    </div>
+                    <div class="product-card" onclick="toggleProduct(this)" data-product="smart-scheduling">
+                        <div class="product-icon-large">📅</div>
+                        <h3 class="feature-title">Smart Scheduling</h3>
+                        <p class="feature-description">Automatically optimize your technician schedules for maximum efficiency</p>
+                    </div>
+                    <div class="product-card" onclick="toggleProduct(this)" data-product="hcp-assist">
+                        <span class="badge">Paid Add-on</span>
+                        <div class="product-icon-large">⭐</div>
+                        <h3 class="feature-title">HCP Assist</h3>
+                        <p class="feature-description">Dedicated account manager and premium support to grow your business</p>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-secondary" onclick="prevStep()">Back</button>
+                    <button class="btn btn-primary" onclick="completeSetup()">Complete Setup</button>
+                </div>
+            </div>
+
+            <!-- Step 4: Complete -->
+            <div class="step-content" id="step-4">
+                <div class="success-container">
+                    <div class="success-icon">✓</div>
+                    <h2 class="step-title">Setup Complete!</h2>
+                    <p class="step-subtitle">Your booking products are now active and ready to capture customers</p>
+
+                    <div class="products-enabled" id="enabledProducts"></div>
+
+                    <div class="card" style="margin-top: 32px; text-align: left;">
+                        <h3 style="margin-bottom: 16px;">What's Next?</h3>
+                        <ul style="padding-left: 20px; color: #86868B;">
+                            <li style="margin-bottom: 8px;">Add the booking widget to your website</li>
+                            <li style="margin-bottom: 8px;">Share your booking link with customers</li>
+                            <li style="margin-bottom: 8px;">Customize settings for each product</li>
+                            <li style="margin-bottom: 8px;">Train your team on the new tools</li>
+                        </ul>
+                    </div>
+
+                    <div class="button-group" style="justify-content: center;">
+                        <button class="btn btn-primary btn-large" onclick="window.close()">Go to Dashboard</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Coach Sidebar -->
+        <div class="ai-coach-sidebar" id="aiCoach" style="display: none;">
+            <div class="ai-coach-card">
+                <div class="ai-coach-header">
+                    <div class="ai-coach-icon">🤖</div>
+                    <div>
+                        <div class="ai-coach-title">AI Coach</div>
+                        <div style="font-size: 12px; opacity: 0.9;">Ask me anything!</div>
+                    </div>
+                </div>
+                <div class="ai-coach-messages" id="aiMessages">
+                    <div class="ai-message">
+                        Hi! I'm here to help you set up your booking products. Feel free to ask me questions at any time! 👋
+                    </div>
+                </div>
+                <div class="ai-coach-input-area">
+                    <div class="ai-input-wrapper">
+                        <input type="text" class="ai-input" id="aiInput" placeholder="Ask a question..." onkeypress="handleAiInputKeypress(event)">
+                        <button class="ai-send-btn" onclick="sendAiMessage()">Send</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Add Service Modal -->
+    <div class="modal" id="addServiceModal">
+        <div class="modal-content">
+            <h3 class="modal-title">Add New Service</h3>
+            <div class="form-group">
+                <label class="form-label">Service Name</label>
+                <input type="text" class="form-input" id="newServiceName" placeholder="e.g., AC Maintenance">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Price</label>
+                <input type="text" class="form-input" id="newServicePrice" placeholder="e.g., 150">
+            </div>
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="closeAddServiceModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="addService()">Add Service</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        let currentStep = 1;
-        const totalSteps = 5;
+        let currentStep = 0;
+        const totalSteps = 4;
+        let services = [
+            { id: 1, name: "AC Installation", price: 3500, enabled: true },
+            { id: 2, name: "AC Repair", price: 250, enabled: true },
+            { id: 3, name: "AC Tune-Up", price: 150, enabled: true },
+            { id: 4, name: "Furnace Installation", price: 4000, enabled: true },
+            { id: 5, name: "Furnace Repair", price: 300, enabled: true },
+            { id: 6, name: "Duct Cleaning", price: 400, enabled: false },
+            { id: 7, name: "Thermostat Installation", price: 200, enabled: true },
+            { id: 8, name: "Emergency Service", price: 500, enabled: true }
+        ];
+        let selectedProducts = ['online-booking'];
+
+        function startOnboarding() {
+            currentStep = 1;
+            document.getElementById('stepper').classList.add('show');
+            document.getElementById('mainContainer').classList.remove('full-width');
+            document.getElementById('aiCoach').style.display = 'block';
+            updateUI();
+            renderServices();
+        }
 
         function updateUI() {
             // Update steps
@@ -998,12 +971,133 @@
             // Update content
             document.querySelectorAll('.step-content').forEach((content, index) => {
                 content.classList.remove('active');
-                if (index + 1 === currentStep) {
+                if (index === currentStep) {
                     content.classList.add('active');
                 }
             });
 
+            // Add contextual AI messages
+            if (currentStep === 1) {
+                addAiMessage("Great! Let's configure your HVAC services. I've pre-selected some common ones. Feel free to add more or adjust prices!");
+            } else if (currentStep === 2) {
+                addAiMessage("Now let's set when customers can book. The default hours work great for most HVAC businesses.");
+            } else if (currentStep === 3) {
+                addAiMessage("Almost done! Choose which booking products you want to enable. Online Booking is already selected for you.");
+            }
+
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function renderServices() {
+            const container = document.getElementById('servicesList');
+            container.innerHTML = services.map(service => `
+                <div class="service-item">
+                    <span class="drag-handle">☰</span>
+                    <div>
+                        <div class="service-name">${service.name}</div>
+                        <div class="service-price">$${service.price}</div>
+                    </div>
+                    <input type="text" class="price-input" value="$${service.price}" onchange="updatePrice(${service.id}, this.value)">
+                    <div class="switch ${service.enabled ? 'checked' : ''}" onclick="toggleService(${service.id})">
+                        <div class="switch-thumb"></div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterServices() {
+            const search = document.getElementById('serviceSearch').value.toLowerCase();
+            const filtered = services.filter(s => s.name.toLowerCase().includes(search));
+            const container = document.getElementById('servicesList');
+            container.innerHTML = filtered.map(service => `
+                <div class="service-item">
+                    <span class="drag-handle">☰</span>
+                    <div>
+                        <div class="service-name">${service.name}</div>
+                        <div class="service-price">$${service.price}</div>
+                    </div>
+                    <input type="text" class="price-input" value="$${service.price}" onchange="updatePrice(${service.id}, this.value)">
+                    <div class="switch ${service.enabled ? 'checked' : ''}" onclick="toggleService(${service.id})">
+                        <div class="switch-thumb"></div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleService(id) {
+            const service = services.find(s => s.id === id);
+            service.enabled = !service.enabled;
+            renderServices();
+        }
+
+        function updatePrice(id, value) {
+            const service = services.find(s => s.id === id);
+            service.price = parseInt(value.replace(/[^0-9]/g, '')) || 0;
+            renderServices();
+        }
+
+        function showAddServiceModal() {
+            document.getElementById('addServiceModal').classList.add('show');
+        }
+
+        function closeAddServiceModal() {
+            document.getElementById('addServiceModal').classList.remove('show');
+            document.getElementById('newServiceName').value = '';
+            document.getElementById('newServicePrice').value = '';
+        }
+
+        function addService() {
+            const name = document.getElementById('newServiceName').value;
+            const price = parseInt(document.getElementById('newServicePrice').value) || 0;
+
+            if (name) {
+                services.push({
+                    id: services.length + 1,
+                    name: name,
+                    price: price,
+                    enabled: true
+                });
+                renderServices();
+                closeAddServiceModal();
+                addAiMessage(`Great! I've added "${name}" to your service list. It's enabled by default.`);
+            }
+        }
+
+        function toggleProduct(card) {
+            const product = card.dataset.product;
+            if (selectedProducts.includes(product)) {
+                selectedProducts = selectedProducts.filter(p => p !== product);
+                card.classList.remove('selected');
+            } else {
+                selectedProducts.push(product);
+                card.classList.add('selected');
+            }
+        }
+
+        function completeSetup() {
+            currentStep = 4;
+            updateUI();
+            showEnabledProducts();
+        }
+
+        function showEnabledProducts() {
+            const productNames = {
+                'online-booking': { icon: '🌐', name: 'Online Booking' },
+                'csr-ai': { icon: '📞', name: 'CSR AI' },
+                'smart-scheduling': { icon: '📅', name: 'Smart Scheduling' },
+                'hcp-assist': { icon: '⭐', name: 'HCP Assist' }
+            };
+
+            const container = document.getElementById('enabledProducts');
+            container.innerHTML = selectedProducts.map(product => {
+                const p = productNames[product];
+                return `
+                    <div class="enabled-badge">
+                        <span class="enabled-icon">${p.icon}</span>
+                        <span>${p.name}</span>
+                    </div>
+                `;
+            }).join('');
         }
 
         function nextStep() {
@@ -1014,36 +1108,68 @@
         }
 
         function prevStep() {
-            if (currentStep > 1) {
-                currentStep--;
+            if (currentStep > 0) {
+                if (currentStep === 1) {
+                    currentStep = 0;
+                    document.getElementById('stepper').classList.remove('show');
+                    document.getElementById('mainContainer').classList.add('full-width');
+                    document.getElementById('aiCoach').style.display = 'none';
+                } else {
+                    currentStep--;
+                }
                 updateUI();
             }
         }
 
-        function finishSetup() {
-            currentStep = totalSteps;
-            updateUI();
+        // AI Coach functionality
+        function addAiMessage(message, isUser = false) {
+            const messagesContainer = document.getElementById('aiMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `ai-message ${isUser ? 'user' : ''}`;
+            messageDiv.textContent = message;
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
-        function toggleSwitch(element) {
-            element.classList.toggle('checked');
-        }
-
-        function selectRadio(element) {
-            document.querySelectorAll('.radio-item').forEach(item => {
-                item.classList.remove('selected');
-            });
-            element.classList.add('selected');
-        }
-
-        // Keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight' && currentStep < totalSteps) {
-                nextStep();
-            } else if (e.key === 'ArrowLeft' && currentStep > 1) {
-                prevStep();
+        function handleAiInputKeypress(event) {
+            if (event.key === 'Enter') {
+                sendAiMessage();
             }
-        });
+        }
+
+        function sendAiMessage() {
+            const input = document.getElementById('aiInput');
+            const message = input.value.trim();
+
+            if (message) {
+                addAiMessage(message, true);
+                input.value = '';
+
+                // Simulate AI response
+                setTimeout(() => {
+                    const response = getAiResponse(message);
+                    addAiMessage(response);
+                }, 500);
+            }
+        }
+
+        function getAiResponse(question) {
+            const q = question.toLowerCase();
+
+            if (q.includes('price') || q.includes('cost')) {
+                return "You can set prices for each service on the Services step. Just click in the price field to edit. Most HVAC companies charge $150-$250 for basic services.";
+            } else if (q.includes('service') || q.includes('add')) {
+                return "To add a new service, click the '+ Add Service' button on the Services step. You can add as many services as you need!";
+            } else if (q.includes('hours') || q.includes('availability')) {
+                return "Booking hours determine when customers can schedule appointments. The default is Monday-Friday, 8 AM - 5 PM, but you can customize this for each technician later.";
+            } else if (q.includes('product') || q.includes('which')) {
+                return "I recommend starting with Online Booking - it's the easiest way to capture customers 24/7. You can add CSR AI and Smart Scheduling later as your business grows!";
+            } else if (q.includes('help') || q.includes('how')) {
+                return "I'm here to help! You can ask me about pricing, services, booking hours, or which products to choose. What would you like to know?";
+            } else {
+                return "Great question! For setup, focus on: 1) Selecting your most popular services, 2) Setting competitive prices, and 3) Choosing products that fit your business needs. Need more specific help?";
+            }
+        }
     </script>
 </body>
 </html>
