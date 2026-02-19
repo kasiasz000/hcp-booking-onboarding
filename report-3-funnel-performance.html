@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lead Source Funnel Performance - Housecall Pro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #FAFAFA;
+            color: #212121;
+        }
+
+        .header {
+            background: white;
+            border-bottom: 1px solid #E0E0E0;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 700;
+            font-size: 18px;
+            color: #0F77CC;
+        }
+
+        .nav {
+            display: flex;
+            gap: 24px;
+            font-size: 14px;
+        }
+
+        .nav-item {
+            color: #757575;
+            cursor: pointer;
+            padding: 8px 12px;
+        }
+
+        .nav-item.active {
+            color: #0F77CC;
+            font-weight: 500;
+        }
+
+        .layout {
+            display: flex;
+            min-height: calc(100vh - 49px);
+        }
+
+        .sidebar {
+            width: 240px;
+            background: white;
+            border-right: 1px solid #E0E0E0;
+            padding: 24px 0;
+        }
+
+        .sidebar-title {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 600;
+            font-size: 16px;
+            padding: 0 24px 16px;
+            color: #212121;
+        }
+
+        .sidebar-section {
+            margin-bottom: 24px;
+        }
+
+        .sidebar-section-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: #9E9E9E;
+            padding: 0 24px 8px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .sidebar-item {
+            padding: 10px 24px;
+            font-size: 14px;
+            color: #212121;
+            cursor: pointer;
+        }
+
+        .sidebar-item:hover {
+            background: #F5F5F5;
+        }
+
+        .sidebar-item.active {
+            background: #E3F2FD;
+            color: #0F77CC;
+            font-weight: 500;
+            border-right: 3px solid #0F77CC;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 24px;
+        }
+
+        .breadcrumb {
+            font-size: 13px;
+            color: #757575;
+            margin-bottom: 16px;
+        }
+
+        .breadcrumb a {
+            color: #0F77CC;
+            text-decoration: none;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .page-title {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 700;
+            font-size: 28px;
+            color: #212121;
+        }
+
+        .page-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 4px;
+            border: none;
+            font-family: 'Roboto', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #0F77CC;
+            border: 1px solid #E0E0E0;
+        }
+
+        .btn-primary {
+            background: #0F77CC;
+            color: white;
+        }
+
+        .filters {
+            background: white;
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin-bottom: 24px;
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            flex-wrap: wrap;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .filter-label {
+            color: #757575;
+            font-weight: 500;
+        }
+
+        select {
+            padding: 8px 32px 8px 12px;
+            border: 1px solid #E0E0E0;
+            border-radius: 4px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 14px;
+            color: #212121;
+            background: white;
+            cursor: pointer;
+        }
+
+        .chart-card {
+            background: white;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+
+        .chart-title {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 600;
+            font-size: 18px;
+            color: #212121;
+            margin-bottom: 20px;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table thead {
+            background: #FAFAFA;
+        }
+
+        .data-table th {
+            padding: 12px 16px;
+            text-align: left;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            color: #757575;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .data-table td {
+            padding: 16px;
+            border-bottom: 1px solid #F5F5F5;
+            font-size: 14px;
+            color: #212121;
+        }
+
+        .data-table tbody tr:hover {
+            background: #FAFAFA;
+        }
+
+        .lead-source-cell {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .source-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .funnel-stages {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .funnel-stage {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .funnel-value {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            color: #212121;
+        }
+
+        .funnel-label {
+            font-size: 11px;
+            color: #757575;
+            text-transform: uppercase;
+        }
+
+        .funnel-arrow {
+            color: #E0E0E0;
+            font-size: 18px;
+        }
+
+        .conversion-rate {
+            font-size: 12px;
+            color: #757575;
+            margin-top: 2px;
+        }
+
+        .conversion-rate.good {
+            color: #4CAF50;
+            font-weight: 600;
+        }
+
+        .conversion-rate.medium {
+            color: #FF9800;
+            font-weight: 600;
+        }
+
+        .conversion-rate.poor {
+            color: #F44336;
+            font-weight: 600;
+        }
+
+        .insight-box {
+            background: #E3F2FD;
+            border-left: 4px solid #0F77CC;
+            padding: 16px;
+            border-radius: 4px;
+            margin-bottom: 24px;
+        }
+
+        .insight-title {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            color: #0F77CC;
+            margin-bottom: 8px;
+        }
+
+        .insight-text {
+            font-size: 14px;
+            color: #212121;
+            line-height: 1.5;
+        }
+
+        .footer-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 16px;
+        }
+
+        .feedback-link {
+            font-size: 13px;
+            color: #0F77CC;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .avg-days {
+            font-size: 12px;
+            color: #757575;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">HOUSECALL PRO</div>
+        <div class="nav">
+            <div class="nav-item">Home</div>
+            <div class="nav-item">Inbox</div>
+            <div class="nav-item">Schedule</div>
+            <div class="nav-item">Customers</div>
+            <div class="nav-item active">Reporting</div>
+            <div class="nav-item">Marketing</div>
+        </div>
+    </div>
+
+    <div class="layout">
+        <div class="sidebar">
+            <div class="sidebar-title">Reporting</div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-item">Marketing & Sales Performance</div>
+                <div class="sidebar-item">Business Insights</div>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-section-label">DASHBOARDS</div>
+                <div class="sidebar-item">Pros</div>
+                <div class="sidebar-item">Tech Performance</div>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-section-label">ALL REPORTS</div>
+                <div class="sidebar-item">Jobs</div>
+                <div class="sidebar-item">Estimates</div>
+                <div class="sidebar-item active">Leads</div>
+                <div class="sidebar-item">Service plans</div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="breadcrumb">
+                <a href="#">Reporting</a> › <a href="#">Leads</a> › Funnel Performance by Lead Source
+            </div>
+
+            <div class="page-header">
+                <h1 class="page-title">Funnel Performance by Lead Source</h1>
+                <div class="page-actions">
+                    <button class="btn btn-secondary">Share & schedule</button>
+                    <button class="btn btn-primary">Save report</button>
+                </div>
+            </div>
+
+            <div class="insight-box">
+                <div class="insight-title">💡 Key Insight</div>
+                <div class="insight-text">
+                    Referrals have your highest Lead → Paid conversion (69%), but Google LSA brings 3x more volume.
+                    Web Organic has a critical drop-off (only 17% Job → Paid) - investigate why jobs aren't getting paid.
+                </div>
+            </div>
+
+            <div class="filters">
+                <div class="filter-group">
+                    <span class="filter-label">Date range</span>
+                    <select>
+                        <option>Last 30 days</option>
+                        <option>Last 90 days</option>
+                        <option>This quarter</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <span class="filter-label">Customer type</span>
+                    <select>
+                        <option>All customers</option>
+                        <option>New customers only</option>
+                        <option>Returning customers</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <button class="btn btn-secondary">Filter</button>
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <div class="chart-title">Sales Funnel by Lead Source</div>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Lead Source</th>
+                            <th colspan="4" style="text-align: center;">Funnel Stages</th>
+                            <th>Avg Days to Close</th>
+                            <th>Overall Conversion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="lead-source-cell">
+                                    <div class="source-icon" style="background: #4285F4; color: white;">G</div>
+                                    <strong>Google LSA</strong>
+                                </div>
+                            </td>
+                            <td colspan="4">
+                                <div class="funnel-stages">
+                                    <div class="funnel-stage">
+                                        <div class="funnel-value">142</div>
+                                        <div class="funnel-label">Leads</div>
+                                    </div>
+                                    <div class="funnel-arrow">→</div>
+                                    <div class="funnel-stage">
+                                        <div class="funnel-value">115</div>
+                                        <div class="funnel-label">Estimates</div>
+                                        <div class="conversion-rate good">81%</div>
+                                    </div>
+                                    <div class="funnel-arrow">→</div>
+                                    <div class="funnel-stage">
+                                        <div class="funnel-value">98</div>
+                                        <div class="funnel-label">Jobs</div>
+                                        <div class="conversion-rate good">85%</div>
+                                    </div>
+                                    <div class="funnel-arrow">→</div>
+                                    <div class="funnel-stage">
+                                        <div class="funnel-value">92</div>
+                                        <div class="funnel-label">Paid</div>
+                                        <div class="conversion-rate good">94%</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="avg-days">4.2 days</div>
+                            </td>
+                            <td>
+                                <strong style="color: #4CAF50; font-size: 16px;">65%</strong>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div class="lead-source-cell">
+                                    <div class="source-icon" style="background: #4285F4; color: white;">G</div>
+                                    <strong>Google Ads</strong>
+                                </div>
+                            </td>
+                            <td colspan="4">
+                                <div class="funnel-stages">
+                                    <div class="funnel-stage">
+                                        <div class="funnel-value">98</div>
+                                        <div class="funnel-label">Leads</div>
+                                    </div>
+                                    <div class="funnel-arrow">→</div>
+                                    <div class="funnel-stage">
+                                        <div class="funnel-value">81</div>
+                                        <div class="funnel-label">Estimates</div>
+                                        <div class="conversion-rate good">83%</div>
+                                    </div>
+                                    <div class="funnel-arrow">→</div>
+                                    <div class="funnel-stage">
+                                        <div class="funnel-value">67</div>
+                                        <div class="funnel-label">Jobs</div>
+                                        <div class="conversion-rate good">83%</div>
+                                    </div>
+                                    <div class="funnel-arrow">→</div>
+                                    <div class="funnel-stage">
+                                        <div class="funnel-value">63</div>
+                                        <div class="funnel-label">Paid</div>
+                                        <div class="conversion-rate good">94%</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="avg-days">4.8 days</div>
+                            </td>
+                            <td>
+                                <strong style="color: #4CAF50; font-size: 16px;">64%</strong>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div class="lead-source-cell">
+                                    <div class="source-icon" style="background: #1877F2; color: white;">f</div>
+                                    <strong>Facebook</strong>
+                                </div>
+                            </td>
+                            <td colspan="4">
+                                <div class="funnel-stages">
+                                    <div class="funnel-stage">
+                                        <div class="funnel-value">87</div>
+                                        <div class="funnel-label">Leads</div>
+                                    </div>
+                                    <div class="funnel-arrow">→</div>
+                                    <div class="funnel-stage">
+                                        <div class="funnel-value">68</div>
+                                        <div class="funnel-label">Estimates</div>
+                                        <div class="conversion-rate good">78%</div>
+                                    </div>
+                                    <div class="funnel-arrow">→</div>
+                                    <div class="funnel-stage">
+                                        <div class="funnel-value">52</div>
+                                        <div class="funnel-label">Jobs</div>
+                                        <div class="conversion-rate good">76%</div>
+                                    </div>
+                                    <div class="funnel-arrow">→</div>
+                                    <div class="funnel-stage">
+                                        <div class="funnel-value">49</div>
+                                        <div class="funnel-label">Paid</div>
+                                        <div class="conversion-rate good">94%</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="avg-days">5.1 days</div>
+                            </td>
+                            <td>
+                                <strong style="color: #4CAF50; font-size: 16px;">56%</strong>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div class="lead-source-cell">
+                                    <div class="source-icon" style="background: #00A4BD; color: white;">T</div>
+                                    <strong>Thumbtack</strong>
+                                </div>
+                            </td>
+                            <td colspan="4">
+                                <div class="funnel-stages">
+                                    <div class="funnel-stage">
+                                        <div class="funnel-value">64</div>
+                                        <div class="funnel-label">Leads</div>
+                                    </div>
+                                    <div class="funnel-arrow">→</div>
+                                    <div class="funnel-stage">
+                                        <div class="funnel-value">51</div>
+                                        <div class="funnel-label">Estimates</div>
+                                        <div class="conversion-rate good">80%</div>
+                                    </div>
+                                    <div class="funnel-arrow">→</div>
+                                    <div class="funnel-stage">
+                                        <div class="funnel-value">38</div>
+                                        <div class="funnel-label">Jobs</div>
+                                        <div class="conversion-rate medium">75%</div>
+                                    </div>
+                                    <div class="funnel-arrow">→</div>
+                                    <div class="funnel-stage">
+                                        <div class="funnel-value">35</div>
+                                        <div class="funnel-label">Paid</div>
+                                        <div class="conversion-rate good">92%</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="avg-days">6.3 days</div>
+                            </td>
+                            <td>
+                                <strong style="color: #4CAF50; font-size: 16px;">55%</strong>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div class="lead-source-cell">
+                                    <div class="source-icon" style="background: #9E9E9E; color: white;">R</div>
+                                    <strong>Referral</strong>
+                                </div>
+                            </td>
+                            <td colspan="4">
+                                <div class="funnel-stages">
+                                    <div class="funnel-stage">
+                                        <div class="funnel-value">52</div>
+                                        <div class="funnel-label">Leads</div>
+                                    </div>
+                                    <div class="funnel-arrow">→</div>
+                                    <div class="funnel-stage">
+                                        <div class="funnel-value">46</div>
+                                        <div class="funnel-label">Estimates</div>
+                                        <div class="conversion-rate good">88%</div>
+                                    </div>
+                                    <div class="funnel-arrow">→</div>
+                                    <div class="funnel-stage">
+                                        <div class="funnel-value">37</div>
+                                        <div class="funnel-label">Jobs</div>
+                                        <div class="conversion-rate good">80%</div>
+                                    </div>
+                                    <div class="funnel-arrow">→</div>
+                                    <div class="funnel-stage">
+                                        <div class="funnel-value">36</div>
+                                        <div class="funnel-label">Paid</div>
+                                        <div class="conversion-rate good">97%</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="avg-days">3.1 days</div>
+                            </td>
+                            <td>
+                                <strong style="color: #4CAF50; font-size: 16px;">69%</strong>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div class="lead-source-cell">
+                                    <div class="source-icon" style="background: #FF6F61; color: white;">Y</div>
+                                    <strong>Yelp</strong>
+                                </div>
+                            </td>
+                            <td colspan="4">
+                                <div class="funnel-stages">
+                                    <div class="funnel-stage">
+                                        <div class="funnel-value">28</div>
+                                        <div class="funnel-label">Leads</div>
+                                    </div>
+                                    <div class="funnel-arrow">→</div>
+                                    <div class="funnel-stage">
+                                        <div class="funnel-value">19</div>
+                                        <div class="funnel-label">Estimates</div>
+                                        <div class="conversion-rate medium">68%</div>
+                                    </div>
+                                    <div class="funnel-arrow">→</div>
+                                    <div class="funnel-stage">
+                                        <div class="funnel-value">14</div>
+                                        <div class="funnel-label">Jobs</div>
+                                        <div class="conversion-rate medium">74%</div>
+                                    </div>
+                                    <div class="funnel-arrow">→</div>
+                                    <div class="funnel-stage">
+                                        <div class="funnel-value">13</div>
+                                        <div class="funnel-label">Paid</div>
+                                        <div class="conversion-rate good">93%</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="avg-days">7.2 days</div>
+                            </td>
+                            <td>
+                                <strong style="color: #FF9800; font-size: 16px;">46%</strong>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div class="lead-source-cell">
+                                    <div class="source-icon" style="background: #757575; color: white;">W</div>
+                                    <strong>Web Organic</strong>
+                                </div>
+                            </td>
+                            <td colspan="4">
+                                <div class="funnel-stages">
+                                    <div class="funnel-stage">
+                                        <div class="funnel-value">16</div>
+                                        <div class="funnel-label">Leads</div>
+                                    </div>
+                                    <div class="funnel-arrow">→</div>
+                                    <div class="funnel-stage">
+                                        <div class="funnel-value">10</div>
+                                        <div class="funnel-label">Estimates</div>
+                                        <div class="conversion-rate medium">63%</div>
+                                    </div>
+                                    <div class="funnel-arrow">→</div>
+                                    <div class="funnel-stage">
+                                        <div class="funnel-value">6</div>
+                                        <div class="funnel-label">Jobs</div>
+                                        <div class="conversion-rate medium">60%</div>
+                                    </div>
+                                    <div class="funnel-arrow">→</div>
+                                    <div class="funnel-stage">
+                                        <div class="funnel-value">1</div>
+                                        <div class="funnel-label">Paid</div>
+                                        <div class="conversion-rate poor">17%</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="avg-days">12.8 days</div>
+                            </td>
+                            <td>
+                                <strong style="color: #F44336; font-size: 16px;">6%</strong>
+                            </td>
+                        </tr>
+
+                        <tr style="background: #FAFAFA;">
+                            <td><strong>Overall</strong></td>
+                            <td colspan="4">
+                                <div class="funnel-stages">
+                                    <div class="funnel-stage">
+                                        <div class="funnel-value"><strong>487</strong></div>
+                                        <div class="funnel-label">Leads</div>
+                                    </div>
+                                    <div class="funnel-arrow">→</div>
+                                    <div class="funnel-stage">
+                                        <div class="funnel-value"><strong>390</strong></div>
+                                        <div class="funnel-label">Estimates</div>
+                                        <div class="conversion-rate good">80%</div>
+                                    </div>
+                                    <div class="funnel-arrow">→</div>
+                                    <div class="funnel-stage">
+                                        <div class="funnel-value"><strong>312</strong></div>
+                                        <div class="funnel-label">Jobs</div>
+                                        <div class="conversion-rate good">80%</div>
+                                    </div>
+                                    <div class="funnel-arrow">→</div>
+                                    <div class="funnel-stage">
+                                        <div class="funnel-value"><strong>289</strong></div>
+                                        <div class="funnel-label">Paid</div>
+                                        <div class="conversion-rate good">93%</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="avg-days"><strong>5.3 days</strong></div>
+                            </td>
+                            <td>
+                                <strong style="color: #4CAF50; font-size: 16px;">59%</strong>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="footer-actions">
+                    <a href="#" class="feedback-link">📊 Give us feedback</a>
+                    <div class="page-actions">
+                        <button class="btn btn-secondary">Export</button>
+                        <button class="btn btn-secondary">Edit columns</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

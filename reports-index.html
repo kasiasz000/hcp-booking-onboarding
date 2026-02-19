@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HCP Reports - Lead Source Cleanup</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #FAFAFA;
+            color: #212121;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        h1 {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 700;
+            font-size: 36px;
+            color: #0F77CC;
+            margin-bottom: 16px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #757575;
+        }
+
+        .reports-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        .report-card {
+            background: white;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .report-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+
+        .report-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: #0F77CC;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 16px;
+        }
+
+        .report-title {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 600;
+            font-size: 20px;
+            color: #212121;
+            margin-bottom: 12px;
+        }
+
+        .report-description {
+            font-size: 14px;
+            color: #757575;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .report-features {
+            list-style: none;
+            font-size: 13px;
+            color: #212121;
+        }
+
+        .report-features li {
+            padding: 6px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .report-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #4CAF50;
+            font-weight: 700;
+        }
+
+        .info-box {
+            background: #E3F2FD;
+            border-left: 4px solid #0F77CC;
+            padding: 20px;
+            border-radius: 4px;
+            margin-bottom: 32px;
+        }
+
+        .info-title {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 600;
+            font-size: 16px;
+            color: #0F77CC;
+            margin-bottom: 8px;
+        }
+
+        .info-text {
+            font-size: 14px;
+            color: #212121;
+            line-height: 1.6;
+        }
+
+        .value-section {
+            background: white;
+            border-radius: 8px;
+            padding: 32px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .value-title {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 700;
+            font-size: 24px;
+            color: #212121;
+            margin-bottom: 24px;
+        }
+
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+        }
+
+        .value-item {
+            padding: 16px;
+            border-left: 3px solid #0F77CC;
+            background: #FAFAFA;
+        }
+
+        .value-item-title {
+            font-weight: 600;
+            font-size: 14px;
+            color: #0F77CC;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .value-item-text {
+            font-size: 14px;
+            color: #212121;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Lead Source Cleanup Reports</h1>
+            <div class="subtitle">5 new reports unlocked by separating Lead Source from Capture Method</div>
+        </div>
+
+        <div class="info-box">
+            <div class="info-title">💡 About These Reports</div>
+            <div class="info-text">
+                These reports demonstrate the value of the Lead Source cleanup project. By separating <strong>Lead Source</strong> (marketing attribution)
+                from <strong>Capture Method</strong> (how the lead entered the system) and <strong>Handled by</strong> (who processed it),
+                we unlock powerful insights that were previously impossible to see.
+            </div>
+        </div>
+
+        <div class="reports-grid">
+            <a href="report-1-executive-summary.html" class="report-card">
+                <div class="report-number" style="background: #0F77CC; display: flex;">1</div>
+                <div class="report-title">Marketing & Sales Performance</div>
+                <div class="report-description">
+                    Executive dashboard showing the complete marketing and sales funnel with all key metrics.
+                </div>
+                <ul class="report-features">
+                    <li>Total leads, jobs, revenue at a glance</li>
+                    <li>Conversion rates across the funnel</li>
+                    <li>Top lead sources by revenue</li>
+                    <li>Period-over-period comparisons</li>
+                </ul>
+            </a>
+
+            <a href="report-2-revenue-by-source.html" class="report-card">
+                <div class="report-number" style="background: #1E88E5; display: flex;">2</div>
+                <div class="report-title">Revenue by Lead Source</div>
+                <div class="report-description">
+                    The most requested report - see exactly which marketing channels drive revenue and ROI.
+                </div>
+                <ul class="report-features">
+                    <li>Revenue & lead volume by source</li>
+                    <li>Conversion rates per channel</li>
+                    <li>Cost per lead & ROI calculations</li>
+                    <li>Visual bar chart comparison</li>
+                </ul>
+            </a>
+
+            <a href="report-3-funnel-performance.html" class="report-card">
+                <div class="report-number" style="background: #1976D2; display: flex;">3</div>
+                <div class="report-title">Lead Source Funnel Performance</div>
+                <div class="report-description">
+                    Visualize the full funnel for each lead source to identify where drop-offs occur.
+                </div>
+                <ul class="report-features">
+                    <li>Leads → Estimates → Jobs → Paid</li>
+                    <li>Conversion % at each stage</li>
+                    <li>Average days to close</li>
+                    <li>Color-coded performance indicators</li>
+                </ul>
+            </a>
+
+            <a href="report-4-capture-method.html" class="report-card">
+                <div class="report-number" style="background: #1565C0; display: flex;">4</div>
+                <div class="report-title">Performance by Capture Method</div>
+                <div class="report-description">
+                    Compare how leads perform based on HOW they entered your system (this report proves the cleanup's value).
+                </div>
+                <ul class="report-features">
+                    <li>Phone vs Online Booking vs Lead Form</li>
+                    <li>Response time by method</li>
+                    <li>Human vs CSR AI performance</li>
+                    <li>After-hours lead capture stats</li>
+                </ul>
+            </a>
+
+            <a href="report-5-matrix.html" class="report-card">
+                <div class="report-number" style="background: #0D47A1; display: flex;">5</div>
+                <div class="report-title">Lead Source × Capture Method Matrix</div>
+                <div class="report-description">
+                    Advanced cross-tabulation showing which lead sources work best with which capture methods.
+                </div>
+                <ul class="report-features">
+                    <li>Every combination visualized</li>
+                    <li>Heatmap-style performance cells</li>
+                    <li>Optimization opportunities revealed</li>
+                    <li>Example: "Google Ads + OLB = 82% conversion"</li>
+                </ul>
+            </a>
+        </div>
+
+        <div class="value-section">
+            <div class="value-title">Why This Cleanup Matters</div>
+            <div class="value-grid">
+                <div class="value-item">
+                    <div class="value-item-title">Before Cleanup</div>
+                    <div class="value-item-text">
+                        "Online Booking" was treated as a lead source, mixing marketing attribution with tool usage.
+                        Impossible to know if Google Ads or Facebook drove those bookings.
+                    </div>
+                </div>
+                <div class="value-item">
+                    <div class="value-item-title">After Cleanup</div>
+                    <div class="value-item-text">
+                        Lead Source = "Google Ads", Capture Method = "Online Booking". Now you can see that Google Ads + Online Booking converts at 82%.
+                    </div>
+                </div>
+                <div class="value-item">
+                    <div class="value-item-title">Pro Impact</div>
+                    <div class="value-item-text">
+                        Pros can finally answer "Is my marketing working?" and optimize spend based on real ROI data, not polluted attribution.
+                    </div>
+                </div>
+                <div class="value-item">
+                    <div class="value-item-title">Leadership Value</div>
+                    <div class="value-item-text">
+                        Proves ROI of booking products (Online Booking, CSR AI) with clean conversion data and revenue attribution.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
