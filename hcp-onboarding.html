@@ -3,1214 +3,1524 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Booking Products Setup - Housecall Pro</title>
+    <title>Booking Products Setup — Housecall Pro</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
+        /* ─── Design System Tokens — HCP Figma Node 128:116198 ─────────
+           Zone 1  Semantic Color Grid
+           Zone 2  Typography Ladder
+           Zone 3  Primitive Geometry
+           Zone 4  Atomic / Core Components
+        ──────────────────────────────────────────────────────────────── */
         :root {
-            /* HCP Theme Colors */
-            --primary-main: #1976D2;
-            --primary-light: #42A5F5;
-            --primary-dark: #1565C0;
-            --secondary-main: #757575;
-            --secondary-light: #BDBDBD;
-            --text-primary: #212121;
-            --text-secondary: #757575;
-            --background-default: #FAFAFA;
-            --background-paper: #FFFFFF;
-            --divider: rgba(0, 0, 0, 0.12);
-            --success-main: #4CAF50;
-            --success-light: #E8F5E9;
-            --warning-main: #FF9800;
-            --warning-light: #FFF3E0;
-            --error-main: #F44336;
-            --grey-100: #F5F5F5;
-            --grey-300: #E0E0E0;
-            --grey-400: #BDBDBD;
-            --grey-600: #757575;
-            --grey-900: #212121;
+            /* Zone 1 — Semantic Colors */
+            --color-action-primary:      #0e6fbe;
+            --color-action-primary-dark: #0d47a1;
+            --background-page:           #fafafa;
+            --surface-card:              #ffffff;
+            --text-primary:              #212121;
+            --text-muted:                #616161;
+            --border-subtle:             #e0e0e0;
+            --status-success:            #00a344;
+            --status-warning:            #bf8600;
+            --status-error:              #d81b60;
+
+            /* Zone 3 — Primitive Geometry */
+            --radius-card:   8px;
+            --radius-input:  8px;
+            --radius-button: 200px;
+            --shadow-card:   0 0 12px 2px rgba(0,0,0,0.10);
         }
 
         body {
-            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: var(--background-default);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--background-page);
             color: var(--text-primary);
-            line-height: 1.5;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Navigation Bar (matches HCP) */
+        /* ─── Top Nav ─────────────────────────────────────────────── */
         .top-nav {
-            background: var(--grey-900);
+            background: var(--text-primary);
             color: white;
-            height: 64px;
+            height: 56px;
             display: flex;
             align-items: center;
+            justify-content: space-between;
             padding: 0 24px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
+            top: 0; left: 0; right: 0;
             z-index: 1000;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.18);
         }
-
         .top-nav-logo {
-            font-size: 20px;
-            font-weight: 500;
             display: flex;
             align-items: center;
             gap: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
         }
-
-        .top-nav-logo .material-icons {
-            font-size: 28px;
-            color: var(--primary-light);
+        .top-nav-logo .material-icons { font-size: 22px; color: var(--color-action-primary); }
+        .top-nav-save {
+            font-size: 12px;
+            font-weight: 500;
+            color: rgba(255,255,255,0.55);
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
+        .top-nav-save .material-icons { font-size: 14px; color: var(--status-success); }
 
+        /* ─── Layout ──────────────────────────────────────────────── */
         .main-content {
-            margin-top: 64px;
-            padding: 32px;
-            max-width: 1200px;
+            margin-top: 56px;
+            padding: 40px 32px;
+            max-width: 800px;
             margin-left: auto;
             margin-right: auto;
         }
 
-        /* Breadcrumbs (HCP style) */
+        /* ─── Breadcrumbs ─────────────────────────────────────────── */
         .breadcrumbs {
             display: flex;
             align-items: center;
-            gap: 8px;
-            margin-bottom: 24px;
-            color: var(--text-secondary);
-            font-size: 14px;
-        }
-
-        .breadcrumbs .material-icons {
-            font-size: 16px;
-        }
-
-        .breadcrumb-link {
-            color: var(--text-secondary);
-            text-decoration: none;
-        }
-
-        .breadcrumb-link:hover {
-            color: var(--primary-main);
-        }
-
-        /* Card (Material Design) */
-        .card {
-            background: var(--background-paper);
-            border-radius: 4px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-            padding: 24px;
-            margin-bottom: 24px;
-        }
-
-        .card-large {
-            padding: 48px;
-        }
-
-        /* Typography */
-        h1 {
-            font-size: 34px;
-            font-weight: 400;
-            line-height: 1.2;
-            margin-bottom: 8px;
-        }
-
-        h2 {
-            font-size: 24px;
-            font-weight: 400;
-            line-height: 1.3;
-            margin-bottom: 16px;
-        }
-
-        h5 {
-            font-size: 20px;
-            font-weight: 500;
-            line-height: 1.4;
-            margin-bottom: 16px;
-        }
-
-        .subtitle1 {
-            font-size: 16px;
-            font-weight: 500;
-            line-height: 1.5;
-        }
-
-        .body1 {
-            font-size: 16px;
-            font-weight: 400;
-            line-height: 1.5;
-        }
-
-        .body2 {
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 1.43;
-        }
-
-        .caption {
+            gap: 6px;
+            margin-bottom: 32px;
             font-size: 12px;
-            font-weight: 400;
-            line-height: 1.66;
-            color: var(--text-secondary);
+            font-weight: 500;
+            line-height: 20px;  /* Label-Small */
+            color: var(--text-muted);
         }
+        .breadcrumbs .material-icons { font-size: 14px; }
+        .breadcrumb-link { color: var(--text-muted); text-decoration: none; }
+        .breadcrumb-link:hover { color: var(--color-action-primary); }
 
-        .text-secondary {
-            color: var(--text-secondary);
+        /* ─── Stepper ─────────────────────────────────────────────── */
+        .stepper-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 40px;
+            gap: 12px;
         }
-
-        /* Stepper (HCP style) */
+        .step-counter {
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 20px;  /* Label-Small */
+            color: var(--text-muted);
+        }
+        .step-counter span { color: var(--color-action-primary); font-weight: 600; }
         .stepper {
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 48px;
-            padding: 0 24px;
         }
-
         .stepper-step {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 12px;
+            gap: 6px;
         }
-
         .stepper-circle {
-            width: 36px;
-            height: 36px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 500;
-            border: 2px solid var(--grey-400);
-            color: var(--text-secondary);
-            background: var(--background-paper);
-        }
-
-        .stepper-circle.active {
-            background: var(--primary-main);
-            color: white;
-            border-color: var(--primary-main);
-        }
-
-        .stepper-circle.completed {
-            background: var(--success-main);
-            color: white;
-            border-color: var(--success-main);
-        }
-
-        .stepper-label {
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--text-secondary);
-            min-width: 80px;
-            text-align: center;
-        }
-
-        .stepper-label.active {
-            color: var(--primary-main);
-        }
-
-        .stepper-connector {
-            width: 40px;
-            height: 2px;
-            background: var(--grey-300);
-            margin: 0 8px;
-        }
-
-        .stepper-connector.completed {
-            background: var(--success-main);
-        }
-
-        /* Buttons */
-        .button {
-            padding: 8px 22px;
-            font-size: 14px;
-            font-weight: 500;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 0.02857em;
+            font-size: 12px;
+            font-weight: 600;
+            border: 1.5px solid var(--border-subtle);
+            color: var(--text-muted);
+            background: var(--surface-card);
             transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
         }
-
-        .button-contained {
-            background: var(--primary-main);
-            color: white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        .stepper-circle.active    { background: var(--color-action-primary); border-color: var(--color-action-primary); color: white; }
+        .stepper-circle.completed { background: var(--status-success); border-color: var(--status-success); color: white; }
+        .stepper-label {
+            font-size: 11px;
+            font-weight: 500;
+            line-height: 16px;
+            color: var(--text-muted);
+            text-align: center;
+            white-space: nowrap;
         }
-
-        .button-contained:hover {
-            background: var(--primary-dark);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        .stepper-label.active { color: var(--color-action-primary); font-weight: 600; }
+        .stepper-connector {
+            width: 48px;
+            height: 1.5px;
+            background: var(--border-subtle);
+            margin: 0 4px;
+            margin-bottom: 22px;
+            flex-shrink: 0;
+            transition: background 0.2s;
         }
+        .stepper-connector.completed { background: var(--status-success); }
 
-        .button-outlined {
-            background: transparent;
-            color: var(--primary-main);
-            border: 1px solid var(--primary-main);
-        }
-
-        .button-outlined:hover {
-            background: rgba(25, 118, 210, 0.04);
-        }
-
-        .button-text {
-            background: transparent;
-            color: var(--primary-main);
-        }
-
-        .button-text:hover {
-            background: rgba(25, 118, 210, 0.04);
-        }
-
-        .button:disabled {
-            background: var(--grey-300);
-            color: var(--grey-600);
-            cursor: not-allowed;
-            box-shadow: none;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 16px;
-            justify-content: flex-end;
-            margin-top: 32px;
-        }
-
-        /* Form Controls */
-        .form-group {
+        /* ─── Card (Zone 3 geometry) ──────────────────────────────── */
+        .card {
+            background: var(--surface-card);
+            border-radius: var(--radius-card);
+            box-shadow: var(--shadow-card);
+            padding: 32px;
             margin-bottom: 24px;
         }
 
+        /* ─── Typography Ladder (Zone 2) ──────────────────────────── */
+        /* Display-LG  40px / 600 / lh 48px */
+        .display-lg  { font-size: 40px;  font-weight: 600; line-height: 48px; color: var(--text-primary); }
+        /* Heading-MD  24px / 600 / lh 36px */
+        .heading-md  { font-size: 24px;  font-weight: 600; line-height: 36px; color: var(--text-primary); margin-bottom: 8px; }
+        /* Body-Base   16px / 400 / lh 28px */
+        .body-base   { font-size: 16px;  font-weight: 400; line-height: 28px; color: var(--text-primary); }
+        /* Label-Small 12px / 500 / lh 20px */
+        .label-small { font-size: 12px;  font-weight: 500; line-height: 20px; color: var(--text-muted); }
+        /* Link-Action 16px / 600 / lh 28px */
+        .link-action { font-size: 16px;  font-weight: 600; line-height: 28px; color: var(--color-action-primary); cursor: pointer; text-decoration: none; }
+        .text-muted  { color: var(--text-muted); }
+
+        /* ─── Buttons (Zone 4 — 200px radius pill) ────────────────── */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 12px 24px;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 20px;
+            border: none;
+            border-radius: var(--radius-button);
+            cursor: pointer;
+            transition: background 0.15s, box-shadow 0.15s;
+            white-space: nowrap;
+        }
+        .btn-primary  { background: var(--color-action-primary); color: white; }
+        .btn-primary:hover { background: var(--color-action-primary-dark); }
+        .btn-primary:disabled { background: var(--border-subtle); color: var(--text-muted); cursor: not-allowed; }
+        .btn-outline  { background: transparent; color: var(--color-action-primary); border: 1px solid var(--color-action-primary); }
+        .btn-outline:hover { background: rgba(14,111,190,0.06); }
+        .btn-ghost    { background: transparent; color: var(--text-muted); border: none; }
+        .btn-ghost:hover  { color: var(--text-primary); }
+        .btn .material-icons { font-size: 18px; }
+        .btn-sm { padding: 8px 16px; font-size: 13px; }
+
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        /* ─── Form Controls (Zone 4 — 8px radius input) ──────────── */
         .form-label {
             display: block;
-            font-size: 14px;
+            font-size: 12px;
             font-weight: 500;
-            margin-bottom: 8px;
-            color: var(--text-primary);
+            line-height: 20px;
+            color: var(--text-muted);
+            margin-bottom: 6px;
         }
-
         .form-input {
             width: 100%;
-            padding: 12px;
-            border: 1px solid var(--grey-400);
-            border-radius: 4px;
-            font-size: 16px;
+            height: 40px;
+            padding: 10px 12px;
             font-family: inherit;
-            transition: border-color 0.2s;
-        }
-
-        .form-input:focus {
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--text-primary);
+            background: var(--surface-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-input);
+            transition: border-color 0.15s, box-shadow 0.15s;
             outline: none;
-            border-color: var(--primary-main);
-            box-shadow: 0 0 0 1px var(--primary-main);
         }
+        .form-input::placeholder { color: var(--text-muted); }
+        .form-input:focus { border-color: var(--color-action-primary); box-shadow: 0 0 0 2px rgba(14,111,190,0.15); }
+        .form-input[readonly] { background: var(--background-page); cursor: default; }
 
-        .checkbox-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px;
+        /* ─── Toggle Switch ───────────────────────────────────────── */
+        .toggle-switch {
+            width: 40px;
+            height: 22px;
+            border-radius: 200px;
+            background: var(--border-subtle);
+            position: relative;
             cursor: pointer;
-            border-radius: 4px;
+            flex-shrink: 0;
             transition: background 0.2s;
+            user-select: none;
+        }
+        .toggle-switch.on { background: var(--color-action-primary); }
+        .toggle-thumb {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 16px;
+            height: 16px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+            transition: transform 0.2s;
+        }
+        .toggle-switch.on .toggle-thumb { transform: translateX(18px); }
+
+        /* ─── Checkbox (Zone 4) ───────────────────────────────────── */
+        .checkbox-row { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+        .checkbox-box {
+            width: 16px; height: 16px;
+            flex-shrink: 0;
+            border: 1.5px solid var(--color-action-primary);
+            border-radius: 2px;
+            background: var(--surface-card);
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.15s;
+        }
+        .checkbox-box.checked { background: var(--color-action-primary); }
+        .checkbox-box.checked::after {
+            content: '';
+            display: block;
+            width: 9px; height: 5px;
+            border-left: 2px solid white;
+            border-bottom: 2px solid white;
+            transform: translateY(-1px) rotate(-45deg);
         }
 
-        .checkbox-wrapper:hover {
-            background: var(--grey-100);
-        }
-
-        .checkbox-input {
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-        }
-
-        /* Service List */
-        .service-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
+        /* ─── Service List ────────────────────────────────────────── */
+        .service-list { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }
         .service-item {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 16px;
-            background: var(--background-paper);
-            border: 1px solid var(--grey-300);
-            border-radius: 4px;
-            transition: all 0.2s;
-        }
-
-        .service-item:hover {
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .service-item.disabled {
-            opacity: 0.5;
-        }
-
-        .service-info {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            flex: 1;
-        }
-
-        .drag-handle {
-            color: var(--grey-400);
-            cursor: grab;
-        }
-
-        .drag-handle:active {
-            cursor: grabbing;
-        }
-
-        .service-details {
-            flex: 1;
-        }
-
-        .service-name {
-            font-size: 16px;
-            font-weight: 500;
-            margin-bottom: 4px;
-        }
-
-        .service-meta {
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
-
-        .service-actions {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-
-        /* Schedule Grid */
-        .schedule-grid {
-            display: grid;
-            gap: 16px;
-        }
-
-        .schedule-day {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            padding: 16px;
-            background: var(--grey-100);
-            border-radius: 4px;
-        }
-
-        .schedule-day-name {
-            font-weight: 500;
-            min-width: 100px;
-        }
-
-        .schedule-times {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            flex: 1;
-        }
-
-        .time-input {
-            padding: 8px;
-            border: 1px solid var(--grey-400);
-            border-radius: 4px;
-            font-size: 14px;
-            width: 120px;
-        }
-
-        /* Team Member Cards */
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 16px;
-        }
-
-        .team-card {
-            padding: 20px;
-            background: var(--background-paper);
-            border: 1px solid var(--grey-300);
-            border-radius: 4px;
-            display: flex;
-            flex-direction: column;
             gap: 12px;
+            padding: 14px 16px;
+            background: var(--surface-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-card);
+            transition: box-shadow 0.15s;
         }
+        .service-item:hover { box-shadow: var(--shadow-card); }
+        .service-item.disabled { opacity: 0.45; }
+        .drag-handle { color: var(--border-subtle); cursor: grab; flex-shrink: 0; font-size: 20px; }
+        .drag-handle:active { cursor: grabbing; }
+        .service-details { flex: 1; min-width: 0; }
+        .service-name  { font-size: 14px; font-weight: 600; line-height: 20px; color: var(--text-primary); }
+        .service-meta  { font-size: 12px; font-weight: 500; line-height: 20px; color: var(--text-muted); }
+        .service-actions { display: flex; align-items: center; gap: 10px; }
+        .icon-btn {
+            background: none; border: none; cursor: pointer;
+            color: var(--text-muted); padding: 4px; border-radius: 4px;
+            display: flex; align-items: center;
+        }
+        .icon-btn:hover { color: var(--color-action-primary); background: rgba(14,111,190,0.06); }
+        .icon-btn .material-icons { font-size: 18px; }
 
+        /* ─── Preset Chips ────────────────────────────────────────── */
+        .preset-chips { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+        .preset-chip {
+            padding: 6px 14px;
+            background: var(--background-page);
+            border: 1px solid var(--border-subtle);
+            border-radius: 200px;
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 20px;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: border-color 0.15s, color 0.15s, background 0.15s;
+            font-family: inherit;
+        }
+        .preset-chip:hover { border-color: var(--color-action-primary); color: var(--color-action-primary); }
+        .preset-chip.active { border-color: var(--color-action-primary); color: var(--color-action-primary); background: rgba(14,111,190,0.06); }
+
+        /* ─── Schedule ────────────────────────────────────────────── */
+        .schedule-list { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+        .schedule-row {
+            display: flex; align-items: center; gap: 16px;
+            padding: 12px 16px;
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-card);
+            background: var(--surface-card);
+        }
+        .schedule-day-name {
+            font-size: 14px; font-weight: 600;
+            color: var(--text-primary);
+            min-width: 96px;
+        }
+        .schedule-times { display: flex; align-items: center; gap: 8px; flex: 1; }
+        .time-input {
+            height: 36px; padding: 8px 10px;
+            font-family: inherit; font-size: 13px;
+            color: var(--text-primary);
+            background: var(--surface-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-input);
+            outline: none; width: 110px;
+        }
+        .time-input:disabled { opacity: 0.4; cursor: not-allowed; }
+        .time-input:focus { border-color: var(--color-action-primary); box-shadow: 0 0 0 2px rgba(14,111,190,0.15); }
+
+        /* ─── Team ────────────────────────────────────────────────── */
+        .team-list { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }
+        .team-row {
+            display: flex; align-items: center; gap: 16px;
+            padding: 14px 16px;
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-card);
+            background: var(--surface-card);
+            transition: box-shadow 0.15s;
+        }
+        .team-row:hover { box-shadow: var(--shadow-card); }
         .team-avatar {
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            background: var(--primary-light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 24px;
-            font-weight: 500;
+            width: 40px; height: 40px; border-radius: 50%;
+            background: rgba(14,111,190,0.12);
+            color: var(--color-action-primary);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 14px; font-weight: 600; flex-shrink: 0;
         }
+        .team-info { flex: 1; }
+        .team-name   { font-size: 14px; font-weight: 600; line-height: 20px; color: var(--text-primary); }
+        .team-status { font-size: 12px; font-weight: 500; line-height: 20px; color: var(--text-muted); }
+        .team-status.active { color: var(--status-success); }
 
-        /* Product Cards */
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
+        /* ─── Badges ──────────────────────────────────────────────── */
+        .badge {
+            display: inline-flex; align-items: center;
+            padding: 2px 8px; border-radius: 200px;
+            font-size: 11px; font-weight: 600; line-height: 18px;
         }
+        .badge-recommend { background: rgba(0,163,68,0.10);  color: var(--status-success); }
+        .badge-pair      { background: rgba(14,111,190,0.10); color: var(--color-action-primary); }
+        .badge-paid      { background: rgba(191,134,0,0.10);  color: var(--status-warning); }
 
+        /* ─── Product Cards ───────────────────────────────────────── */
+        .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 16px; }
         .product-card {
-            padding: 24px;
-            background: var(--background-paper);
-            border: 2px solid var(--grey-300);
-            border-radius: 8px;
+            padding: 20px;
+            background: var(--surface-card);
+            border: 1.5px solid var(--border-subtle);
+            border-radius: var(--radius-card);
             cursor: pointer;
-            transition: all 0.2s;
+            transition: border-color 0.15s, box-shadow 0.15s;
+            position: relative;
         }
-
-        .product-card:hover {
-            border-color: var(--primary-main);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-
-        .product-card.selected {
-            border-color: var(--primary-main);
-            background: rgba(25, 118, 210, 0.04);
-        }
-
+        .product-card:hover { border-color: var(--color-action-primary); box-shadow: var(--shadow-card); }
+        .product-card.selected { border-color: var(--color-action-primary); background: rgba(14,111,190,0.04); }
+        .product-card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 8px; }
         .product-icon {
-            width: 48px;
-            height: 48px;
-            background: var(--primary-light);
+            width: 40px; height: 40px;
+            background: rgba(14,111,190,0.10);
             border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 16px;
+            display: flex; align-items: center; justify-content: center;
         }
+        .product-icon .material-icons { font-size: 22px; color: var(--color-action-primary); }
+        .product-name { font-size: 14px; font-weight: 600; line-height: 20px; color: var(--text-primary); margin-bottom: 4px; }
+        .product-desc { font-size: 12px; font-weight: 500; line-height: 20px; color: var(--text-muted); }
+        .product-check { display: flex; justify-content: flex-end; margin-top: 12px; }
 
-        .product-icon .material-icons {
-            font-size: 28px;
-            color: white;
+        /* ─── Welcome product cards ───────────────────────────────── */
+        .welcome-products { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 32px; }
+        .welcome-product {
+            padding: 20px;
+            background: var(--background-page);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-card);
         }
-
-        .product-name {
-            font-size: 18px;
-            font-weight: 500;
-            margin-bottom: 8px;
+        .welcome-product-icon {
+            width: 36px; height: 36px;
+            background: rgba(14,111,190,0.10); border-radius: 6px;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 10px;
         }
+        .welcome-product-icon .material-icons { font-size: 20px; color: var(--color-action-primary); }
+        .welcome-product-name { font-size: 14px; font-weight: 600; line-height: 20px; color: var(--text-primary); margin-bottom: 4px; }
+        .welcome-product-desc { font-size: 12px; font-weight: 500; line-height: 20px; color: var(--text-muted); }
 
-        .product-description {
-            font-size: 14px;
-            color: var(--text-secondary);
-            line-height: 1.5;
+        /* ─── Insight / Quote Callout ─────────────────────────────── */
+        .insight-callout {
+            background: rgba(14,111,190,0.05);
+            border: 1px solid rgba(14,111,190,0.18);
+            border-radius: var(--radius-card);
+            padding: 14px 16px;
+            display: flex; gap: 12px; align-items: flex-start;
         }
-
-        /* AI Coach */
-        .ai-coach {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            width: 380px;
-            background: var(--background-paper);
-            border-radius: 8px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-            overflow: hidden;
-            z-index: 900;
-            display: none;
+        .insight-callout .material-icons { color: var(--color-action-primary); font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+        .insight-callout-text { font-size: 13px; font-weight: 400; line-height: 20px; color: var(--text-primary); }
+        .insight-callout-text strong { font-weight: 600; }
+        .insight-callout-text em { font-style: italic; color: var(--text-muted); }
+        .insight-warn {
+            background: rgba(191,134,0,0.05);
+            border: 1px solid rgba(191,134,0,0.2);
         }
+        .insight-warn .material-icons { color: var(--status-warning); }
 
-        .ai-coach.visible {
-            display: block;
-        }
-
-        .ai-coach-header {
-            background: var(--primary-main);
-            color: white;
+        /* ─── Product Setup blocks (Step 6) ──────────────────────── */
+        .setup-block { border: 1px solid var(--border-subtle); border-radius: var(--radius-card); overflow: hidden; margin-bottom: 16px; }
+        .setup-block-header {
+            display: flex; align-items: center; gap: 12px;
             padding: 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            background: var(--background-page);
+            border-bottom: 1px solid var(--border-subtle);
         }
-
-        .ai-coach-header h6 {
-            font-size: 16px;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        .setup-block-icon {
+            width: 36px; height: 36px;
+            background: rgba(14,111,190,0.10); border-radius: 8px;
+            display: flex; align-items: center; justify-content: center; flex-shrink: 0;
         }
+        .setup-block-icon .material-icons { font-size: 20px; color: var(--color-action-primary); }
+        .setup-block-title    { font-size: 14px; font-weight: 600; line-height: 20px; color: var(--text-primary); }
+        .setup-block-subtitle { font-size: 12px; font-weight: 500; line-height: 20px; color: var(--text-muted); }
+        .setup-block-body     { padding: 16px; display: flex; flex-direction: column; gap: 14px; }
+        .setup-row { display: flex; gap: 8px; align-items: center; }
+        .setup-row .form-input { flex: 1; }
 
-        .ai-coach-close {
-            background: none;
-            border: none;
-            color: white;
-            cursor: pointer;
-            padding: 4px;
+        /* ─── Code snippet ────────────────────────────────────────── */
+        .code-snippet {
+            background: #1e293b;
+            color: #7dd3fc;
+            padding: 14px 16px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            line-height: 20px;
+            overflow-x: auto;
+            position: relative;
         }
-
-        .ai-coach-body {
-            padding: 16px;
-            max-height: 400px;
-            overflow-y: auto;
+        .copy-btn {
+            display: inline-flex; align-items: center; gap: 4px;
+            padding: 4px 10px;
+            background: rgba(255,255,255,0.10);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 4px; color: rgba(255,255,255,0.8);
+            cursor: pointer; font-size: 11px; font-family: inherit;
+            margin-top: 8px; transition: background 0.15s;
         }
+        .copy-btn:hover { background: rgba(255,255,255,0.20); }
+        .copy-btn .material-icons { font-size: 13px; }
 
-        .ai-message {
-            background: var(--grey-100);
-            padding: 12px;
-            border-radius: 4px;
-            margin-bottom: 12px;
-            font-size: 14px;
-            line-height: 1.5;
+        /* ─── Review summary ──────────────────────────────────────── */
+        .review-section {
+            padding: 14px 16px;
+            background: var(--background-page);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-card);
+            margin-bottom: 10px;
         }
-
-        .ai-input-wrapper {
-            padding: 16px;
-            border-top: 1px solid var(--divider);
-            display: flex;
-            gap: 8px;
+        .review-section-title {
+            font-size: 11px; font-weight: 600; line-height: 20px;
+            color: var(--text-muted); text-transform: uppercase;
+            letter-spacing: 0.06em; margin-bottom: 4px;
         }
+        .review-section-body { font-size: 14px; font-weight: 400; line-height: 24px; color: var(--text-primary); }
 
-        .ai-input {
-            flex: 1;
-            padding: 8px 12px;
-            border: 1px solid var(--grey-400);
-            border-radius: 4px;
-            font-size: 14px;
+        /* ─── Done screen ─────────────────────────────────────────── */
+        .done-icon-wrap {
+            width: 72px; height: 72px; border-radius: 50%;
+            background: rgba(0,163,68,0.10);
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 24px;
         }
-
-        /* Toggle Button */
-        .ai-toggle-button {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            background: var(--primary-main);
-            color: white;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 899;
-        }
-
-        .ai-toggle-button:hover {
-            background: var(--primary-dark);
-        }
-
-        /* Utility Classes */
-        .hidden {
-            display: none !important;
-        }
-
-        .mt-24 {
+        .done-icon-wrap .material-icons { font-size: 40px; color: var(--status-success); }
+        .next-steps-list {
             margin-top: 24px;
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-card);
+            overflow: hidden;
         }
-
-        .mb-16 {
-            margin-bottom: 16px;
+        .next-step-item {
+            display: flex; align-items: flex-start; gap: 12px;
+            padding: 16px; border-bottom: 1px solid var(--border-subtle);
         }
+        .next-step-item:last-child { border-bottom: none; }
+        .next-step-item .material-icons { font-size: 18px; color: var(--color-action-primary); flex-shrink: 0; margin-top: 2px; }
+        .next-step-text { font-size: 14px; line-height: 24px; color: var(--text-primary); }
+        .next-step-text strong { font-weight: 600; }
 
-        .text-center {
+        /* ─── Stat Pills ──────────────────────────────────────────── */
+        .stat-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
+        .stat-pill {
+            flex: 1; min-width: 120px;
+            padding: 16px;
+            background: var(--background-page);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-card);
             text-align: center;
         }
+        .stat-value { font-size: 24px; font-weight: 600; line-height: 36px; color: var(--color-action-primary); }
+        .stat-label { font-size: 12px; font-weight: 500; line-height: 20px; color: var(--text-muted); }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .main-content {
-                padding: 16px;
-            }
+        /* ─── AI Coach ────────────────────────────────────────────── */
+        .ai-coach {
+            position: fixed; bottom: 24px; right: 24px;
+            width: 360px;
+            background: var(--surface-card);
+            border-radius: var(--radius-card);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.14);
+            overflow: hidden; z-index: 900;
+            display: none;
+        }
+        .ai-coach.visible { display: flex; flex-direction: column; }
+        .ai-coach-header {
+            background: var(--color-action-primary); color: white;
+            padding: 14px 16px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .ai-coach-title {
+            font-size: 14px; font-weight: 600;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .ai-coach-title .material-icons { font-size: 18px; }
+        .ai-coach-close { background: none; border: none; color: white; cursor: pointer; padding: 2px; display: flex; opacity: 0.8; }
+        .ai-coach-close:hover { opacity: 1; }
+        .ai-coach-close .material-icons { font-size: 18px; }
+        .ai-coach-body { padding: 16px; max-height: 320px; overflow-y: auto; flex: 1; }
+        .ai-message {
+            background: var(--background-page); padding: 10px 12px;
+            border-radius: 8px; margin-bottom: 10px;
+            font-size: 13px; line-height: 20px; color: var(--text-primary);
+        }
+        .ai-message.user { background: rgba(14,111,190,0.10); color: var(--color-action-primary); margin-left: 24px; }
+        .ai-input-wrapper { padding: 12px 16px; border-top: 1px solid var(--border-subtle); display: flex; gap: 8px; }
+        .ai-input {
+            flex: 1; height: 36px; padding: 8px 10px;
+            font-family: inherit; font-size: 13px;
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-input); outline: none;
+            color: var(--text-primary);
+        }
+        .ai-input:focus { border-color: var(--color-action-primary); box-shadow: 0 0 0 2px rgba(14,111,190,0.15); }
+        .ai-send-btn {
+            width: 36px; height: 36px; flex-shrink: 0;
+            background: var(--color-action-primary); border: none;
+            border-radius: 50%; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; color: white;
+            transition: background 0.15s;
+        }
+        .ai-send-btn:hover { background: var(--color-action-primary-dark); }
+        .ai-send-btn .material-icons { font-size: 18px; }
+        .ai-toggle-btn {
+            position: fixed; bottom: 24px; right: 24px;
+            width: 52px; height: 52px; border-radius: 50%;
+            background: var(--color-action-primary); color: white;
+            border: none; cursor: pointer;
+            box-shadow: 0 4px 16px rgba(14,111,190,0.4);
+            display: flex; align-items: center; justify-content: center;
+            z-index: 899; transition: background 0.15s;
+        }
+        .ai-toggle-btn:hover { background: var(--color-action-primary-dark); }
+        .ai-toggle-btn .material-icons { font-size: 24px; }
 
-            .stepper {
-                flex-direction: column;
-                align-items: flex-start;
-            }
+        /* ─── Step header ─────────────────────────────────────────── */
+        .step-header { margin-bottom: 24px; }
+        .step-header .heading-md { margin-bottom: 4px; }
 
-            .stepper-connector {
-                width: 2px;
-                height: 40px;
-                margin: 8px 0;
-            }
+        /* ─── Utility ─────────────────────────────────────────────── */
+        .hidden { display: none !important; }
+        .text-center { text-align: center; }
+        .mt-8  { margin-top: 8px; }
+        .mt-16 { margin-top: 16px; }
+        .mt-24 { margin-top: 24px; }
+        .mb-8  { margin-bottom: 8px; }
+        .mb-16 { margin-bottom: 16px; }
+        .gap-8 { gap: 8px; }
 
-            .product-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .ai-coach {
-                width: calc(100% - 32px);
-                right: 16px;
-            }
+        /* ─── Responsive ──────────────────────────────────────────── */
+        @media (max-width: 640px) {
+            .main-content { padding: 24px 16px; }
+            .stepper-connector { width: 24px; }
+            .stepper-label { display: none; }
+            .welcome-products, .product-grid { grid-template-columns: 1fr; }
+            .ai-coach { width: calc(100% - 32px); right: 16px; }
+            .stat-row { gap: 8px; }
         }
     </style>
 </head>
 <body>
-    <!-- Top Navigation -->
-    <nav class="top-nav">
-        <div class="top-nav-logo">
-            <span class="material-icons">home_repair_service</span>
-            <span>Housecall Pro</span>
-        </div>
-    </nav>
 
-    <!-- Main Content -->
-    <div class="main-content">
-        <!-- Breadcrumbs -->
-        <div class="breadcrumbs">
-            <a href="#" class="breadcrumb-link">Settings</a>
-            <span class="material-icons">chevron_right</span>
-            <a href="#" class="breadcrumb-link">Booking</a>
-            <span class="material-icons">chevron_right</span>
-            <span>Setup</span>
-        </div>
+<!-- Top Nav -->
+<nav class="top-nav">
+    <div class="top-nav-logo">
+        <span class="material-icons">home_repair_service</span>
+        Housecall Pro
+    </div>
+    <div class="top-nav-save">
+        <span class="material-icons">cloud_done</span>
+        Progress saved automatically
+    </div>
+</nav>
 
-        <!-- Stepper -->
+<!-- Main Content -->
+<div class="main-content">
+
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs">
+        <a href="#" class="breadcrumb-link">Settings</a>
+        <span class="material-icons">chevron_right</span>
+        <a href="#" class="breadcrumb-link">Booking</a>
+        <span class="material-icons">chevron_right</span>
+        <span>Setup</span>
+    </div>
+
+    <!-- Stepper + counter -->
+    <div class="stepper-wrap">
+        <div class="step-counter" id="stepCounter"></div>
         <div class="stepper" id="stepper"></div>
-
-        <!-- Content -->
-        <div id="content"></div>
     </div>
 
-    <!-- AI Coach Toggle -->
-    <button class="ai-toggle-button" onclick="toggleAICoach()">
-        <span class="material-icons">smart_toy</span>
-    </button>
+    <!-- Step Content -->
+    <div id="content"></div>
 
-    <!-- AI Coach -->
-    <div class="ai-coach" id="aiCoach">
-        <div class="ai-coach-header">
-            <h6>
-                <span class="material-icons">smart_toy</span>
-                AI Setup Coach
-            </h6>
-            <button class="ai-coach-close" onclick="toggleAICoach()">
-                <span class="material-icons">close</span>
-            </button>
+</div>
+
+<!-- AI Coach Toggle -->
+<button class="ai-toggle-btn" id="aiToggleBtn" onclick="toggleAICoach()">
+    <span class="material-icons">smart_toy</span>
+</button>
+
+<!-- AI Coach Panel -->
+<div class="ai-coach" id="aiCoach">
+    <div class="ai-coach-header">
+        <div class="ai-coach-title">
+            <span class="material-icons">smart_toy</span>
+            AI Setup Coach
         </div>
-        <div class="ai-coach-body" id="aiCoachBody">
-            <div class="ai-message">
-                Hi! I'm your AI Setup Coach. I'm here to help you configure your booking products. Ask me anything!
+        <button class="ai-coach-close" onclick="toggleAICoach()">
+            <span class="material-icons">close</span>
+        </button>
+    </div>
+    <div class="ai-coach-body" id="aiCoachBody"></div>
+    <div class="ai-input-wrapper">
+        <input type="text" class="ai-input" id="aiInput" placeholder="Ask me anything…" onkeypress="handleAIInput(event)">
+        <button class="ai-send-btn" onclick="sendAIMessage()">
+            <span class="material-icons">send</span>
+        </button>
+    </div>
+</div>
+
+<script>
+    // ── State ────────────────────────────────────────────────────────
+    let currentStep = 0;
+
+    let services = [
+        { id: 1, name: 'AC Repair',         price: 150, duration: 90,  enabled: true  },
+        { id: 2, name: 'Heating Service',    price: 120, duration: 60,  enabled: true  },
+        { id: 3, name: 'Maintenance Check',  price: 85,  duration: 45,  enabled: true  },
+        { id: 4, name: 'Duct Cleaning',      price: 250, duration: 120, enabled: true  },
+        { id: 5, name: 'Installation',       price: 500, duration: 240, enabled: false },
+        { id: 6, name: 'Emergency Service',  price: 200, duration: 120, enabled: true  }
+    ];
+
+    let selectedProducts = [];
+
+    let teamMembers = [
+        { id: 1, name: 'John Smith',    role: 'Lead Technician', initials: 'JS', available: true  },
+        { id: 2, name: 'Sarah Johnson', role: 'Technician',      initials: 'SJ', available: true  },
+        { id: 3, name: 'Mike Davis',    role: 'Technician',      initials: 'MD', available: false },
+        { id: 4, name: 'Lisa Chen',     role: 'Apprentice',      initials: 'LC', available: false }
+    ];
+
+    let schedule = {
+        Monday:    { enabled: true,  start: '08:00', end: '17:00' },
+        Tuesday:   { enabled: true,  start: '08:00', end: '17:00' },
+        Wednesday: { enabled: true,  start: '08:00', end: '17:00' },
+        Thursday:  { enabled: true,  start: '08:00', end: '17:00' },
+        Friday:    { enabled: true,  start: '08:00', end: '17:00' },
+        Saturday:  { enabled: false, start: '09:00', end: '13:00' },
+        Sunday:    { enabled: false, start: '09:00', end: '13:00' }
+    };
+
+    // product-specific setup state
+    let setupConfig = {
+        online_booking: { bookingLink: 'https://book.housecallpro.com/book/demo-hvac-pro', payment: true },
+        csr_ai:         { forwardPhone: '', callHours: 'business' },
+        smart_scheduling: { mode: 'maximize_jobs', autoAssign: true },
+        hcp_assist:     {}
+    };
+
+    const steps = [
+        { name: 'Overview',  render: renderOverview  },
+        { name: 'Services',  render: renderServices  },
+        { name: 'Hours',     render: renderHours     },
+        { name: 'Team',      render: renderTeam      },
+        { name: 'Products',  render: renderProducts  },
+        { name: 'Setup',     render: renderSetup     },
+        { name: 'Done',      render: renderDone      }
+    ];
+
+    // Per-step AI Coach contextual messages
+    const stepCoachMessages = [
+        "Hi! I'm your AI Setup Coach. 👋 This wizard takes about 10 minutes and gets all four of your booking products live at once. I'll be here at every step if you have questions.",
+        "Heads up: the #1 issue pros run into is services that appear in the pricebook but don't show up in online booking — because they were never toggled on here. Fix that now by enabling everything you want customers to book. Drag to reorder.",
+        "Setting default hours here applies to your whole business. Individual techs can override later. Tip: enabling Saturday mornings drives up to 40% more weekend job revenue for HVAC and plumbing pros.",
+        "This is the step most pros miss! Every team member must be individually enabled for online booking — even if they're active in your system. If a tech shows as unavailable to customers, this is why.",
+        "Online Booking + CSR AI is the most popular combo — one captures website visitors, the other captures phone calls. HCP Assist adds live human agents for overflow and is a paid upgrade to your current plan.",
+        "Almost live! Just a few product-specific settings. Your website embed code copies with one click — paste it anywhere you want the booking widget to appear.",
+        "You're live! 🎉 Do a test booking using the link below to confirm everything looks right on the customer side. Share the link with your team so they know it's active."
+    ];
+
+    // ── Bootstrap ────────────────────────────────────────────────────
+    function init() {
+        renderStepper();
+        renderStep();
+    }
+
+    // ── Stepper ──────────────────────────────────────────────────────
+    function renderStepper() {
+        // Step counter
+        document.getElementById('stepCounter').innerHTML =
+            `Step <span>${currentStep + 1}</span> of ${steps.length}`;
+
+        // Stepper dots
+        const el = document.getElementById('stepper');
+        el.innerHTML = steps.map((step, i) => {
+            const isActive    = i === currentStep;
+            const isCompleted = i < currentStep;
+            const isLast      = i === steps.length - 1;
+            const circleClass = isActive ? 'active' : isCompleted ? 'completed' : '';
+            const labelClass  = isActive ? 'active' : '';
+            const connClass   = isCompleted ? 'completed' : '';
+            const circleInner = isCompleted
+                ? '<span class="material-icons" style="font-size:16px;">check</span>'
+                : (i + 1);
+            return `
+                <div class="stepper-step">
+                    <div class="stepper-circle ${circleClass}">${circleInner}</div>
+                    <div class="stepper-label ${labelClass}">${step.name}</div>
+                </div>
+                ${!isLast ? `<div class="stepper-connector ${connClass}"></div>` : ''}
+            `;
+        }).join('');
+    }
+
+    function renderStep() {
+        document.getElementById('content').innerHTML = '';
+        renderStepper();
+        steps[currentStep].render();
+        injectCoachMessage(stepCoachMessages[currentStep]);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function nextStep() { if (currentStep < steps.length - 1) { currentStep++; renderStep(); } }
+    function prevStep() { if (currentStep > 0) { currentStep--; renderStep(); } }
+
+    // ── AI Coach ─────────────────────────────────────────────────────
+    function injectCoachMessage(msg) {
+        const body = document.getElementById('aiCoachBody');
+        body.innerHTML = `<div class="ai-message">${msg}</div>`;
+        body.scrollTop = 0;
+    }
+
+    function toggleAICoach() {
+        const coach  = document.getElementById('aiCoach');
+        const toggle = document.getElementById('aiToggleBtn');
+        const open   = coach.classList.toggle('visible');
+        toggle.style.display = open ? 'none' : 'flex';
+    }
+
+    function handleAIInput(e) { if (e.key === 'Enter') sendAIMessage(); }
+
+    function sendAIMessage() {
+        const input = document.getElementById('aiInput');
+        const body  = document.getElementById('aiCoachBody');
+        const msg   = input.value.trim();
+        if (!msg) return;
+        body.innerHTML += `<div class="ai-message user">${msg}</div>`;
+        input.value = '';
+        setTimeout(() => {
+            const replies = {
+                services:     'You have ' + services.filter(s=>s.enabled).length + ' services enabled. If a service isn\'t showing on your website, check that it\'s toggled on here.',
+                hours:        'Business hours set Mon–Fri 8am–5pm. Consider enabling Saturday 8am–1pm — HVAC pros see big weekend revenue from that.',
+                team:         services.filter(s=>s.enabled).length + ' services are enabled. Each tech must also be individually enabled in the Team step.',
+                products:     'Start with Online Booking + CSR AI — they work together to capture website and phone leads at the same time.',
+                online:       'Your booking link is ready to share! Add it to Google Business Profile and your website header for maximum visibility.',
+                csr:          'CSR AI answers in under 3 rings and books jobs while you\'re on other calls or on-site.',
+                assist:       'HCP Assist is our premium live-agent tier. Perfect for businesses that want humans to handle overflow calls during peak seasons.',
+                smart:        'Smart Scheduling auto-assigns the closest available tech to each incoming job and optimizes routes to cut drive time.',
+            };
+            const key = Object.keys(replies).find(k => msg.toLowerCase().includes(k));
+            const reply = replies[key] || 'Great question! Everything looks good from my end. Let me know if you want to adjust anything at this step.';
+            body.innerHTML += `<div class="ai-message">${reply}</div>`;
+            body.scrollTop = body.scrollHeight;
+        }, 480);
+        body.scrollTop = body.scrollHeight;
+    }
+
+    // ── Step 1: Overview ─────────────────────────────────────────────
+    function renderOverview() {
+        document.getElementById('content').innerHTML = `
+            <div class="card">
+                <div class="step-header" style="text-align:center; padding-top:8px;">
+                    <div style="display:inline-flex; align-items:center; gap:6px; background:rgba(14,111,190,0.08); border:1px solid rgba(14,111,190,0.2); border-radius:200px; padding:4px 14px; font-size:12px; font-weight:600; color:var(--color-action-primary); margin-bottom:16px;">
+                        <span class="material-icons" style="font-size:14px;">schedule</span>
+                        ~10 minute setup
+                    </div>
+                    <div class="heading-md" style="font-size:28px; line-height:40px; margin-bottom:8px;">
+                        Set up your booking products
+                    </div>
+                    <div class="body-base text-muted" style="max-width:520px; margin:0 auto;">
+                        One wizard to configure everything. We'll walk you through services,
+                        hours, team, and product activation — all in one place.
+                    </div>
+                </div>
+
+                <div class="welcome-products">
+                    <div class="welcome-product">
+                        <div class="welcome-product-icon">
+                            <span class="material-icons">calendar_today</span>
+                        </div>
+                        <div class="welcome-product-name">Online Booking</div>
+                        <div class="welcome-product-desc">Let customers book 24/7 from your website, Google, or anywhere you share a link</div>
+                    </div>
+                    <div class="welcome-product">
+                        <div class="welcome-product-icon">
+                            <span class="material-icons">phone_in_talk</span>
+                        </div>
+                        <div class="welcome-product-name">CSR AI</div>
+                        <div class="welcome-product-desc">AI answers your phones and books jobs automatically — even when you're on-site</div>
+                    </div>
+                    <div class="welcome-product">
+                        <div class="welcome-product-icon">
+                            <span class="material-icons">route</span>
+                        </div>
+                        <div class="welcome-product-name">Smart Scheduling</div>
+                        <div class="welcome-product-desc">Auto-assign jobs and optimize your team's routes to cut drive time and fit more jobs</div>
+                    </div>
+                    <div class="welcome-product">
+                        <div class="welcome-product-icon">
+                            <span class="material-icons">support_agent</span>
+                        </div>
+                        <div class="welcome-product-name">HCP Assist</div>
+                        <div class="welcome-product-desc">Live support agents handle your overflow calls during peak hours — never miss a lead</div>
+                    </div>
+                </div>
+
+                <div class="insight-callout mt-24">
+                    <span class="material-icons">info</span>
+                    <div class="insight-callout-text">
+                        <strong>Why this wizard?</strong> Based on feedback from 410+ pros, the most common issue is purchasing a booking product but never getting it fully working. This setup connects all the pieces — services, hours, team, and products — in one flow so everything works from day one.
+                    </div>
+                </div>
+
+                <div style="display:flex; justify-content:center; margin-top:32px;">
+                    <button class="btn btn-primary" onclick="nextStep()">
+                        Get started
+                        <span class="material-icons">arrow_forward</span>
+                    </button>
+                </div>
             </div>
-        </div>
-        <div class="ai-input-wrapper">
-            <input type="text" class="ai-input" id="aiInput" placeholder="Ask me anything..." onkeypress="handleAIInput(event)">
-            <button class="button button-contained" onclick="sendAIMessage()">
-                <span class="material-icons">send</span>
-            </button>
-        </div>
-    </div>
+        `;
+    }
 
-    <script>
-        // State
-        let currentStep = 0;
-        let services = [
-            { id: 1, name: 'AC Repair', price: 150, duration: 90, enabled: true },
-            { id: 2, name: 'Heating Service', price: 120, duration: 60, enabled: true },
-            { id: 3, name: 'Maintenance Check', price: 85, duration: 45, enabled: true },
-            { id: 4, name: 'Installation', price: 500, duration: 240, enabled: false },
-            { id: 5, name: 'Emergency Service', price: 200, duration: 120, enabled: true }
+    // ── Step 2: Services ─────────────────────────────────────────────
+    function renderServices() {
+        document.getElementById('content').innerHTML = `
+            <div class="card">
+                <div class="step-header">
+                    <div class="heading-md">Which services can customers book?</div>
+                    <div class="label-small">Toggle on every service you want visible on your booking page. Drag ☰ to reorder.</div>
+                </div>
+
+                <div class="insight-callout mb-16">
+                    <span class="material-icons">lightbulb</span>
+                    <div class="insight-callout-text">
+                        <strong>28% of pros report this issue:</strong> <em>"My services aren't showing up on my website."</em> This step is the fix — each service must be explicitly enabled here to appear for customers.
+                    </div>
+                </div>
+
+                <input type="text" class="form-input" placeholder="Search services…" id="serviceSearch" oninput="filterServices()" style="margin-bottom:4px;">
+
+                <div class="service-list" id="serviceList">
+                    ${services.map(s => `
+                        <div class="service-item ${!s.enabled ? 'disabled' : ''}" data-id="${s.id}">
+                            <span class="material-icons drag-handle">drag_indicator</span>
+                            <div class="service-details">
+                                <div class="service-name">${s.name}</div>
+                                <div class="service-meta">$${s.price} &middot; ${s.duration} min</div>
+                            </div>
+                            <div class="service-actions">
+                                <button class="icon-btn" onclick="editService(${s.id})" title="Edit pricing">
+                                    <span class="material-icons">edit</span>
+                                </button>
+                                <div class="toggle-switch ${s.enabled ? 'on' : ''}" onclick="toggleService(${s.id})">
+                                    <div class="toggle-thumb"></div>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+
+                <button class="btn btn-outline mt-16" onclick="addService()">
+                    <span class="material-icons">add</span>
+                    Add service
+                </button>
+
+                <div class="btn-group">
+                    <button class="btn btn-ghost" onclick="prevStep()">Back</button>
+                    <button class="btn btn-primary" onclick="nextStep()">
+                        Continue
+                        <span class="material-icons">arrow_forward</span>
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+
+    // ── Step 3: Hours ────────────────────────────────────────────────
+    function renderHours() {
+        const days = Object.keys(schedule);
+        document.getElementById('content').innerHTML = `
+            <div class="card">
+                <div class="step-header">
+                    <div class="heading-md">When are you available?</div>
+                    <div class="label-small">Set your default business hours. Individual techs can have their own schedules configured separately.</div>
+                </div>
+
+                <div class="label-small mb-8">Quick presets</div>
+                <div class="preset-chips">
+                    <button class="preset-chip" onclick="applyPreset('mf85')">Mon–Fri 8am–5pm</button>
+                    <button class="preset-chip" onclick="applyPreset('mf95')">Mon–Fri 9am–5pm</button>
+                    <button class="preset-chip" onclick="applyPreset('ms85')">Mon–Sat 8am–5pm</button>
+                    <button class="preset-chip" onclick="applyPreset('247')">7 days a week</button>
+                </div>
+
+                <div class="schedule-list">
+                    ${days.map(day => `
+                        <div class="schedule-row">
+                            <div style="display:flex; align-items:center; gap:10px; min-width:150px;">
+                                <div class="toggle-switch ${schedule[day].enabled ? 'on' : ''}" onclick="toggleDay('${day}')">
+                                    <div class="toggle-thumb"></div>
+                                </div>
+                                <span class="schedule-day-name" style="${!schedule[day].enabled ? 'color:var(--text-muted);' : ''}">${day}</span>
+                            </div>
+                            <div class="schedule-times">
+                                <input type="time" class="time-input" value="${schedule[day].start}"
+                                    ${!schedule[day].enabled ? 'disabled' : ''}
+                                    onchange="updateTime('${day}','start',this.value)">
+                                <span class="label-small">to</span>
+                                <input type="time" class="time-input" value="${schedule[day].end}"
+                                    ${!schedule[day].enabled ? 'disabled' : ''}
+                                    onchange="updateTime('${day}','end',this.value)">
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+
+                <div class="insight-callout mt-16">
+                    <span class="material-icons">trending_up</span>
+                    <div class="insight-callout-text">
+                        <strong>Pro tip:</strong> HVAC and plumbing pros who enable Saturday mornings report significantly more weekend bookings. You can always change this later in Settings → Booking → Hours.
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-ghost" onclick="prevStep()">Back</button>
+                    <button class="btn btn-primary" onclick="nextStep()">
+                        Continue
+                        <span class="material-icons">arrow_forward</span>
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+
+    // ── Step 4: Team ─────────────────────────────────────────────────
+    function renderTeam() {
+        document.getElementById('content').innerHTML = `
+            <div class="card">
+                <div class="step-header">
+                    <div class="heading-md">Who can receive bookings?</div>
+                    <div class="label-small">Enable the team members who should appear as available for customer booking.</div>
+                </div>
+
+                <div class="insight-callout insight-warn mb-16">
+                    <span class="material-icons">warning</span>
+                    <div class="insight-callout-text">
+                        <strong>22% of pros miss this step.</strong> Each team member must be individually enabled for booking — even if they're active in your system. If a tech isn't showing up for customers to book, this is why.
+                    </div>
+                </div>
+
+                <div class="team-list">
+                    ${teamMembers.map(m => `
+                        <div class="team-row">
+                            <div class="team-avatar">${m.initials}</div>
+                            <div class="team-info">
+                                <div class="team-name">${m.name}</div>
+                                <div class="team-status ${m.available ? 'active' : ''}">${m.role} &middot; ${m.available ? 'Accepting bookings' : 'Not accepting bookings'}</div>
+                            </div>
+                            <div class="toggle-switch ${m.available ? 'on' : ''}" onclick="toggleTeamMember(${m.id})">
+                                <div class="toggle-thumb"></div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-ghost" onclick="prevStep()">Back</button>
+                    <button class="btn btn-primary" onclick="nextStep()">
+                        Continue
+                        <span class="material-icons">arrow_forward</span>
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+
+    // ── Step 5: Products ─────────────────────────────────────────────
+    function renderProducts() {
+        const products = [
+            {
+                id: 'online_booking',
+                name: 'Online Booking',
+                icon: 'calendar_today',
+                desc: 'Customers book directly from your website, Google profile, or any link you share — 24/7 without phone calls.',
+                badge: { label: 'Most popular', cls: 'badge-recommend' }
+            },
+            {
+                id: 'csr_ai',
+                name: 'CSR AI',
+                icon: 'phone_in_talk',
+                desc: 'AI answers your phones and books jobs automatically. Never miss a call when you\'re on-site or after hours.',
+                badge: { label: 'Pairs well with Online Booking', cls: 'badge-pair' }
+            },
+            {
+                id: 'smart_scheduling',
+                name: 'Smart Scheduling',
+                icon: 'route',
+                desc: 'Auto-assign the right tech to every job and optimize routes to cut drive time and fit more jobs per day.',
+                badge: null
+            },
+            {
+                id: 'hcp_assist',
+                name: 'HCP Assist',
+                icon: 'support_agent',
+                desc: 'Live agents handle your overflow calls during peak hours. Never let a lead go to voicemail.',
+                badge: { label: 'Paid add-on', cls: 'badge-paid' }
+            }
         ];
-        let selectedProducts = [];
-        let teamMembers = [
-            { id: 1, name: 'John Smith', initials: 'JS', available: true },
-            { id: 2, name: 'Sarah Johnson', initials: 'SJ', available: true },
-            { id: 3, name: 'Mike Davis', initials: 'MD', available: false }
-        ];
-        let schedule = {
-            monday: { enabled: true, start: '08:00', end: '17:00' },
-            tuesday: { enabled: true, start: '08:00', end: '17:00' },
-            wednesday: { enabled: true, start: '08:00', end: '17:00' },
-            thursday: { enabled: true, start: '08:00', end: '17:00' },
-            friday: { enabled: true, start: '08:00', end: '17:00' },
-            saturday: { enabled: false, start: '09:00', end: '13:00' },
-            sunday: { enabled: false, start: '09:00', end: '13:00' }
+
+        document.getElementById('content').innerHTML = `
+            <div class="card">
+                <div class="step-header">
+                    <div class="heading-md">Choose what to enable</div>
+                    <div class="label-small">Select the booking products you want to activate. You can add or remove products any time.</div>
+                </div>
+
+                <div class="product-grid">
+                    ${products.map(p => `
+                        <div class="product-card ${selectedProducts.includes(p.id) ? 'selected' : ''}"
+                             onclick="toggleProduct('${p.id}')">
+                            <div class="product-card-top">
+                                <div class="product-icon">
+                                    <span class="material-icons">${p.icon}</span>
+                                </div>
+                                <div class="checkbox-box ${selectedProducts.includes(p.id) ? 'checked' : ''}"></div>
+                            </div>
+                            ${p.badge ? `<div class="badge ${p.badge.cls}" style="margin-bottom:6px;">${p.badge.label}</div>` : '<div style="height:6px;"></div>'}
+                            <div class="product-name">${p.name}</div>
+                            <div class="product-desc">${p.desc}</div>
+                        </div>
+                    `).join('')}
+                </div>
+
+                <div class="insight-callout mt-16">
+                    <span class="material-icons">lightbulb</span>
+                    <div class="insight-callout-text">
+                        <strong>Recommended:</strong> Start with Online Booking + CSR AI to capture both website and phone leads. You can add Smart Scheduling once your online volume picks up.
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-ghost" onclick="prevStep()">Back</button>
+                    <button class="btn btn-primary" onclick="nextStep()" ${selectedProducts.length === 0 ? 'disabled' : ''}>
+                        Continue
+                        <span class="material-icons">arrow_forward</span>
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+
+    // ── Step 6: Product-Specific Setup ───────────────────────────────
+    function renderSetup() {
+        // Pre-populate defaults when arriving without selections (e.g. via URL param)
+        if (selectedProducts.length === 0) {
+            selectedProducts = ['online_booking', 'csr_ai'];
+        }
+
+        const setupBlocks = selectedProducts.map(id => {
+            if (id === 'online_booking')   return renderOnlineBookingSetup();
+            if (id === 'csr_ai')           return renderCSRAISetup();
+            if (id === 'smart_scheduling') return renderSmartSchedulingSetup();
+            if (id === 'hcp_assist')       return renderHCPAssistSetup();
+            return '';
+        }).join('');
+
+        document.getElementById('content').innerHTML = `
+            <div class="card">
+                <div class="step-header">
+                    <div class="heading-md">Configure your products</div>
+                    <div class="label-small">A few product-specific settings before you go live. You can update these any time in Settings → Booking.</div>
+                </div>
+
+                ${setupBlocks}
+
+                <div class="btn-group">
+                    <button class="btn btn-ghost" onclick="prevStep()">Back</button>
+                    <button class="btn btn-primary" onclick="nextStep()">
+                        Activate products
+                        <span class="material-icons">check</span>
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+
+    function renderOnlineBookingSetup() {
+        return `
+            <div class="setup-block">
+                <div class="setup-block-header">
+                    <div class="setup-block-icon"><span class="material-icons">calendar_today</span></div>
+                    <div>
+                        <div class="setup-block-title">Online Booking</div>
+                        <div class="setup-block-subtitle">Add the booking widget to your website</div>
+                    </div>
+                </div>
+                <div class="setup-block-body">
+                    <div>
+                        <div class="form-label">Your booking page link — share this anywhere</div>
+                        <div class="setup-row">
+                            <input class="form-input" value="${setupConfig.online_booking.bookingLink}" readonly style="color:var(--color-action-primary);">
+                            <button class="btn btn-outline btn-sm" onclick="copyText('${setupConfig.online_booking.bookingLink}', this)">
+                                <span class="material-icons">content_copy</span> Copy
+                            </button>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="form-label">Website embed code — paste into any page where you want the booking form</div>
+                        <div class="code-snippet" id="embedCodeBlock">&lt;script src="https://widget.housecallpro.com/v2/embed.js" defer&gt;&lt;/script&gt;
+&lt;div id="hcp-booking" data-business="demo-hvac-pro"&gt;&lt;/div&gt;</div>
+                        <button class="copy-btn" onclick="copyEmbed(this)">
+                            <span class="material-icons">content_copy</span> Copy embed code
+                        </button>
+                    </div>
+                    <div style="display:flex; align-items:center; justify-content:space-between;">
+                        <div>
+                            <div style="font-size:14px; font-weight:600; color:var(--text-primary);">Accept online payments</div>
+                            <div class="label-small">Require a deposit or full payment at booking</div>
+                        </div>
+                        <div class="toggle-switch ${setupConfig.online_booking.payment ? 'on' : ''}" onclick="setupConfig.online_booking.payment=!setupConfig.online_booking.payment; this.classList.toggle('on');">
+                            <div class="toggle-thumb"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    function renderCSRAISetup() {
+        return `
+            <div class="setup-block">
+                <div class="setup-block-header">
+                    <div class="setup-block-icon"><span class="material-icons">phone_in_talk</span></div>
+                    <div>
+                        <div class="setup-block-title">CSR AI</div>
+                        <div class="setup-block-subtitle">Configure your AI phone answering</div>
+                    </div>
+                </div>
+                <div class="setup-block-body">
+                    <div>
+                        <div class="form-label">Forward your business phone to this number (CSR AI answers)</div>
+                        <div class="setup-row">
+                            <input class="form-input" value="(855) 472-0091" readonly style="color:var(--color-action-primary); font-weight:600;">
+                            <button class="btn btn-outline btn-sm" onclick="copyText('(855) 472-0091', this)">
+                                <span class="material-icons">content_copy</span> Copy
+                            </button>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="form-label">When should CSR AI answer calls?</div>
+                        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                            <button class="preset-chip ${setupConfig.csr_ai.callHours === 'business' ? 'active' : ''}" onclick="setupConfig.csr_ai.callHours='business'; renderStep();">During business hours</button>
+                            <button class="preset-chip ${setupConfig.csr_ai.callHours === 'after' ? 'active' : ''}" onclick="setupConfig.csr_ai.callHours='after'; renderStep();">After hours only</button>
+                            <button class="preset-chip ${setupConfig.csr_ai.callHours === 'always' ? 'active' : ''}" onclick="setupConfig.csr_ai.callHours='always'; renderStep();">Always (24/7)</button>
+                        </div>
+                    </div>
+                    <div class="insight-callout">
+                        <span class="material-icons">info</span>
+                        <div class="insight-callout-text">CSR AI answers in under 3 rings, collects customer info, and creates a job in your Housecall Pro account automatically.</div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    function renderSmartSchedulingSetup() {
+        return `
+            <div class="setup-block">
+                <div class="setup-block-header">
+                    <div class="setup-block-icon"><span class="material-icons">route</span></div>
+                    <div>
+                        <div class="setup-block-title">Smart Scheduling</div>
+                        <div class="setup-block-subtitle">Set your auto-assignment preferences</div>
+                    </div>
+                </div>
+                <div class="setup-block-body">
+                    <div>
+                        <div class="form-label">Optimization goal</div>
+                        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                            <button class="preset-chip ${setupConfig.smart_scheduling.mode === 'maximize_jobs' ? 'active' : ''}"
+                                onclick="setupConfig.smart_scheduling.mode='maximize_jobs'; renderStep();">Maximize jobs per day</button>
+                            <button class="preset-chip ${setupConfig.smart_scheduling.mode === 'minimize_drive' ? 'active' : ''}"
+                                onclick="setupConfig.smart_scheduling.mode='minimize_drive'; renderStep();">Minimize drive time</button>
+                            <button class="preset-chip ${setupConfig.smart_scheduling.mode === 'balanced' ? 'active' : ''}"
+                                onclick="setupConfig.smart_scheduling.mode='balanced'; renderStep();">Balanced</button>
+                        </div>
+                    </div>
+                    <div style="display:flex; align-items:center; justify-content:space-between;">
+                        <div>
+                            <div style="font-size:14px; font-weight:600; color:var(--text-primary);">Auto-assign techs to new jobs</div>
+                            <div class="label-small">Automatically assign the best-fit tech when a booking comes in</div>
+                        </div>
+                        <div class="toggle-switch ${setupConfig.smart_scheduling.autoAssign ? 'on' : ''}" onclick="setupConfig.smart_scheduling.autoAssign=!setupConfig.smart_scheduling.autoAssign; this.classList.toggle('on');">
+                            <div class="toggle-thumb"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    function renderHCPAssistSetup() {
+        return `
+            <div class="setup-block">
+                <div class="setup-block-header">
+                    <div class="setup-block-icon"><span class="material-icons">support_agent</span></div>
+                    <div>
+                        <div class="setup-block-title">HCP Assist</div>
+                        <div class="setup-block-subtitle">Live agents handle your overflow calls</div>
+                    </div>
+                </div>
+                <div class="setup-block-body">
+                    <div class="insight-callout">
+                        <span class="material-icons">check_circle</span>
+                        <div class="insight-callout-text">
+                            <strong>Your dedicated agent team is being assigned.</strong> HCP Assist typically goes live within 1 business day. You'll receive a confirmation email at the address on your account.
+                        </div>
+                    </div>
+                    <div>
+                        <div class="form-label">Overflow threshold — agents answer when you're unavailable after</div>
+                        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                            <button class="preset-chip active">3 rings</button>
+                            <button class="preset-chip">5 rings</button>
+                            <button class="preset-chip">Goes to voicemail</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // ── Step 7: Done ─────────────────────────────────────────────────
+    function renderDone() {
+        const enabledServices = services.filter(s => s.enabled);
+        const enabledDays     = Object.keys(schedule).filter(d => schedule[d].enabled);
+        const availableTeam   = teamMembers.filter(m => m.available);
+        const productNames    = {
+            online_booking: 'Online Booking', csr_ai: 'CSR AI',
+            smart_scheduling: 'Smart Scheduling', hcp_assist: 'HCP Assist'
         };
 
-        const steps = [
-            { name: 'Welcome', render: renderWelcome },
-            { name: 'Services', render: renderServices },
-            { name: 'Hours', render: renderHours },
-            { name: 'Team', render: renderTeam },
-            { name: 'Products', render: renderProducts },
-            { name: 'Setup', render: renderSetup },
-            { name: 'Done', render: renderDone }
-        ];
+        document.getElementById('content').innerHTML = `
+            <div class="card" style="text-align:center; padding:48px 32px 32px;">
+                <div class="done-icon-wrap">
+                    <span class="material-icons">check_circle</span>
+                </div>
+                <div class="heading-md" style="font-size:28px; line-height:40px; margin-bottom:8px;">
+                    You're live!
+                </div>
+                <div class="body-base text-muted" style="max-width:460px; margin:0 auto;">
+                    Your booking products are active. Customers can start booking right away.
+                    Do a quick test to make sure everything looks right.
+                </div>
 
-        // Initialize
-        function init() {
-            renderStepper();
-            renderStep();
-        }
-
-        // Render Stepper
-        function renderStepper() {
-            const stepper = document.getElementById('stepper');
-            stepper.innerHTML = steps.map((step, index) => {
-                const isActive = index === currentStep;
-                const isCompleted = index < currentStep;
-                const showConnector = index < steps.length - 1;
-
-                return `
-                    <div class="stepper-step">
-                        <div>
-                            <div class="stepper-circle ${isActive ? 'active' : ''} ${isCompleted ? 'completed' : ''}">
-                                ${isCompleted ? '<span class="material-icons" style="font-size: 20px;">check</span>' : index + 1}
-                            </div>
-                            <div class="stepper-label ${isActive ? 'active' : ''}">${step.name}</div>
-                        </div>
+                <div class="stat-row" style="max-width:480px; margin:24px auto 0;">
+                    <div class="stat-pill">
+                        <div class="stat-value">${enabledServices.length}</div>
+                        <div class="stat-label">Services enabled</div>
                     </div>
-                    ${showConnector ? `<div class="stepper-connector ${isCompleted ? 'completed' : ''}"></div>` : ''}
-                `;
-            }).join('');
-        }
-
-        // Render Current Step
-        function renderStep() {
-            const content = document.getElementById('content');
-            content.innerHTML = '';
-            steps[currentStep].render();
-            renderStepper();
-        }
-
-        // Navigation
-        function nextStep() {
-            if (currentStep < steps.length - 1) {
-                currentStep++;
-                renderStep();
-            }
-        }
-
-        function prevStep() {
-            if (currentStep > 0) {
-                currentStep--;
-                renderStep();
-            }
-        }
-
-        // Step Renderers
-        function renderWelcome() {
-            const content = document.getElementById('content');
-            content.innerHTML = `
-                <div class="card card-large text-center">
-                    <h1>Welcome to Booking Products Setup</h1>
-                    <p class="body1 text-secondary" style="margin: 16px 0 32px;">
-                        Let's set up your booking products in just a few steps. This will only take 5-10 minutes.
-                    </p>
-                    <div class="product-grid" style="text-align: left; margin-top: 32px;">
-                        <div class="card">
-                            <div class="product-icon">
-                                <span class="material-icons">calendar_today</span>
-                            </div>
-                            <h5>Online Booking</h5>
-                            <p class="body2 text-secondary">Let customers book appointments 24/7 from your website</p>
-                        </div>
-                        <div class="card">
-                            <div class="product-icon">
-                                <span class="material-icons">phone</span>
-                            </div>
-                            <h5>CSR AI</h5>
-                            <p class="body2 text-secondary">AI-powered phone answering to handle customer calls</p>
-                        </div>
-                        <div class="card">
-                            <div class="product-icon">
-                                <span class="material-icons">route</span>
-                            </div>
-                            <h5>Smart Scheduling</h5>
-                            <p class="body2 text-secondary">Optimize routes and automatically assign jobs to your team</p>
-                        </div>
-                        <div class="card">
-                            <div class="product-icon">
-                                <span class="material-icons">support_agent</span>
-                            </div>
-                            <h5>HCP Assist</h5>
-                            <p class="body2 text-secondary">Live customer support with real agents (paid add-on)</p>
-                        </div>
+                    <div class="stat-pill">
+                        <div class="stat-value">${enabledDays.length}</div>
+                        <div class="stat-label">Days open</div>
                     </div>
-                    <div class="button-group" style="justify-content: center; margin-top: 48px;">
-                        <button class="button button-contained" onclick="nextStep()">
-                            Get Started
-                            <span class="material-icons">arrow_forward</span>
-                        </button>
+                    <div class="stat-pill">
+                        <div class="stat-value">${availableTeam.length}</div>
+                        <div class="stat-label">Techs available</div>
+                    </div>
+                    <div class="stat-pill">
+                        <div class="stat-value">${selectedProducts.length}</div>
+                        <div class="stat-label">Products active</div>
                     </div>
                 </div>
-            `;
-        }
 
-        function renderServices() {
-            const content = document.getElementById('content');
-            content.innerHTML = `
-                <div class="card">
-                    <h2>Select Your Services</h2>
-                    <p class="body2 text-secondary mb-16">Choose which services you want to offer for online booking. You can reorder them by dragging.</p>
-
-                    <div class="form-group">
-                        <input type="text" class="form-input" placeholder="Search services..." id="serviceSearch" oninput="filterServices()">
+                <div class="next-steps-list" style="text-align:left; max-width:520px; margin:32px auto 0;">
+                    <div class="next-step-item">
+                        <span class="material-icons">open_in_new</span>
+                        <div class="next-step-text">
+                            <strong>Test your booking page</strong><br>
+                            Open your booking link and place a test booking to confirm your services, hours, and team appear correctly.
+                            <br><a href="#" class="link-action" style="font-size:13px;" onclick="return false;">Open booking page →</a>
+                        </div>
                     </div>
-
-                    <div class="service-list" id="serviceList">
-                        ${services.map(service => `
-                            <div class="service-item ${!service.enabled ? 'disabled' : ''}" data-id="${service.id}">
-                                <div class="service-info">
-                                    <span class="material-icons drag-handle">drag_indicator</span>
-                                    <div class="service-details">
-                                        <div class="service-name">${service.name}</div>
-                                        <div class="service-meta">$${service.price} • ${service.duration} min</div>
-                                    </div>
-                                </div>
-                                <div class="service-actions">
-                                    <label class="checkbox-wrapper" style="margin: 0;">
-                                        <input type="checkbox" class="checkbox-input" ${service.enabled ? 'checked' : ''} onchange="toggleService(${service.id})">
-                                    </label>
-                                    <button class="button button-text" onclick="editService(${service.id})">
-                                        <span class="material-icons">edit</span>
-                                    </button>
-                                </div>
-                            </div>
-                        `).join('')}
+                    <div class="next-step-item">
+                        <span class="material-icons">share</span>
+                        <div class="next-step-text">
+                            <strong>Share your booking link</strong><br>
+                            Add it to your Google Business Profile, website header, and Facebook page for maximum visibility.
+                        </div>
                     </div>
+                    <div class="next-step-item">
+                        <span class="material-icons">phone</span>
+                        <div class="next-step-text">
+                            <strong>Test CSR AI</strong><br>
+                            Call your forwarded number to hear the AI assistant answer and walk through a booking.
+                        </div>
+                    </div>
+                    <div class="next-step-item">
+                        <span class="material-icons">tune</span>
+                        <div class="next-step-text">
+                            <strong>Fine-tune any time</strong><br>
+                            Adjust services, hours, team, and advanced settings in Settings → Booking.
+                        </div>
+                    </div>
+                </div>
 
-                    <button class="button button-outlined mt-24" onclick="addService()">
-                        <span class="material-icons">add</span>
-                        Add Service
+                <div style="background:var(--background-page); border:1px solid var(--border-subtle); border-radius:var(--radius-card); padding:14px 16px; text-align:left; max-width:520px; margin:24px auto 0;">
+                    <div style="font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); margin-bottom:8px;">Active products</div>
+                    <div style="font-size:14px; line-height:24px; color:var(--text-primary);">
+                        ${selectedProducts.map(id => `<span style="display:inline-flex; align-items:center; gap:4px; margin-right:12px;"><span class="material-icons" style="font-size:14px; color:var(--status-success);">check_circle</span>${productNames[id]}</span>`).join('')}
+                    </div>
+                </div>
+
+                <div style="display:flex; gap:12px; justify-content:center; margin-top:32px;">
+                    <button class="btn btn-outline" onclick="window.location.reload()">Start over</button>
+                    <button class="btn btn-primary" onclick="alert('Redirecting to dashboard…')">
+                        Go to dashboard
+                        <span class="material-icons">arrow_forward</span>
                     </button>
-
-                    <div class="button-group">
-                        <button class="button button-text" onclick="prevStep()">Back</button>
-                        <button class="button button-contained" onclick="nextStep()">
-                            Continue
-                            <span class="material-icons">arrow_forward</span>
-                        </button>
-                    </div>
                 </div>
-            `;
-        }
+            </div>
+        `;
+    }
 
-        function renderHours() {
-            const content = document.getElementById('content');
-            const days = Object.keys(schedule);
+    // ── Service actions ──────────────────────────────────────────────
+    function toggleService(id) {
+        const s = services.find(s => s.id === id);
+        s.enabled = !s.enabled;
+        renderStep();
+    }
 
-            content.innerHTML = `
-                <div class="card">
-                    <h2>Set Your Availability</h2>
-                    <p class="body2 text-secondary mb-16">Define when customers can book appointments with you.</p>
+    function filterServices() {
+        const q = document.getElementById('serviceSearch').value.toLowerCase();
+        document.querySelectorAll('.service-item').forEach(el => {
+            el.style.display = el.querySelector('.service-name').textContent.toLowerCase().includes(q) ? 'flex' : 'none';
+        });
+    }
 
-                    <div class="schedule-grid">
-                        ${days.map(day => `
-                            <div class="schedule-day">
-                                <label class="checkbox-wrapper" style="margin: 0;">
-                                    <input type="checkbox" class="checkbox-input" ${schedule[day].enabled ? 'checked' : ''} onchange="toggleDay('${day}')">
-                                    <span class="schedule-day-name">${day.charAt(0).toUpperCase() + day.slice(1)}</span>
-                                </label>
-                                <div class="schedule-times">
-                                    <input type="time" class="time-input" value="${schedule[day].start}" ${!schedule[day].enabled ? 'disabled' : ''} onchange="updateTime('${day}', 'start', this.value)">
-                                    <span>to</span>
-                                    <input type="time" class="time-input" value="${schedule[day].end}" ${!schedule[day].enabled ? 'disabled' : ''} onchange="updateTime('${day}', 'end', this.value)">
-                                </div>
-                            </div>
-                        `).join('')}
-                    </div>
+    function addService() {
+        const name = prompt('Service name:');
+        if (!name) return;
+        const price    = parseFloat(prompt('Price ($):') || 0);
+        const duration = parseInt(prompt('Duration (minutes):') || 60);
+        services.push({ id: services.length + 1, name, price, duration, enabled: true });
+        renderStep();
+    }
 
-                    <div class="button-group">
-                        <button class="button button-text" onclick="prevStep()">Back</button>
-                        <button class="button button-contained" onclick="nextStep()">
-                            Continue
-                            <span class="material-icons">arrow_forward</span>
-                        </button>
-                    </div>
-                </div>
-            `;
-        }
+    function editService(id) {
+        const s     = services.find(s => s.id === id);
+        const price = prompt('Price ($):', s.price);
+        const dur   = prompt('Duration (minutes):', s.duration);
+        if (price !== null) s.price    = parseFloat(price) || s.price;
+        if (dur   !== null) s.duration = parseInt(dur)     || s.duration;
+        renderStep();
+    }
 
-        function renderTeam() {
-            const content = document.getElementById('content');
-            content.innerHTML = `
-                <div class="card">
-                    <h2>Your Team</h2>
-                    <p class="body2 text-secondary mb-16">Manage which team members can take bookings.</p>
+    // ── Schedule actions ─────────────────────────────────────────────
+    function toggleDay(day) { schedule[day].enabled = !schedule[day].enabled; renderStep(); }
+    function updateTime(day, field, value) { schedule[day][field] = value; }
 
-                    <div class="team-grid">
-                        ${teamMembers.map(member => `
-                            <div class="team-card">
-                                <div class="team-avatar">${member.initials}</div>
-                                <div>
-                                    <div class="subtitle1">${member.name}</div>
-                                    <div class="caption">${member.available ? 'Available' : 'Not available'}</div>
-                                </div>
-                                <label class="checkbox-wrapper" style="margin: 0;">
-                                    <input type="checkbox" class="checkbox-input" ${member.available ? 'checked' : ''} onchange="toggleTeamMember(${member.id})">
-                                    <span class="body2">Available for bookings</span>
-                                </label>
-                            </div>
-                        `).join('')}
-                    </div>
-
-                    <div class="button-group">
-                        <button class="button button-text" onclick="prevStep()">Back</button>
-                        <button class="button button-contained" onclick="nextStep()">
-                            Continue
-                            <span class="material-icons">arrow_forward</span>
-                        </button>
-                    </div>
-                </div>
-            `;
-        }
-
-        function renderProducts() {
-            const content = document.getElementById('content');
-            const products = [
-                { id: 'online_booking', name: 'Online Booking', icon: 'calendar_today', desc: 'Let customers book appointments 24/7' },
-                { id: 'csr_ai', name: 'CSR AI', icon: 'phone', desc: 'AI-powered phone answering' },
-                { id: 'smart_scheduling', name: 'Smart Scheduling', icon: 'route', desc: 'Optimize routes and assignments' },
-                { id: 'hcp_assist', name: 'HCP Assist', icon: 'support_agent', desc: 'Live customer support (paid add-on)' }
-            ];
-
-            content.innerHTML = `
-                <div class="card">
-                    <h2>Choose Your Products</h2>
-                    <p class="body2 text-secondary mb-16">Select which booking products you want to enable.</p>
-
-                    <div class="product-grid">
-                        ${products.map(product => `
-                            <div class="product-card ${selectedProducts.includes(product.id) ? 'selected' : ''}" onclick="toggleProduct('${product.id}')">
-                                <div class="product-icon">
-                                    <span class="material-icons">${product.icon}</span>
-                                </div>
-                                <div class="product-name">${product.name}</div>
-                                <div class="product-description">${product.desc}</div>
-                            </div>
-                        `).join('')}
-                    </div>
-
-                    <div class="button-group">
-                        <button class="button button-text" onclick="prevStep()">Back</button>
-                        <button class="button button-contained" onclick="nextStep()" ${selectedProducts.length === 0 ? 'disabled' : ''}>
-                            Continue
-                            <span class="material-icons">arrow_forward</span>
-                        </button>
-                    </div>
-                </div>
-            `;
-        }
-
-        function renderSetup() {
-            const content = document.getElementById('content');
-            const enabledServices = services.filter(s => s.enabled);
-            const enabledDays = Object.keys(schedule).filter(day => schedule[day].enabled);
-            const availableTeam = teamMembers.filter(m => m.available);
-
-            content.innerHTML = `
-                <div class="card">
-                    <h2>Review Your Setup</h2>
-                    <p class="body2 text-secondary mb-16">Review your configuration before we activate your booking products.</p>
-
-                    <div class="card" style="background: var(--grey-100); margin-top: 24px;">
-                        <h5>Services (${enabledServices.length})</h5>
-                        <ul style="list-style: none; padding: 0;">
-                            ${enabledServices.slice(0, 3).map(s => `<li class="body2">✓ ${s.name} - $${s.price}</li>`).join('')}
-                            ${enabledServices.length > 3 ? `<li class="body2">+ ${enabledServices.length - 3} more</li>` : ''}
-                        </ul>
-                    </div>
-
-                    <div class="card" style="background: var(--grey-100); margin-top: 16px;">
-                        <h5>Availability</h5>
-                        <p class="body2">${enabledDays.join(', ')}</p>
-                    </div>
-
-                    <div class="card" style="background: var(--grey-100); margin-top: 16px;">
-                        <h5>Team Members (${availableTeam.length})</h5>
-                        <p class="body2">${availableTeam.map(m => m.name).join(', ')}</p>
-                    </div>
-
-                    <div class="card" style="background: var(--grey-100); margin-top: 16px;">
-                        <h5>Products (${selectedProducts.length})</h5>
-                        <p class="body2">${selectedProducts.join(', ').replace(/_/g, ' ')}</p>
-                    </div>
-
-                    <div class="button-group">
-                        <button class="button button-text" onclick="prevStep()">Back</button>
-                        <button class="button button-contained" onclick="nextStep()">
-                            Activate Products
-                            <span class="material-icons">check</span>
-                        </button>
-                    </div>
-                </div>
-            `;
-        }
-
-        function renderDone() {
-            const content = document.getElementById('content');
-            content.innerHTML = `
-                <div class="card card-large text-center">
-                    <div style="width: 80px; height: 80px; background: var(--success-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px;">
-                        <span class="material-icons" style="font-size: 48px; color: var(--success-main);">check_circle</span>
-                    </div>
-                    <h1>You're All Set!</h1>
-                    <p class="body1 text-secondary" style="margin: 16px 0 32px;">
-                        Your booking products are now active. Customers can start booking appointments right away.
-                    </p>
-
-                    <div class="card" style="text-align: left; max-width: 600px; margin: 0 auto;">
-                        <h5>Next Steps</h5>
-                        <div class="body2" style="margin-bottom: 12px;">
-                            <span class="material-icons" style="vertical-align: middle; color: var(--primary-main);">link</span>
-                            <strong>Share your booking link:</strong> Add it to your website and social media
-                        </div>
-                        <div class="body2" style="margin-bottom: 12px;">
-                            <span class="material-icons" style="vertical-align: middle; color: var(--primary-main);">phone</span>
-                            <strong>Test CSR AI:</strong> Call your number to experience the AI assistant
-                        </div>
-                        <div class="body2">
-                            <span class="material-icons" style="vertical-align: middle; color: var(--primary-main);">settings</span>
-                            <strong>Fine-tune settings:</strong> Adjust advanced options in Settings > Booking
-                        </div>
-                    </div>
-
-                    <div class="button-group" style="justify-content: center; margin-top: 48px;">
-                        <button class="button button-outlined" onclick="window.location.reload()">
-                            Set Up Another
-                        </button>
-                        <button class="button button-contained" onclick="alert('Redirecting to dashboard...')">
-                            Go to Dashboard
-                            <span class="material-icons">arrow_forward</span>
-                        </button>
-                    </div>
-                </div>
-            `;
-        }
-
-        // Service Functions
-        function toggleService(id) {
-            const service = services.find(s => s.id === id);
-            service.enabled = !service.enabled;
-            renderStep();
-        }
-
-        function filterServices() {
-            const search = document.getElementById('serviceSearch').value.toLowerCase();
-            const items = document.querySelectorAll('.service-item');
-            items.forEach(item => {
-                const name = item.querySelector('.service-name').textContent.toLowerCase();
-                item.style.display = name.includes(search) ? 'flex' : 'none';
+    function applyPreset(preset) {
+        const all = Object.keys(schedule);
+        const weekdays = ['Monday','Tuesday','Wednesday','Thursday','Friday'];
+        if (preset === 'mf85') {
+            all.forEach(d => {
+                schedule[d].enabled = weekdays.includes(d);
+                if (weekdays.includes(d)) { schedule[d].start = '08:00'; schedule[d].end = '17:00'; }
             });
+        } else if (preset === 'mf95') {
+            all.forEach(d => {
+                schedule[d].enabled = weekdays.includes(d);
+                if (weekdays.includes(d)) { schedule[d].start = '09:00'; schedule[d].end = '17:00'; }
+            });
+        } else if (preset === 'ms85') {
+            all.forEach(d => {
+                schedule[d].enabled = weekdays.includes(d) || d === 'Saturday';
+                if (weekdays.includes(d))  { schedule[d].start = '08:00'; schedule[d].end = '17:00'; }
+                if (d === 'Saturday')      { schedule[d].start = '08:00'; schedule[d].end = '13:00'; }
+            });
+        } else if (preset === '247') {
+            all.forEach(d => { schedule[d].enabled = true; schedule[d].start = '00:00'; schedule[d].end = '23:59'; });
         }
+        renderStep();
+    }
 
-        function addService() {
-            const name = prompt('Service name:');
-            const price = prompt('Price ($):');
-            const duration = prompt('Duration (minutes):');
-            if (name && price && duration) {
-                services.push({
-                    id: services.length + 1,
-                    name,
-                    price: parseInt(price),
-                    duration: parseInt(duration),
-                    enabled: true
-                });
-                renderStep();
-            }
-        }
+    // ── Team actions ─────────────────────────────────────────────────
+    function toggleTeamMember(id) {
+        const m = teamMembers.find(m => m.id === id);
+        m.available = !m.available;
+        renderStep();
+    }
 
-        function editService(id) {
-            const service = services.find(s => s.id === id);
-            const price = prompt('New price:', service.price);
-            const duration = prompt('New duration (minutes):', service.duration);
-            if (price) service.price = parseInt(price);
-            if (duration) service.duration = parseInt(duration);
-            renderStep();
-        }
+    // ── Product actions ──────────────────────────────────────────────
+    function toggleProduct(id) {
+        const i = selectedProducts.indexOf(id);
+        if (i > -1) selectedProducts.splice(i, 1);
+        else selectedProducts.push(id);
+        renderStep();
+    }
 
-        // Schedule Functions
-        function toggleDay(day) {
-            schedule[day].enabled = !schedule[day].enabled;
-            renderStep();
-        }
+    // ── Clipboard helpers ────────────────────────────────────────────
+    function copyText(text, btn) {
+        navigator.clipboard.writeText(text).then(() => {
+            const orig = btn.innerHTML;
+            btn.innerHTML = '<span class="material-icons">check</span> Copied!';
+            setTimeout(() => btn.innerHTML = orig, 2000);
+        });
+    }
 
-        function updateTime(day, field, value) {
-            schedule[day][field] = value;
-        }
+    function copyEmbed(btn) {
+        const code = document.getElementById('embedCodeBlock').textContent;
+        navigator.clipboard.writeText(code).then(() => {
+            const orig = btn.innerHTML;
+            btn.innerHTML = '<span class="material-icons">check</span> Copied!';
+            setTimeout(() => btn.innerHTML = orig, 2000);
+        });
+    }
 
-        // Team Functions
-        function toggleTeamMember(id) {
-            const member = teamMembers.find(m => m.id === id);
-            member.available = !member.available;
-            renderStep();
-        }
-
-        // Product Functions
-        function toggleProduct(id) {
-            const index = selectedProducts.indexOf(id);
-            if (index > -1) {
-                selectedProducts.splice(index, 1);
-            } else {
-                selectedProducts.push(id);
-            }
-            renderStep();
-        }
-
-        // AI Coach Functions
-        function toggleAICoach() {
-            const coach = document.getElementById('aiCoach');
-            coach.classList.toggle('visible');
-        }
-
-        function handleAIInput(event) {
-            if (event.key === 'Enter') {
-                sendAIMessage();
-            }
-        }
-
-        function sendAIMessage() {
-            const input = document.getElementById('aiInput');
-            const body = document.getElementById('aiCoachBody');
-            const message = input.value.trim();
-
-            if (!message) return;
-
-            // User message
-            body.innerHTML += `<div class="ai-message" style="background: var(--primary-light); color: white; margin-left: 24px;">${message}</div>`;
-
-            // AI response (mock)
-            setTimeout(() => {
-                const responses = {
-                    'services': 'You have 5 services configured. The most popular is AC Repair at $150. Would you like to adjust pricing?',
-                    'hours': 'Your availability is set for Mon-Fri, 8am-5pm. Most HVAC pros also enable Saturday mornings for emergency calls.',
-                    'products': 'I recommend starting with Online Booking and CSR AI. You can add Smart Scheduling later as your team grows.',
-                    'default': 'Great question! Based on your setup, everything looks good. Is there anything specific you\'d like to change?'
-                };
-
-                const response = responses[message.toLowerCase()] || responses.default;
-                body.innerHTML += `<div class="ai-message">${response}</div>`;
-                body.scrollTop = body.scrollHeight;
-            }, 500);
-
-            input.value = '';
-            body.scrollTop = body.scrollHeight;
-        }
-
-        // Initialize on load
-        init();
-    </script>
+    // ── Init ─────────────────────────────────────────────────────────
+    // Support ?step=N for direct step access
+    const urlStep = parseInt(new URLSearchParams(window.location.search).get('step'));
+    if (!isNaN(urlStep) && urlStep >= 0 && urlStep < steps.length) {
+        if (urlStep >= 5) selectedProducts = ['online_booking', 'csr_ai', 'smart_scheduling'];
+        currentStep = urlStep;
+    }
+    init();
+</script>
 </body>
 </html>
