@@ -453,27 +453,53 @@
         .ai-panel.open { transform: translateX(0); }
 
         .ai-panel-header {
-            background: linear-gradient(135deg, var(--color-action-primary), var(--color-action-primary-dark));
-            padding: 16px;
+            background: var(--surface-card);
+            padding: 12px 16px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-subtle);
             flex-shrink: 0;
         }
-        .ai-avatar {
-            width: 36px; height: 36px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.2);
+        .ai-panel-back {
+            display: flex; align-items: center; gap: 4px;
+            background: none; border: none; cursor: pointer;
+            font-size: 13px; font-weight: 600; color: var(--text-muted);
+            font-family: inherit; padding: 4px 6px; border-radius: 4px;
+        }
+        .ai-panel-back:hover { color: var(--text-primary); background: rgba(0,0,0,0.04); }
+        .ai-panel-back .material-icons { font-size: 16px; }
+        .ai-panel-expand {
+            background: none; border: none; cursor: pointer;
+            color: var(--text-muted); padding: 4px; border-radius: 4px; display: flex;
+        }
+        .ai-panel-expand:hover { color: var(--text-primary); background: rgba(0,0,0,0.04); }
+        .ai-panel-expand .material-icons { font-size: 18px; }
+        .ai-panel-agent {
+            display: flex; flex-direction: column; align-items: center;
+            padding: 20px 16px 8px; flex-shrink: 0;
+        }
+        .ai-coach-avatar {
+            width: 48px; height: 48px; border-radius: 50%;
+            background: #7c3aed;
             display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0;
+            font-size: 20px; font-weight: 700; color: white;
+            margin-bottom: 6px;
         }
-        .ai-avatar .material-icons { font-size: 20px; color: white; }
-        .ai-panel-title-wrap { flex: 1; }
-        .ai-panel-title { font-size: 14px; font-weight: 600; color: white; line-height: 20px; }
-        .ai-panel-subtitle { font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.65); }
-        .ai-panel-close { background: none; border: none; color: rgba(255,255,255,0.7); cursor: pointer; padding: 4px; border-radius: 4px; display: flex; }
-        .ai-panel-close:hover { color: white; background: rgba(255,255,255,0.1); }
-        .ai-panel-close .material-icons { font-size: 18px; }
+        .ai-coach-label { font-size: 12px; font-weight: 600; color: var(--text-muted); }
+        .ai-panel-meta {
+            padding: 0 16px 14px; text-align: center; flex-shrink: 0;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        .ai-panel-title { font-size: 15px; font-weight: 600; color: var(--text-primary); line-height: 22px; }
+        .ai-panel-subtitle { font-size: 12px; font-weight: 400; color: var(--text-muted); }
+        .ai-disclaimer {
+            padding: 8px 16px; font-size: 11px; font-weight: 400;
+            color: var(--text-muted); text-align: center;
+            border-top: 1px solid var(--border-subtle); flex-shrink: 0;
+        }
+        .ai-tips-list { margin: 4px 0 0 0; padding-left: 16px; display: flex; flex-direction: column; gap: 6px; }
+        .ai-tips-list li { font-size: 13px; line-height: 19px; color: var(--text-primary); }
 
         .ai-chat-body {
             flex: 1;
@@ -658,6 +684,13 @@
             </div>
         </div>
 
+        <div class="overview-cta" style="margin-bottom:48px;">
+            <button class="btn btn-primary" style="padding:14px 40px; font-size:15px;" onclick="enterSteps()">
+                Get started
+                <span class="material-icons">arrow_forward</span>
+            </button>
+        </div>
+
         <!-- Industry stats -->
         <div class="stats-grid">
             <div class="stat-card">
@@ -703,12 +736,6 @@
             </div>
         </div>
 
-        <div class="overview-cta">
-            <button class="btn btn-primary" style="padding:14px 40px; font-size:15px;" onclick="enterSteps()">
-                Get started
-                <span class="material-icons">arrow_forward</span>
-            </button>
-        </div>
     </div>
 
     <!-- Steps page -->
@@ -734,23 +761,31 @@
 <!-- AI Side Panel -->
 <div class="ai-panel" id="aiPanel">
     <div class="ai-panel-header">
-        <div class="ai-avatar"><span class="material-icons">smart_toy</span></div>
-        <div class="ai-panel-title-wrap">
-            <div class="ai-panel-title">AI Setup Coach</div>
-            <div class="ai-panel-subtitle">Here to help you go live faster</div>
-        </div>
-        <button class="ai-panel-close" onclick="closeAIPanel()">
-            <span class="material-icons">close</span>
+        <button class="ai-panel-back" onclick="closeAIPanel()">
+            <span class="material-icons">arrow_back</span>
+            Back
         </button>
+        <button class="ai-panel-expand">
+            <span class="material-icons">open_in_full</span>
+        </button>
+    </div>
+    <div class="ai-panel-agent">
+        <div class="ai-coach-avatar">C</div>
+        <div class="ai-coach-label">Coach</div>
+    </div>
+    <div class="ai-panel-meta">
+        <div class="ai-panel-title">AI Setup Coach</div>
+        <div class="ai-panel-subtitle">Here to help you go live faster</div>
     </div>
     <div class="ai-chat-body" id="aiChatBody"></div>
     <div class="quick-replies" id="quickReplies"></div>
     <div class="ai-input-area">
-        <input type="text" class="ai-text-input" id="aiInput" placeholder="Ask me anything…" onkeypress="handleAIKey(event)">
+        <input type="text" class="ai-text-input" id="aiInput" placeholder="Ask AI Anything..." onkeypress="handleAIKey(event)">
         <button class="ai-send-btn" onclick="sendAIMessage()">
             <span class="material-icons">send</span>
         </button>
     </div>
+    <div class="ai-disclaimer">AI can make mistakes. Review important info.</div>
 </div>
 
 <!-- AI FAB (visible when panel closed, during steps) -->
@@ -759,14 +794,21 @@
     <span class="ai-fab-badge" id="aiFabBadge"></span>
 </button>
 
-<!-- Duration Modal -->
+<!-- Edit Service Modal -->
 <div class="modal-overlay" id="durationModal">
     <div class="modal-dialog">
         <div class="modal-header">
-            <h3>Edit service duration</h3>
-            <p class="label-small" style="margin-top:4px;">Choose how long this service typically takes</p>
+            <h3>Edit service</h3>
         </div>
         <div class="modal-body">
+            <div style="margin-bottom:12px;">
+                <div class="form-label">Service name</div>
+                <input type="text" class="form-input" id="editServiceName" placeholder="e.g. AC Repair">
+            </div>
+            <div style="margin-bottom:16px;">
+                <div class="form-label">Price ($)</div>
+                <input type="number" class="form-input" id="editServicePrice" min="0" step="1" placeholder="0">
+            </div>
             <div class="form-label">Duration</div>
             <div class="duration-selects">
                 <select id="durHours">
@@ -785,7 +827,7 @@
         </div>
         <div class="modal-footer">
             <button class="btn btn-ghost" onclick="closeDurationModal()">Cancel</button>
-            <button class="btn btn-primary" onclick="saveDuration()">Save duration</button>
+            <button class="btn btn-primary" onclick="saveDuration()">Save</button>
         </div>
     </div>
 </div>
@@ -806,6 +848,19 @@ let services = [
     { id:4, name:'Duct Cleaning',    price:250, duration:120, enabled:true  },
     { id:5, name:'Installation',     price:500, duration:240, enabled:false },
     { id:6, name:'Emergency Service',price:200, duration:120, enabled:true  }
+];
+
+const priceBook = [
+    { id:101, name:'AC Installation',        price:2500, duration:240 },
+    { id:102, name:'AC Tune-Up',             price:89,   duration:60  },
+    { id:103, name:'Furnace Repair',         price:175,  duration:90  },
+    { id:104, name:'Furnace Installation',   price:3200, duration:300 },
+    { id:105, name:'Heat Pump Service',      price:130,  duration:75  },
+    { id:106, name:'Indoor Air Quality Test',price:120,  duration:60  },
+    { id:107, name:'Refrigerant Recharge',   price:195,  duration:60  },
+    { id:108, name:'Thermostat Installation',price:149,  duration:60  },
+    { id:109, name:'Coil Cleaning',          price:110,  duration:60  },
+    { id:110, name:'Humidifier Installation',price:350,  duration:120 }
 ];
 
 let teamMembers = [
@@ -842,7 +897,7 @@ const steps = [
 // ── Per-step AI data ─────────────────────────────────────────────────
 const aiStepData = [
     {   // 0 — Services
-        open: "What types of jobs does your business focus on? I can help you decide which services to prioritize and in what order.",
+        open: "<ul class='ai-tips-list'><li><strong>Order matters:</strong> Services at the top get more attention — put your most popular first.</li><li><strong>Enable everything bookable:</strong> Toggle on any service you want visible to customers.</li><li><strong>Set accurate durations:</strong> This determines time slot availability and prevents double-bookings.</li></ul>",
         chips: ["HVAC & Cooling", "Plumbing", "Electrical", "General home services"],
         responses: {
             "HVAC & Cooling":        "For HVAC, prioritize AC Repair, Maintenance Check, and Tune-Up — these are the highest-converting online bookings. Put them first in your list.",
@@ -853,7 +908,7 @@ const aiStepData = [
         fallback: "Enable every service you want customers to book. The order here is the order on your booking page — put your most popular services at the top."
     },
     {   // 1 — Hours
-        open: "How do you prefer to handle customer scheduling? I can help you pick the right booking type for your business.",
+        open: "<ul class='ai-tips-list'><li><strong>Flexible scheduling:</strong> Customers pick a window (Morning/Afternoon). Best for variable-duration jobs.</li><li><strong>Specific start times:</strong> Customers pick exact slots. End time auto-calculated from service duration.</li><li><strong>Request &amp; approve:</strong> Customer submits info, you call to schedule. Best for complex or custom jobs.</li></ul>",
         chips: ["Explain each option", "I want exact appointment times", "Time windows work better", "I'll approve requests manually"],
         responses: {
             "Explain each option":             "Flexible: customers pick a window (morning/afternoon).\nSpecific start time: customers pick exact slots — end time is calculated from service duration.\nManual: customer submits a request, you reach out to schedule. Best for custom jobs.",
@@ -864,7 +919,7 @@ const aiStepData = [
         fallback: "Most home service pros start with Flexible scheduling — it's the easiest to manage and customers still get a clear expectation. You can always change this later."
     },
     {   // 2 — Team
-        open: "How many techs are out in the field right now? The more you enable here, the more booking slots customers will see.",
+        open: "<ul class='ai-tips-list'><li><strong>More techs = more slots:</strong> Every enabled Field Tech adds available booking slots for customers.</li><li><strong>Enable all active workers:</strong> Include everyone who takes field jobs to maximize booking availability.</li><li><strong>Roles explained:</strong> Field Tech = bookable staff. Office Staff = coordinators. Admin = full access.</li></ul>",
         chips: ["I work solo", "2–5 techs", "5+ techs", "What do the roles mean?"],
         responses: {
             "I work solo":          "Enable yourself under Admin or Field Tech. You'll be the sole bookable resource. More availability hours = more booking slots customers can choose from.",
@@ -875,7 +930,7 @@ const aiStepData = [
         fallback: "Enable every Field Tech who takes jobs. More enabled techs means more booking availability for customers — which increases your overall booking rate."
     },
     {   // 3 — Setup
-        open: "Almost live! Where do you plan to share your booking link first? I can walk you through getting it in front of customers.",
+        open: "<ul class='ai-tips-list'><li><strong>Google Business Profile:</strong> Add your booking URL — highest-traffic placement for most local businesses.</li><li><strong>Embed on your website:</strong> Use the widget code to add a \"Book Now\" experience directly on your site.</li><li><strong>CSR AI:</strong> Forward your business number to the AI line so every call gets answered and booked.</li></ul>",
         chips: ["My website", "Google Business Profile", "Social media / SMS", "Walk me through all of it"],
         responses: {
             "My website":              "Copy the embed code and paste it into your website's custom HTML section. Works with WordPress, Wix, Squarespace, Webflow — anywhere that supports custom HTML.",
@@ -886,7 +941,7 @@ const aiStepData = [
         fallback: "Your booking page is live the moment you activate. Start with Google Business Profile — it drives the most organic traffic for local home service businesses."
     },
     {   // 4 — Done
-        open: "You're live! 🎉 What would you like to do first to start getting bookings?",
+        open: "<ul class='ai-tips-list'><li><strong>Test first:</strong> Open your booking link in incognito and complete a test booking.</li><li><strong>Google Business Profile:</strong> Add your booking URL — most pros see their first organic booking within 48 hours.</li><li><strong>Share with past customers:</strong> Text the link to your top 10 customers — returning customers convert at 60%+.</li></ul>",
         chips: ["Test my booking page", "Add to Google Business", "How do I get more bookings?", "What's next?"],
         responses: {
             "Test my booking page":     "Open your booking link in a private/incognito window and complete a full test booking. Check that the confirmation email arrives and the job appears in your HCP dashboard.",
@@ -1044,6 +1099,7 @@ function renderServices() {
             <div class="service-list" id="serviceList">
                 ${services.map(s => serviceItemHTML(s)).join('')}
             </div>
+            <div id="priceBookResults" style="display:none;"></div>
 
             <button class="btn btn-outline mt-16" onclick="addService()">
                 <span class="material-icons">add</span> Add service
@@ -1076,9 +1132,7 @@ function serviceItemHTML(s) {
                 </div>
             </div>
             <div class="service-actions">
-                <button class="icon-btn" onclick="openDurationModal(${s.id})" title="Edit duration">
-                    <span class="material-icons">timer</span>
-                </button>
+                <button class="icon-btn" style="font-size:12px;font-weight:600;color:var(--color-action-primary);padding:4px 8px;" onclick="openEditModal(${s.id})">Edit</button>
                 <div class="toggle-switch ${s.enabled?'on':''}" onclick="toggleService(${s.id})">
                     <div class="toggle-thumb"></div>
                 </div>
@@ -1111,11 +1165,13 @@ function formatDuration(mins) {
     return `${m}min`;
 }
 
-// ── Duration Modal ───────────────────────────────────────────────────
-function openDurationModal(id) {
+// ── Edit Service Modal ───────────────────────────────────────────────
+function openEditModal(id) {
     editingServiceId = id;
     const s = services.find(s => s.id === id);
     const totalMins = s.duration || 0;
+    document.getElementById('editServiceName').value = s.name;
+    document.getElementById('editServicePrice').value = s.price;
     document.getElementById('durHours').value = Math.floor(totalMins / 60);
     document.getElementById('durMins').value = totalMins % 60;
     document.getElementById('durError').style.display = 'none';
@@ -1136,7 +1192,13 @@ function saveDuration() {
         return;
     }
     const s = services.find(s => s.id === editingServiceId);
-    if (s) s.duration = total;
+    if (s) {
+        s.duration = total;
+        const nameVal = document.getElementById('editServiceName').value.trim();
+        if (nameVal) s.name = nameVal;
+        const priceVal = parseFloat(document.getElementById('editServicePrice').value);
+        if (!isNaN(priceVal)) s.price = priceVal;
+    }
     closeDurationModal();
     renderStep();
 }
@@ -1268,7 +1330,7 @@ function renderTeam() {
             <div class="btn-group">
                 <button class="btn btn-ghost" onclick="prevStep()">Back</button>
                 <button class="btn btn-primary" onclick="nextStep()">
-                    Continue <span class="material-icons">arrow_forward</span>
+                    Finish availability setup <span class="material-icons">arrow_forward</span>
                 </button>
             </div>
         </div>
@@ -1280,8 +1342,19 @@ function renderSetup() {
     document.getElementById('content').innerHTML = `
         <div class="card">
             <div class="step-header">
-                <div class="heading-md">Configure your products</div>
-                <div class="label-small">A few last settings and you're live. You can update these any time in Settings → Booking.</div>
+                <div class="heading-md">Your booking products are live</div>
+                <div class="label-small">Your availability is all set. Here's how to start using each product and get your first bookings.</div>
+                <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;">
+                    <div style="display:flex;align-items:center;gap:6px;padding:6px 12px;background:rgba(0,163,68,0.08);border:1px solid rgba(0,163,68,0.25);border-radius:200px;font-size:12px;font-weight:600;color:var(--status-success);">
+                        <span class="material-icons" style="font-size:14px;">check_circle</span> Services set up
+                    </div>
+                    <div style="display:flex;align-items:center;gap:6px;padding:6px 12px;background:rgba(0,163,68,0.08);border:1px solid rgba(0,163,68,0.25);border-radius:200px;font-size:12px;font-weight:600;color:var(--status-success);">
+                        <span class="material-icons" style="font-size:14px;">check_circle</span> Availability set
+                    </div>
+                    <div style="display:flex;align-items:center;gap:6px;padding:6px 12px;background:rgba(0,163,68,0.08);border:1px solid rgba(0,163,68,0.25);border-radius:200px;font-size:12px;font-weight:600;color:var(--status-success);">
+                        <span class="material-icons" style="font-size:14px;">check_circle</span> Team ready
+                    </div>
+                </div>
             </div>
 
             ${renderOnlineBookingSetup()}
@@ -1305,7 +1378,7 @@ function renderOnlineBookingSetup() {
                 <div class="setup-block-icon"><span class="material-icons">calendar_today</span></div>
                 <div>
                     <div class="setup-block-title">Online Booking</div>
-                    <div class="setup-block-subtitle">Share your booking link or embed it anywhere</div>
+                    <div class="setup-block-subtitle">Share your link and start getting bookings</div>
                 </div>
             </div>
             <div class="setup-block-body">
@@ -1370,7 +1443,7 @@ function renderCSRAISetup() {
                 <div class="setup-block-icon"><span class="material-icons">phone_in_talk</span></div>
                 <div>
                     <div class="setup-block-title">CSR AI</div>
-                    <div class="setup-block-subtitle">Configure your AI phone answering</div>
+                    <div class="setup-block-subtitle">AI answers calls and books jobs — even after hours</div>
                 </div>
             </div>
             <div class="setup-block-body">
@@ -1403,7 +1476,7 @@ function renderSmartSchedulingSetup() {
                 <div class="setup-block-icon"><span class="material-icons">route</span></div>
                 <div>
                     <div class="setup-block-title">Smart Scheduling</div>
-                    <div class="setup-block-subtitle">Auto-assignment preferences</div>
+                    <div class="setup-block-subtitle">Auto-assigns the nearest available tech to each job</div>
                 </div>
             </div>
             <div class="setup-block-body">
@@ -1500,10 +1573,43 @@ function toggleService(id) {
 }
 
 function filterServices() {
-    const q = document.getElementById('serviceSearch').value.toLowerCase();
+    const q = document.getElementById('serviceSearch').value.toLowerCase().trim();
+    // Filter existing list
     document.querySelectorAll('.service-item').forEach(el => {
-        el.style.display = el.querySelector('.service-name').textContent.toLowerCase().includes(q) ? 'flex' : 'none';
+        el.style.display = !q || el.querySelector('.service-name').textContent.toLowerCase().includes(q) ? 'flex' : 'none';
     });
+    // Show price book results
+    const pbSection = document.getElementById('priceBookResults');
+    if (!pbSection) return;
+    if (!q) { pbSection.style.display = 'none'; return; }
+    const activeIds = new Set(services.map(s => s.id));
+    const matches = priceBook.filter(p => !activeIds.has(p.id) && p.name.toLowerCase().includes(q));
+    if (matches.length === 0) { pbSection.style.display = 'none'; return; }
+    pbSection.style.display = 'block';
+    pbSection.innerHTML = `
+        <div class="section-label" style="margin-top:16px;margin-bottom:8px;">From your price book</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+            ${matches.map(p => `
+                <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;border:1.5px dashed var(--border-subtle);border-radius:var(--radius-card);background:var(--background-page);">
+                    <div style="flex:1;">
+                        <div class="service-name">${p.name}</div>
+                        <div class="service-meta">$${p.price} · ${formatDuration(p.duration)}</div>
+                    </div>
+                    <button class="btn btn-outline btn-sm" onclick="addFromPriceBook(${p.id})">
+                        <span class="material-icons">add</span> Add
+                    </button>
+                </div>
+            `).join('')}
+        </div>
+    `;
+}
+
+function addFromPriceBook(id) {
+    const item = priceBook.find(p => p.id === id);
+    if (!item) return;
+    services.push({ id: item.id, name: item.name, price: item.price, duration: item.duration, enabled: true });
+    document.getElementById('serviceSearch').value = '';
+    renderStep();
 }
 
 function addService() {
