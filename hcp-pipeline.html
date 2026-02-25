@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pipeline — Jobs | Housecall Pro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary:        #0057ff;
+      --primary-dark:   #0046cc;
+      --primary-light:  #eef2ff;
+      --bg-page:        #f2f3f7;
+      --bg-col:         #e9eaee;
+      --surface:        #ffffff;
+      --text-primary:   #15181d;
+      --text-muted:     #6b7487;
+      --border:         #e1e6f2;
+      --success:        #00a344;
+      --warning-bg:     #fef3c7;
+      --warning-text:   #92400e;
+      --error-bg:       #fee2e2;
+      --error-text:     #991b1b;
+      --auto-bg:        #ede9fe;
+      --auto-text:      #5b21b6;
+      --nav:            #18191e;
+      --radius:         8px;
+      --shadow-card:    0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+    }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      font-size: 14px;
+      color: var(--text-primary);
+      background: var(--bg-page);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ─── TOP NAV ─── */
+    .top-nav {
+      height: 48px;
+      background: var(--nav);
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      gap: 2px;
+      flex-shrink: 0;
+      z-index: 200;
+    }
+    .nav-logo {
+      width: 32px;
+      height: 32px;
+      background: var(--primary);
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      font-size: 15px;
+      margin-right: 6px;
+      flex-shrink: 0;
+    }
+    .nav-items { display: flex; align-items: center; gap: 1px; flex: 1; overflow: hidden; }
+    .nav-item {
+      padding: 5px 9px;
+      border-radius: 5px;
+      color: rgba(255,255,255,0.72);
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.12s;
+    }
+    .nav-item:hover { background: rgba(255,255,255,0.1); }
+    .nav-item.active { color: #fff; font-weight: 600; }
+    .nav-badge-wrap { position: relative; }
+    .nav-badge {
+      position: absolute;
+      top: 0; right: 0;
+      background: #e53e3e;
+      color: white;
+      font-size: 9px;
+      font-weight: 700;
+      min-width: 14px;
+      height: 14px;
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 3px;
+    }
+    .nav-right { display: flex; align-items: center; gap: 6px; margin-left: 8px; flex-shrink: 0; }
+    .nav-search {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 6px;
+      padding: 5px 10px;
+      cursor: pointer;
+      min-width: 140px;
+    }
+    .nav-search .material-icons-round { font-size: 16px; color: rgba(255,255,255,0.5); }
+    .nav-search span:last-child { font-size: 12px; color: rgba(255,255,255,0.5); }
+    .nav-btn {
+      padding: 5px 12px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      font-family: inherit;
+      height: 30px;
+      display: flex;
+      align-items: center;
+    }
+    .nav-btn-primary { background: var(--primary); color: white; }
+    .nav-btn-ghost { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.85); border: 1px solid rgba(255,255,255,0.18); }
+    .nav-btn-danger { background: rgba(255,255,255,0.08); color: #ff7875; border: 1px solid rgba(255,120,117,0.35); }
+    .nav-icon {
+      width: 30px; height: 30px;
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      color: rgba(255,255,255,0.65);
+    }
+    .nav-icon:hover { background: rgba(255,255,255,0.1); }
+    .nav-icon .material-icons-round { font-size: 20px; }
+    .nav-avatar {
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      background: #e05a2b;
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+    }
+
+    /* ─── BODY LAYOUT ─── */
+    .app-body { display: flex; flex: 1; overflow: hidden; }
+
+    /* ─── SIDEBAR ─── */
+    .sidebar {
+      width: 196px;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      flex-shrink: 0;
+      overflow-y: auto;
+      padding-bottom: 24px;
+    }
+    .sidebar-head {
+      padding: 14px 16px 10px;
+      font-size: 20px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .sidebar-head .material-icons-round { font-size: 18px; color: var(--text-muted); cursor: pointer; }
+    .sidebar-item {
+      padding: 7px 16px 7px 22px;
+      font-size: 13.5px;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: background 0.1s;
+      position: relative;
+    }
+    .sidebar-item:hover { background: #f4f5f8; }
+    .sidebar-item.active {
+      color: var(--primary);
+      font-weight: 600;
+    }
+    .sidebar-item.active::before {
+      content: '';
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 3px;
+      height: 20px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+    .sidebar-group {
+      padding: 10px 16px 4px;
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+    .sidebar-feedback {
+      position: absolute;
+      bottom: 0;
+      width: 196px;
+      padding: 12px 16px;
+      border-top: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      background: white;
+    }
+    .sidebar-feedback .material-icons-round { font-size: 15px; }
+
+    /* ─── MAIN ─── */
+    .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
+
+    .page-head {
+      padding: 14px 24px 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .breadcrumb { font-size: 12px; color: var(--text-muted); margin-bottom: 1px; }
+    .breadcrumb a { color: var(--primary); text-decoration: none; font-weight: 500; }
+    .page-title { font-size: 24px; font-weight: 700; }
+    .tour-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 16px;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      background: white;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      color: var(--text-primary);
+    }
+    .tour-dot {
+      width: 22px; height: 22px;
+      background: var(--primary);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .tour-dot .material-icons-round { font-size: 13px; color: white; }
+
+    /* ─── TOOLBAR ─── */
+    .toolbar {
+      padding: 2px 24px 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .dropdown-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: white;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      font-family: inherit;
+    }
+    .dropdown-pill .material-icons-round { font-size: 16px; color: var(--text-muted); }
+    .search-box {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: white;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .search-box .material-icons-round { font-size: 18px; }
+    .filter-btn {
+      padding: 6px 16px;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      background: white;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .view-toggle {
+      display: flex;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      background: white;
+    }
+    .view-btn {
+      padding: 6px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--text-muted);
+      border: none;
+      background: none;
+      font-family: inherit;
+    }
+    .view-btn.active { background: var(--primary); color: white; }
+
+    /* ─── PROMO BANNER ─── */
+    .promo-banner {
+      margin: 0 24px 10px;
+      padding: 9px 14px;
+      background: #eeefff;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .promo-left { display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 600; color: #4338ca; }
+    .promo-dot { width: 22px; height: 22px; background: #4338ca; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    .promo-dot .material-icons-round { font-size: 13px; color: white; }
+    .promo-right { display: flex; align-items: center; gap: 8px; }
+    .promo-cta {
+      padding: 5px 14px;
+      background: #4338ca;
+      color: white;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      font-family: inherit;
+    }
+    .promo-close { cursor: pointer; color: var(--text-muted); display: flex; }
+    .promo-close .material-icons-round { font-size: 18px; }
+
+    /* ─── BOARD ─── */
+    .board-wrap { flex: 1; overflow-x: auto; overflow-y: hidden; padding: 0 24px 16px; }
+    .board { display: flex; gap: 10px; height: 100%; min-width: max-content; padding-bottom: 2px; }
+
+    .col {
+      width: 228px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      border-radius: 10px;
+      background: var(--bg-col);
+      overflow: hidden;
+    }
+    .col-head {
+      padding: 12px 12px 8px;
+      flex-shrink: 0;
+    }
+    .col-title-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px; }
+    .col-title { font-size: 13.5px; font-weight: 700; }
+    .col-count { font-size: 13px; color: var(--text-muted); font-weight: 600; }
+    .col-total { font-size: 12px; color: var(--text-muted); }
+    .col-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 2px 8px 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .col-empty {
+      padding: 24px 12px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .col-empty a { color: var(--primary); text-decoration: none; font-weight: 600; }
+
+    /* ─── JOB CARD ─── */
+    .job-card {
+      background: white;
+      border-radius: 8px;
+      padding: 12px 13px;
+      cursor: pointer;
+      box-shadow: var(--shadow-card);
+      border: 1.5px solid transparent;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .job-card:hover {
+      border-color: var(--primary);
+      box-shadow: 0 2px 10px rgba(0,87,255,0.1);
+    }
+    .card-num { font-size: 11.5px; color: var(--primary); font-weight: 600; margin-bottom: 3px; }
+    .card-name { font-size: 13.5px; font-weight: 700; line-height: 1.3; margin-bottom: 3px; }
+    .card-amount { font-size: 13px; color: var(--text-primary); margin-bottom: 9px; }
+    .card-team {
+      display: flex;
+      align-items: center;
+      margin-bottom: 9px;
+    }
+    .avatar {
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 9px; font-weight: 700; color: white;
+      border: 2px solid white;
+      margin-right: -6px;
+      flex-shrink: 0;
+    }
+    .team-label { font-size: 11.5px; color: var(--text-muted); margin-left: 10px; }
+    .card-status {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 5px 9px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 13px;
+      background: white;
+      margin-bottom: 7px;
+      cursor: pointer;
+    }
+    .card-status .material-icons-round { font-size: 18px; color: var(--text-muted); }
+    .card-updated { font-size: 11px; color: var(--text-muted); margin-bottom: 7px; }
+
+    /* ─── OPTION A: AUTOMATION STATUS BADGE ─── */
+    .auto-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 9px 3px 6px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      max-width: 100%;
+      transition: filter 0.12s;
+    }
+    .auto-badge:hover { filter: brightness(0.94); }
+    .auto-badge .material-icons-round { font-size: 13px; flex-shrink: 0; }
+    .auto-badge.moved   { background: var(--auto-bg); color: var(--auto-text); }
+    .auto-badge.pending { background: var(--warning-bg); color: var(--warning-text); }
+    .auto-badge.skipped { background: var(--error-bg); color: var(--error-text); }
+    .auto-badge.success { background: #d1fae5; color: #065f46; }
+
+    /* ─── AUTOMATION TOOLTIP POPUP ─── */
+    .auto-popup {
+      display: none;
+      position: fixed;
+      z-index: 9000;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.15), 0 2px 8px rgba(0,0,0,0.08);
+      border: 1px solid var(--border);
+      width: 280px;
+      padding: 0;
+      overflow: hidden;
+    }
+    .auto-popup.show { display: block; }
+    .auto-popup-head {
+      padding: 12px 14px 10px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .auto-popup-head .material-icons-round { font-size: 16px; color: var(--auto-text); }
+    .auto-popup-title { font-size: 13px; font-weight: 700; }
+    .auto-popup-close {
+      margin-left: auto;
+      cursor: pointer;
+      color: var(--text-muted);
+      display: flex;
+    }
+    .auto-popup-close .material-icons-round { font-size: 17px; }
+    .auto-popup-body { padding: 8px 14px 12px; }
+    .auto-event {
+      display: flex;
+      gap: 9px;
+      padding: 8px 0;
+      border-bottom: 1px solid #f3f4f7;
+    }
+    .auto-event:last-child { border-bottom: none; padding-bottom: 0; }
+    .auto-event-dot {
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .auto-event-dot.fired   { background: var(--auto-bg); }
+    .auto-event-dot.skipped { background: var(--error-bg); }
+    .auto-event-dot.pending { background: var(--warning-bg); }
+    .auto-event-dot .material-icons-round { font-size: 13px; }
+    .auto-event-dot.fired   .material-icons-round { color: var(--auto-text); }
+    .auto-event-dot.skipped .material-icons-round { color: var(--error-text); }
+    .auto-event-dot.pending .material-icons-round { color: var(--warning-text); }
+    .auto-event-body { flex: 1; min-width: 0; }
+    .auto-event-title { font-size: 12px; font-weight: 600; margin-bottom: 2px; }
+    .auto-event-desc { font-size: 11px; color: var(--text-muted); line-height: 1.5; }
+    .auto-event-time { font-size: 10px; color: #9ca3af; margin-top: 2px; }
+
+    /* ─── CARD MODAL ─── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 500;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 40px 24px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: white;
+      border-radius: 12px;
+      width: 480px;
+      max-height: calc(100vh - 80px);
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.22);
+    }
+    .modal-head {
+      padding: 20px 24px 14px;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: white;
+      z-index: 2;
+    }
+    .modal-job-num {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 3px;
+    }
+    .modal-job-num .material-icons-round { font-size: 14px; }
+    .modal-customer { font-size: 22px; font-weight: 700; padding-right: 36px; }
+    .modal-close-btn {
+      position: absolute;
+      top: 16px; right: 16px;
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      color: var(--text-muted);
+      border: none; background: none;
+    }
+    .modal-close-btn:hover { background: #f4f5f8; }
+    .modal-close-btn .material-icons-round { font-size: 18px; }
+    .modal-body { padding: 18px 24px 24px; }
+    .modal-contact {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.65;
+      margin-bottom: 14px;
+    }
+    .modal-actions { display: flex; gap: 8px; margin-bottom: 20px; }
+    .modal-action {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      background: white;
+      font-family: inherit;
+    }
+    .modal-action .material-icons-round { font-size: 16px; color: var(--primary); }
+    .modal-section { margin-bottom: 18px; }
+    .modal-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-bottom: 5px;
+    }
+    .modal-value { font-size: 14px; line-height: 1.6; }
+    .modal-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 14px;
+      color: var(--primary);
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .modal-link .material-icons-round { font-size: 16px; }
+
+    /* ─── AUTOMATION SECTION IN MODAL ─── */
+    .modal-auto-section {
+      background: #faf8ff;
+      border: 1px solid #ddd6fe;
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-bottom: 20px;
+    }
+    .modal-auto-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--auto-text);
+      margin-bottom: 12px;
+    }
+    .modal-auto-title .material-icons-round { font-size: 16px; }
+    .modal-auto-event {
+      display: flex;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid #ede9fe;
+    }
+    .modal-auto-event:last-child { border-bottom: none; padding-bottom: 0; }
+    .modal-auto-icon {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .modal-auto-icon.fired   { background: var(--auto-bg); }
+    .modal-auto-icon.skipped { background: var(--error-bg); }
+    .modal-auto-icon.pending { background: var(--warning-bg); }
+    .modal-auto-icon .material-icons-round { font-size: 15px; }
+    .modal-auto-icon.fired   .material-icons-round { color: var(--auto-text); }
+    .modal-auto-icon.skipped .material-icons-round { color: var(--error-text); }
+    .modal-auto-icon.pending .material-icons-round { color: var(--warning-text); }
+    .modal-auto-etitle { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+    .modal-auto-edesc { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+    .modal-auto-etime { font-size: 11px; color: #9ca3af; margin-top: 3px; }
+
+    /* ─── SCROLLBAR ─── */
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<!-- ═══ TOP NAV ═══ -->
+<nav class="top-nav">
+  <div class="nav-logo">H</div>
+  <div class="nav-items">
+    <div class="nav-item">Home</div>
+    <div class="nav-item">Dash</div>
+    <div class="nav-badge-wrap nav-item" style="position:relative">
+      Inbox
+      <span class="nav-badge" style="top:-2px;right:-4px">3</span>
+    </div>
+    <div class="nav-item">Schedule</div>
+    <div class="nav-item">Customers</div>
+    <div class="nav-item active">Pipeline</div>
+    <div class="nav-item">My money</div>
+    <div class="nav-item">Payroll</div>
+    <div class="nav-item">Reporting</div>
+    <div class="nav-item">Marketing</div>
+    <div class="nav-item">Price book</div>
+  </div>
+  <div class="nav-right">
+    <div class="nav-search">
+      <span class="material-icons-round">search</span>
+      <span>Search</span>
+    </div>
+    <button class="nav-btn nav-btn-primary">New</button>
+    <div class="nav-icon"><span class="material-icons-round">notifications</span></div>
+    <button class="nav-btn nav-btn-ghost">Intercom</button>
+    <button class="nav-btn nav-btn-danger">HCP log out</button>
+    <div class="nav-icon"><span class="material-icons-round">people_alt</span></div>
+    <div class="nav-icon"><span class="material-icons-round">apps</span></div>
+    <div class="nav-icon"><span class="material-icons-round">settings</span></div>
+    <div class="nav-avatar">JM</div>
+  </div>
+</nav>
+
+<!-- ═══ APP BODY ═══ -->
+<div class="app-body">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-head">
+      Pipeline
+      <span class="material-icons-round">chevron_left</span>
+    </div>
+    <div class="sidebar-item">Leads</div>
+    <div class="sidebar-item">Estimates</div>
+    <div class="sidebar-item active">Jobs</div>
+    <div class="sidebar-item">Archived items</div>
+    <div class="sidebar-group">Settings</div>
+    <div class="sidebar-item">Automations</div>
+    <div class="sidebar-item">Customize boards</div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- Page header -->
+    <div class="page-head">
+      <div>
+        <div class="breadcrumb"><a href="#">Pipeline</a> › Jobs</div>
+        <div class="page-title">Jobs</div>
+      </div>
+      <button class="tour-btn">
+        <div class="tour-dot"><span class="material-icons-round">play_arrow</span></div>
+        Launch Pipeline Tour
+      </button>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+      <button class="dropdown-pill">
+        Job # (exact match)
+        <span class="material-icons-round">expand_more</span>
+      </button>
+      <div class="search-box">
+        <span class="material-icons-round">search</span>
+        Search by Job # (exact match)
+      </div>
+      <button class="filter-btn">Filter</button>
+      <div class="view-toggle">
+        <button class="view-btn active">Board</button>
+        <button class="view-btn">Table</button>
+      </div>
+    </div>
+
+    <!-- Promo banner -->
+    <div class="promo-banner" id="promoBanner">
+      <div class="promo-left">
+        <div class="promo-dot"><span class="material-icons-round">bolt</span></div>
+        Let your customers book jobs online
+      </div>
+      <div class="promo-right">
+        <button class="promo-cta">Set up now</button>
+        <div class="promo-close" onclick="document.getElementById('promoBanner').style.display='none'">
+          <span class="material-icons-round">close</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Kanban board -->
+    <div class="board-wrap">
+      <div class="board" id="board"><!-- rendered by JS --></div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ═══ AUTOMATION BADGE POPUP ═══ -->
+<div class="auto-popup" id="autoPopup">
+  <div class="auto-popup-head">
+    <span class="material-icons-round">bolt</span>
+    <span class="auto-popup-title">Automation Activity</span>
+    <div class="auto-popup-close" onclick="closePopup()">
+      <span class="material-icons-round">close</span>
+    </div>
+  </div>
+  <div class="auto-popup-body" id="autoPopupBody"></div>
+</div>
+
+<!-- ═══ CARD MODAL ═══ -->
+<div class="modal-overlay" id="modalOverlay" onclick="overlayClose(event)">
+  <div class="modal" id="modalContent"><!-- rendered by JS --></div>
+</div>
+
+<script>
+// ──────────────────────────────────────────────
+// DATA
+// ──────────────────────────────────────────────
+
+const AVG_COLORS = ['#4f46e5','#0ea5e9','#059669','#d97706','#dc2626','#7c3aed','#db2777','#ea580c'];
+
+function avatarColor(name) {
+  let h = 0;
+  for (const c of name) h = (h * 31 + c.charCodeAt(0)) % AVG_COLORS.length;
+  return AVG_COLORS[h];
+}
+function initials(name) {
+  return name.split(' ').filter(Boolean).map(w => w[0]).join('').slice(0,2).toUpperCase();
+}
+
+// Columns
+const COLUMNS = [
+  { id:'unscheduled',  label:'Unscheduled',  total:'$0.00' },
+  { id:'scheduled',    label:'Scheduled',    total:'$15,413.00' },
+  { id:'in_progress',  label:'In Progress',  total:'$0.00' },
+  { id:'completed',    label:'Completed',    total:'$0.00' },
+  { id:'invoice_sent', label:'Invoice Sent', total:'$5,697.60' },
+  { id:'on_hold',      label:'On Hold',      total:'$0.00' },
+  { id:'invoice_paid', label:'Invoice Paid', total:'$0.00' },
+];
+
+// Jobs with automation data
+const JOBS = [
+
+  // ── SCHEDULED ──
+  {
+    id: '150', col: 'scheduled',
+    name: 'Arlene Kelly', amount: '$11,059.00',
+    address: '4 Jo Lenes Dr, York, ME 03909',
+    email: 'arlenekelly0715@outlook.com', phone: '(413) 949-1051',
+    services: ['785 VCT Plank Flooring Demo & Disposal', '800 Basement Epoxy Flooring'],
+    team: ['Isaiah Matthews','Marcus Jr','Jose Caquas'],
+    updatedAgo: '2 days',
+    appts: [{
+      label: 'Appt #1',
+      date: 'Thu, Mar 12, 2026 9:00am – 5:00pm EST',
+      team: ['Isaiah Matthews','Marcus Jr','Jose Caquas'],
+    }],
+    createdFrom: 'Estimate #305',
+    automation: {
+      badge: { type:'moved', icon:'bolt', label:'Auto-moved from Unscheduled · 2d ago' },
+      history: [
+        { state:'fired', icon:'bolt', title:'Auto-moved to Scheduled',
+          desc:'Automation "Appointment Booked → Scheduled" triggered when appointment was added.',
+          time:'Feb 23, 2026 · 10:14 am' },
+        { state:'pending', icon:'schedule', title:'Next: Move to In Progress',
+          desc:'Will fire automatically when the appointment start time is reached.',
+          time:'Scheduled for Mar 12, 2026' },
+      ]
+    }
+  },
+  {
+    id: '148', col: 'scheduled',
+    name: 'CHARLES RIVER COUNTRY CLUB', amount: '$4,354.00',
+    address: '11 Golf Club Rd, Weston, MA 02493',
+    email: 'admin@charlesrivercc.com', phone: '(781) 891-3400',
+    services: ['Commercial HVAC Inspection', 'Duct Cleaning – Full System'],
+    team: ['Isaiah Matthews','Marcus Jr'],
+    updatedAgo: '2 days',
+    appts: [],
+    createdFrom: null,
+    automation: {
+      badge: { type:'moved', icon:'bolt', label:'Auto-moved from Unscheduled · 2d ago' },
+      history: [
+        { state:'fired', icon:'bolt', title:'Auto-moved to Scheduled',
+          desc:'Automation "Estimate Approved → Scheduled" triggered when Estimate #298 was approved.',
+          time:'Feb 23, 2026 · 8:02 am' },
+      ]
+    }
+  },
+
+  // ── COMPLETED ──
+  {
+    id: '9-2', col: 'completed',
+    name: 'Marc Stiller', amount: '$0.00',
+    address: '22 Maple Ave, Newton, MA 02461',
+    email: '—', phone: '(617) 555-0192',
+    services: ['A/C Diagnostic'],
+    team: ['Isaiah Matthews'],
+    updatedAgo: 'a year',
+    appts: [],
+    createdFrom: null,
+    automation: {
+      badge: { type:'skipped', icon:'warning', label:'Automation skipped · missing email' },
+      history: [
+        { state:'skipped', icon:'warning', title:'Automation skipped: Send Invoice Email',
+          desc:'Automation "Completed → Invoice Sent" could not fire — no email address on file for this customer.',
+          time:'Apr 3, 2025 · 2:30 pm' },
+        { state:'fired', icon:'bolt', title:'Auto-moved to Completed',
+          desc:'Automation "Job Completed → Completed" triggered when job status was changed.',
+          time:'Apr 3, 2025 · 2:28 pm' },
+      ]
+    }
+  },
+  {
+    id: '91', col: 'completed',
+    name: 'HOLLISTON TRUE VALUE', amount: '$0.00',
+    address: '698 Washington St, Holliston, MA 01746',
+    email: 'manager@hollistontv.com', phone: '(508) 429-4494',
+    services: ['Boiler Service & Flush'],
+    team: ['Jose Caquas','Marcus Jr'],
+    updatedAgo: 'a year',
+    appts: [],
+    createdFrom: null,
+    automation: {
+      badge: { type:'success', icon:'check_circle', label:'Invoice sent automatically' },
+      history: [
+        { state:'fired', icon:'bolt', title:'Auto-moved to Invoice Sent',
+          desc:'Automation "Completed → Invoice Sent" emailed invoice to manager@hollistontv.com and moved card.',
+          time:'Feb 12, 2025 · 9:15 am' },
+        { state:'fired', icon:'bolt', title:'Auto-moved to Completed',
+          desc:'Automation "Job Completed → Completed" triggered when job status changed.',
+          time:'Feb 12, 2025 · 9:00 am' },
+      ]
+    }
+  },
+  {
+    id: '12', col: 'completed',
+    name: 'Marc Stiller', amount: '$0.00',
+    address: '22 Maple Ave, Newton, MA 02461',
+    email: 'marc.stiller@gmail.com', phone: '(617) 555-0192',
+    services: ['Furnace Tune-Up'],
+    team: ['Isaiah Matthews','Alex G.'],
+    updatedAgo: '2 years',
+    appts: [],
+    createdFrom: null,
+    automation: null,
+  },
+  {
+    id: '25', col: 'completed',
+    name: 'Patricia Hinchliffe', amount: '$0.00',
+    address: '84 Pine St, Natick, MA 01760',
+    email: 'phinchliffe@gmail.com', phone: '(508) 650-3812',
+    services: ['Heat Pump Installation'],
+    team: ['Isaiah Matthews'],
+    updatedAgo: '2 years',
+    appts: [],
+    createdFrom: null,
+    automation: null,
+  },
+
+  // ── INVOICE SENT ──
+  {
+    id: '149', col: 'invoice_sent',
+    name: 'David Byter', amount: '$4,097.60',
+    address: '55 Harbor View Dr, Portsmouth, NH 03801',
+    email: 'david.byter@gmail.com', phone: '(603) 422-7890',
+    services: ['A/C Refrigerant Recharge', 'Condenser Coil Clean'],
+    team: ['Isaiah Matthews','Marcus Jr'],
+    updatedAgo: '6 days',
+    appts: [],
+    createdFrom: 'Estimate #301',
+    automation: {
+      badge: { type:'moved', icon:'bolt', label:'Auto-moved · invoice sent 6d ago' },
+      history: [
+        { state:'fired', icon:'bolt', title:'Auto-moved to Invoice Sent',
+          desc:'Automation "Completed → Invoice Sent" emailed invoice to david.byter@gmail.com and moved this card.',
+          time:'Feb 19, 2026 · 11:22 am' },
+      ]
+    }
+  },
+  {
+    id: '103', col: 'invoice_sent',
+    name: 'John Piselli', amount: '$0.00',
+    address: '103 Green St, Somerville, MA 02143',
+    email: 'jpiselli@outlook.com', phone: '(617) 629-0451',
+    services: ['Leak Detection', 'Pipe Repair'],
+    team: ['Isaiah Matthews'],
+    updatedAgo: 'a year',
+    appts: [],
+    createdFrom: null,
+    automation: {
+      badge: { type:'pending', icon:'pending', label:'Next: Follow-up email in 3d' },
+      history: [
+        { state:'pending', icon:'schedule', title:'Upcoming: Auto follow-up email',
+          desc:'Automation "Invoice Unpaid 7 days → Follow Up" will send a reminder email if the invoice remains unpaid.',
+          time:'Due Mar 2, 2026' },
+        { state:'fired', icon:'bolt', title:'Auto-moved to Invoice Sent',
+          desc:'Automation "Completed → Invoice Sent" triggered.',
+          time:'Mar 5, 2025 · 3:04 pm' },
+      ]
+    }
+  },
+  {
+    id: '146', col: 'invoice_sent',
+    name: 'Pet Supplies Plus', amount: '$1,600.00',
+    address: '350 Providence Hwy, Dedham, MA 02026',
+    email: 'facilities@petsuppliesplus.com', phone: '(781) 320-4200',
+    services: ['Commercial Refrigeration Service'],
+    team: ['Isaiah Matthews','Marcus Jr'],
+    updatedAgo: '20 days',
+    appts: [],
+    createdFrom: null,
+    automation: {
+      badge: { type:'skipped', icon:'warning', label:'Follow-up skipped · invoice paid' },
+      history: [
+        { state:'skipped', icon:'warning', title:'Automation skipped: Follow-up email',
+          desc:'Automation "Invoice Unpaid 7 days → Follow Up" was skipped because the invoice was already paid before the trigger window.',
+          time:'Feb 22, 2026 · 9:00 am' },
+        { state:'fired', icon:'bolt', title:'Auto-moved to Invoice Sent',
+          desc:'Automation "Completed → Invoice Sent" triggered.',
+          time:'Feb 5, 2026 · 2:15 pm' },
+      ]
+    }
+  },
+];
+
+// ──────────────────────────────────────────────
+// RENDER BOARD
+// ──────────────────────────────────────────────
+
+function renderBoard() {
+  const board = document.getElementById('board');
+  board.innerHTML = COLUMNS.map(col => {
+    const colJobs = JOBS.filter(j => j.col === col.id);
+    return `
+      <div class="col">
+        <div class="col-head">
+          <div class="col-title-row">
+            <span class="col-title">${col.label}</span>
+            <span class="col-count">${colJobs.length}</span>
+          </div>
+          <div class="col-total">${col.total} total</div>
+        </div>
+        <div class="col-body">
+          ${colJobs.length === 0 && col.id === 'invoice_paid'
+            ? `<div class="col-empty">We're only showing active jobs.<br><a href="#">Looking for an archived job?</a></div>`
+            : colJobs.map(renderCard).join('')}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderCard(job) {
+  const visible = job.team.slice(0,3);
+  const extra   = job.team.length - 1;
+  const label   = `${job.team[0]}${extra > 0 ? ' +' + extra : ''}`;
+
+  const badge = job.automation?.badge;
+  const statusLabel = {
+    unscheduled: 'Unscheduled', scheduled: 'Scheduled',
+    in_progress: 'In Progress', completed: 'Completed',
+    invoice_sent: 'Invoice Sent', on_hold: 'On Hold', invoice_paid: 'Invoice Paid',
+  }[job.col] || job.col;
+
+  return `
+    <div class="job-card" onclick="openModal('${job.id}')">
+      <div class="card-num">Job #${job.id}</div>
+      <div class="card-name">${job.name}</div>
+      <div class="card-amount">${job.amount}</div>
+      <div class="card-team">
+        ${visible.map(n => `<div class="avatar" style="background:${avatarColor(n)}">${initials(n)}</div>`).join('')}
+        <span class="team-label">${label}</span>
+      </div>
+      <div class="card-status" onclick="event.stopPropagation()">
+        ${statusLabel}
+        <span class="material-icons-round">expand_more</span>
+      </div>
+      <div class="card-updated">Status updated ${job.updatedAgo} ago</div>
+      ${badge ? `
+        <div class="auto-badge ${badge.type}" onclick="event.stopPropagation(); showPopup(event,'${job.id}')">
+          <span class="material-icons-round">${badge.icon}</span>${badge.label}
+        </div>
+      ` : ''}
+    </div>
+  `;
+}
+
+// ──────────────────────────────────────────────
+// AUTOMATION BADGE POPUP
+// ──────────────────────────────────────────────
+
+let popupOpen = false;
+
+function showPopup(e, jobId) {
+  const job = JOBS.find(j => j.id === jobId);
+  if (!job?.automation) return;
+
+  const body = document.getElementById('autoPopupBody');
+  body.innerHTML = job.automation.history.map(h => `
+    <div class="auto-event">
+      <div class="auto-event-dot ${h.state}">
+        <span class="material-icons-round">${h.icon}</span>
+      </div>
+      <div class="auto-event-body">
+        <div class="auto-event-title">${h.title}</div>
+        <div class="auto-event-desc">${h.desc}</div>
+        <div class="auto-event-time">${h.time}</div>
+      </div>
+    </div>
+  `).join('');
+
+  const popup = document.getElementById('autoPopup');
+  const rect  = e.currentTarget.getBoundingClientRect();
+
+  // Position below badge, ensure it stays on screen
+  let top  = rect.bottom + 6;
+  let left = rect.left;
+  if (left + 280 > window.innerWidth - 16) left = window.innerWidth - 296;
+  if (top + 260 > window.innerHeight - 16) top = rect.top - 270;
+
+  popup.style.top  = top + 'px';
+  popup.style.left = left + 'px';
+  popup.classList.add('show');
+  popupOpen = true;
+
+  setTimeout(() => {
+    document.addEventListener('click', dismissPopup, { once: true });
+  }, 10);
+}
+
+function dismissPopup(e) {
+  if (document.getElementById('autoPopup').contains(e.target)) return;
+  closePopup();
+}
+
+function closePopup() {
+  document.getElementById('autoPopup').classList.remove('show');
+  popupOpen = false;
+}
+
+// ──────────────────────────────────────────────
+// CARD MODAL
+// ──────────────────────────────────────────────
+
+function openModal(jobId) {
+  closePopup();
+  const job = JOBS.find(j => j.id === jobId);
+  if (!job) return;
+
+  const autoSection = job.automation ? `
+    <div class="modal-auto-section">
+      <div class="modal-auto-title">
+        <span class="material-icons-round">bolt</span>
+        Automation Activity
+      </div>
+      ${job.automation.history.map(h => `
+        <div class="modal-auto-event">
+          <div class="modal-auto-icon ${h.state}">
+            <span class="material-icons-round">${h.icon}</span>
+          </div>
+          <div style="flex:1;min-width:0">
+            <div class="modal-auto-etitle">${h.title}</div>
+            <div class="modal-auto-edesc">${h.desc}</div>
+            <div class="modal-auto-etime">${h.time}</div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  ` : '';
+
+  const apptSection = job.appts?.length ? `
+    <div class="modal-section">
+      <div class="modal-label">Appointments (${job.appts.length})</div>
+      ${job.appts.map((a, i) => `
+        <div style="margin-bottom:10px">
+          <div style="font-size:13px;font-weight:600;margin-bottom:2px">${a.label}</div>
+          <div style="font-size:13px;color:var(--text-muted);margin-bottom:6px">${a.date}</div>
+          <div class="card-team" style="margin-bottom:0">
+            ${a.team.slice(0,3).map(n => `<div class="avatar" style="background:${avatarColor(n)}">${initials(n)}</div>`).join('')}
+            <span class="team-label">${a.team[0]}${a.team.length > 1 ? ' +' + (a.team.length-1) : ''}</span>
+          </div>
+        </div>
+      `).join('')}
+      <a class="modal-link">View appointments <span class="material-icons-round">arrow_forward</span></a>
+    </div>
+  ` : '';
+
+  document.getElementById('modalContent').innerHTML = `
+    <div class="modal-head">
+      <div class="modal-job-num">Job #${job.id} <span class="material-icons-round">open_in_new</span></div>
+      <div class="modal-customer">${job.name}</div>
+      <button class="modal-close-btn" onclick="closeModal()">
+        <span class="material-icons-round">close</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-contact">${job.address}<br>${job.email}<br>${job.phone}</div>
+      <div class="modal-actions">
+        <button class="modal-action"><span class="material-icons-round">phone</span> Call</button>
+        <button class="modal-action"><span class="material-icons-round">chat_bubble</span> Chat</button>
+        <button class="modal-action"><span class="material-icons-round">email</span> Email</button>
+      </div>
+
+      ${autoSection}
+
+      <div class="modal-section">
+        <div class="modal-label">Services</div>
+        <div class="modal-value">${job.services.join('<br>')}</div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-label">Total</div>
+        <div class="modal-value" style="font-weight:600">${job.amount}</div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-label">Private Notes</div>
+        <a class="modal-link">View and edit notes <span class="material-icons-round">arrow_forward</span></a>
+      </div>
+      ${apptSection}
+      ${job.createdFrom ? `
+        <div class="modal-section">
+          <div class="modal-label">Created from</div>
+          <a class="modal-link">${job.createdFrom}</a>
+        </div>
+      ` : ''}
+    </div>
+  `;
+
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+}
+
+function overlayClose(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+}
+
+// ──────────────────────────────────────────────
+// INIT
+// ──────────────────────────────────────────────
+renderBoard();
+</script>
+</body>
+</html>
