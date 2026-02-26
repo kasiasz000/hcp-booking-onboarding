@@ -1073,33 +1073,7 @@ function renderCard(job) {
         ${vis.map(n => `<div class="avatar" style="background:${avatarColor(n)}">${initials(n)}</div>`).join('')}
         <span class="team-label">${label}</span>
       </div>
-      <div class="card-status" onclick="event.stopPropagation()">
-        ${status} <span class="material-icons-round">expand_more</span>
-      </div>
       <div class="card-updated">Status updated ${job.updatedAgo || 'recently'} ago</div>
-
-      <!-- Option B: compact activity preview -->
-      <div class="card-activity-preview">
-        ${previewEvents.map(e => {
-          const theme = dotTheme(e);
-          const text  = e.type === 'auto_skipped'
-            ? `<strong>Skipped:</strong> ${e.actor}`
-            : e.actorType === 'automation'
-            ? `<strong>Auto:</strong> ${e.title}`
-            : `<strong>${e.actor}</strong> · ${e.title}`;
-          return `
-            <div class="card-activity-row">
-              <div class="card-activity-dot ${theme}">
-                <span class="material-icons-round">${e.icon}</span>
-              </div>
-              <span class="card-activity-text">${text}</span>
-              <span class="card-activity-time">${e.time}</span>
-            </div>`;
-        }).join('')}
-        <span class="card-see-all" onclick="event.stopPropagation(); openModal('${job.id}', 'activity')">
-          See all ${totalEvents} events <span class="material-icons-round">arrow_forward</span>
-        </span>
-      </div>
     </div>
   `;
 }
